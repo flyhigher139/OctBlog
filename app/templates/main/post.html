@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %} {{ post.title }} {% endblock %}
+{% block header %}
+<header class="intro-header" style="background-image: url('http://7d9q7a.com1.z0.glb.clouddn.com/mayblog-home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>{{ post.title }}</h1>
+                        <!-- <h2 class="subheading">Problems look mighty small from 150 miles up</h2> -->
+                        <span class="meta">Posted by <a href="#">unknown</a> on {{ post.pub_time }}</span>
+                        <span class="meta">Category:Not yet</span>
+                        <span class="meta">Tags:Not yet</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+{% block main %}
+<div class="container">
+    <article>
+        <!-- <div class="container"> -->
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {{post.content_html|safe}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {{ jiathis_share }}
+                </div>
+            </div>
+            <br>
+            {% if allow_donate %}
+            <div class="row">
+                <!-- donate -->
+                <div class ="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <a id="btn_donate" class="btn_donate" href="#" title="Donate">
+                    <i class="fa fa-usd"></i> | <i class="fa fa-jpy"></i>
+                    </a>                  
+                    <br>
+                  <!-- weixin -->
+                  <div id="donate_guide" class="donate_bar center hidden">
+                      <img src="http://7tsygu.com1.z0.glb.clouddn.com/mayblog-weixin-pay.jpg?imageView/2/w/300" title="Donate">
+                  </div> 
+                </div>
+                <!-- donate --> 
+                
+            </div>
+            
+            {% endif %}
+            
+        <!-- </div> -->
+    </article>
+    <br>
+    <hr>
+    <article>
+        <!-- <div class="container"> -->
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {{ comment_script }}
+                </div>
+            </div>
+        <!-- </div> -->
+    </article>
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+    // $('#btn_donate').on('click', function(event){
+    //     $('#donate_guide').removeClass('hidden');
+    //     // $(this).attr('id', 'btn_donate_hidden');
+    //     return false
+    // });
+    $('#btn_donate').on('click', function(event){
+        if($('#donate_guide').hasClass('hidden'))
+            $('#donate_guide').removeClass('hidden');
+        else
+            $('#donate_guide').addClass('hidden');
+        return false
+    })
+    
+    
+</script>
+{% endblock %}
