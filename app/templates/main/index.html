@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}OctBlog{% endblock %}
+{% block header %}
+<header class="intro-header" style="background-image: url('http://7d9q7a.com1.z0.glb.clouddn.com/mayblog-home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>OctBlog</h1>
+                        <hr class="small">
+                        <span class="subheading">Tech Rocks! <a href="#"><i class="fa fa-rss"></i></a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1">
+            {% for post in posts %}
+            <div class="post-preview">
+                <a href="#">
+                    <h2 class="post-title">
+                        {{ post.title }}
+                    </h2>
+                </a>
+                <p class="post-subtitle">
+                    {{ post.abstract }}
+                </p>
+                <p class="post-meta">Posted by <a href="#">author</a> on {{post.pub_time}}</p>
+                <p class="post-meta">category: <a href="#">None</a></p>
+            </div>
+            {% if not loop.last %}
+            <hr>
+            {% endif %}
+            {% else %}
+                <p class="post-subtitle">
+                    No articles found here
+                </p>
+            {% endfor %}
+            <!-- Pager -->
+            <ul class="pager">
+                {% if posts.has_next %}
+                <li class="next">
+                    <a href="?page={{ posts.next_page_number }}">Older Posts &rarr;</a>
+                </li>
+                {% endif %}
+                {% if posts.has_previous %}
+                    <li class="next"><a href="?page={{ posts.previous_page_number }}">Previous Posts</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="col-lg-3 col-md-2">
+            <h3>Tags</h3><hr/>
+            Nothing yet!
+            
+            <h3>Category</h3><hr/>
+            <div class="list-group">
+                Nothong yet!
+            </div>
+
+                        
+        </div>
+    </div>
+</div>
+
+<hr>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+$('.rm-filter').on('click', function (event) {
+
+    location.href = "/";
+    return false;
+  });
+</script>
+{% endblock %}

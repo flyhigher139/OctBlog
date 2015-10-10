@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-import os
+import os, sys
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 from flask.ext.script import Manager, Server
 
