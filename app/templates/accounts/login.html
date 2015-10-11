@@ -1,0 +1,16 @@
+{% extends "admin_base.html" %}
+{% block title %}Login{% endblock %}
+{% block main %}
+
+<div class="row">
+    <div class="col-xs-6 col-sm-3"></div>
+    <div class="col-xs-6 col-sm-6">
+        {% import "_form.html" as forms %}
+        <form method="POST" action="" id='login'>
+        {{ forms.render(form) }}
+            <button type="submit" class="btn btn-primary" name="login">Login</button>
+        </form>
+    </div>
+    <div class="col-xs-6 col-sm-3"></div>
+</div>
+{% endblock %}

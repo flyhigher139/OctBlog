@@ -1,5 +1,8 @@
 flask
 flask-script
+flask-login
+flask-admin
+Flask-WTF
 WTForms
 mongoengine
 flask_mongoengine
