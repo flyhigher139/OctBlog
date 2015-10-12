@@ -19,9 +19,10 @@ def create_app(config_name):
     db.init_app(app)
     login_manager.init_app(app)
 
-    from main.urls import main as main_blueprint
+    from main.urls import main as main_blueprint, blog_admin as blog_admin_blueprint
     from accounts.urls import accounts as accounts_blueprint
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(blog_admin_blueprint, url_prefix='/admin')
     app.register_blueprint(accounts_blueprint, url_prefix='/accounts')
 
     return app
