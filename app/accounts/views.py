@@ -15,14 +15,14 @@ def login():
             login_user(user, form.remember_me.data)
             return redirect(request.args.get('next') or url_for('blog_admin.admin_index'))
 
-        flash('Invalid username or password')
+        flash('Invalid username or password', 'danger')
 
     return render_template('blog_admin/login.html', form=form)
 
 @login_required
 def logout():
     logout_user()
-    flash('You have been logged out')
+    flash('You have been logged out', 'success')
     return redirect(url_for('accounts.login'))
 
 def register():

@@ -1,4 +1,4 @@
-from flask import request, redirect, render_template, url_for, abort
+from flask import request, redirect, render_template, url_for, abort, flash
 from flask.views import MethodView
 
 from . import models

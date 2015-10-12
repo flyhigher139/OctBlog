@@ -16,6 +16,7 @@
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/mayblog.css') }}" rel="stylesheet">
+
     
     <!-- Custom CSS -->
     
@@ -30,6 +31,18 @@
     <![endif]-->
 </head>
 <body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flashes">
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible" role="alert" style="margin-bottom: 0px">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          {{ message }}
+      </div>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
     <!-- Navigation -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -109,6 +122,8 @@
         </div>
       </div><!-- /.container-fluid -->
     </nav>
+
+
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
     {%block header %}{% endblock %}
