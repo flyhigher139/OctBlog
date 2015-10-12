@@ -90,7 +90,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-          {% if current_user.is_authenticated() %}
+          {% if current_user.is_authenticated %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ current_user.username }} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -103,7 +103,7 @@
             </li>
           {% else %}
             <li><a href="{{ url_for('accounts.login') }}">Login</a></li>
-            <li><a href="#">Register</a></li>
+            <li><a href="{{ url_for('accounts.register') }}">Register</a></li>
           {% endif %}
           </ul>
         </div>
@@ -142,7 +142,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="https://github.com/flyhigher139/mayblog" target="_blank">
+                            <a href="https://github.com/flyhigher139/OctBlog" target="_blank">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -150,7 +150,7 @@
                             </a>
                         </li>
                     </ul>
-                    <p class="copyright text-muted text-center">Copyright &copy; May Blog 2015</p>
+                    <p class="copyright text-muted text-center">Copyright &copy; Oct Blog 2015</p>
                 </div>
             </div>
         </div>

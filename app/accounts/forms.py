@@ -10,12 +10,10 @@ class LoginForm(Form):
     remember_me = BooleanField('Keep me logged in')
 
 class RegistrationForm(Form):
-    username = StringField('Username', validators=[Required(), 
-        Length(1,64), 
+    username = StringField('Username', validators=[Required(), Length(1,64), 
         Regexp('^[A-Za-z0-9_.]*$', 0, 'Usernames must have only letters, numbers dots or underscores')])
     email = StringField('Email', validators=[Required(), Length(1,128), Email()])
-    password = PasswordField('Password', validators=[
-        Required(), EqualTo('password2', message='Passwords must match')])
+    password = PasswordField('Password', validators=[Required(), EqualTo('password2', message='Passwords must match')])
     password2 = PasswordField('Confirm password', validators=[Required()])
 
     def validate_username(self, field):

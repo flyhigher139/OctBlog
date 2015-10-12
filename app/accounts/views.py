@@ -24,3 +24,16 @@ def logout():
     logout_user()
     flash('You have been logged out')
     return redirect(url_for('main.index'))
+
+def register():
+    form = forms.RegistrationForm()
+    if form.validate_on_submit():
+        user = models.User()
+        user.username = form.username.data
+        user.password = form.password.data
+        user.email = form.email.data
+        user.save()
+
+        return redirect(url_for('main.index'))
+
+    return render_template('accounts/registration.html', form=form)
