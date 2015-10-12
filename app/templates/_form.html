@@ -1,25 +1,30 @@
 {% macro render(form) -%}
-<fieldset>
+
 {% for field in form %}
-{% if field.type in ['CSRFTokenField', 'HiddenField'] %}
-  {{ field() }}
-{% else %}
-  <div class="clearfix {% if field.errors %}error{% endif %}">
-    {{ field.label }}
-    <div class="input">
-      {{ field() }}
-      {% if field.errors or field.help_text %}
-        <span class="help-inline">
-        {% if field.errors %}
-          {{ field.errors|join(' ') }}
-        {% else %}
-          {{ field.help_text }}
-        {% endif %}
-        </span>
-      {% endif %}
-    </div>
+  {% if field.type in ['CSRFTokenField', 'HiddenField'] %}
+    {{ field() }}
+  {% elif field.type == "BooleanField" %}
+  <div class="checkbox">
+  <label>
+    {{ field() }} {{ field.label }}
+  </label>
+
   </div>
-{% endif %}
+  {% else %}
+    <div class="clearfix {% if field.errors %}has-error{% endif %} form-group">
+      {{ field.label }}
+        {{ field(class_="form-control") }}
+        {% if field.errors or field.help_text %}
+          <span class="help-block">
+          {% if field.errors %}
+            {{ field.errors|join(' ') }}
+          {% else %}
+            {{ field.help_text }}
+          {% endif %}
+          </span>
+        {% endif %}
+    </div>
+  {% endif %}
 {% endfor %}
-</fieldset>
+
 {% endmacro %}
