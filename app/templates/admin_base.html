@@ -31,18 +31,8 @@
     <![endif]-->
 </head>
 <body>
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <div class="flashes">
-    {% for category, message in messages %}
-      <div class="alert alert-{{ category }} alert-dismissible" role="alert" style="margin-bottom: 0px">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          {{ message }}
-      </div>
-    {% endfor %}
-    </div>
-  {% endif %}
-{% endwith %}
+{% import "_msg.html" as messages %}
+{{ messages.render_msg() }}
     <!-- Navigation -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
