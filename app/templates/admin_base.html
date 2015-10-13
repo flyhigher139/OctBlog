@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Blog Admin</a>
+          <a class="navbar-brand" href="{{ url_for('main.index') }}">Oct Blog</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -57,7 +57,7 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ url_for('blog_admin.posts') }}">All Posts</a></li>
                 <li><a href="{{ url_for('blog_admin.new_post') }}">New Post</a></li>
-                <li><a href="#">Drafts</a></li>
+                <li><a href="{{ url_for('blog_admin.posts') }}?draft=true">Drafts</a></li>
 
                 <li class="divider"></li>
                 <li><a href="#">Tags</a></li>

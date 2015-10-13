@@ -26,8 +26,12 @@ class Post(MethodView):
         display_slug = slug if slug else 'slug-value'
 
         if not form:
-            post = models.Post.objects.get_or_404(slug=slug) if slug else None
-            form = forms.PostForm(obj=post)
+            if slug:
+                post = models.Post.objects.get_or_404(slug=slug)
+                post.post_id = str(post.id)
+                form = forms.PostForm(obj=post)
+            else:
+                form = forms.PostForm()
         
         context = {'edit_flag':edit_flag, 'form':form, 'display_slug':display_slug}
 

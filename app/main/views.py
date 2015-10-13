@@ -17,6 +17,7 @@ def list_posts():
 def post_detail(slug):
     try:
         post = models.Post.objects.get(slug=slug)
-        return render_template('main/post.html', post=post)
     except models.Post.DoesNotExist:
         abort(404)
+        
+    return render_template('main/post.html', post=post)

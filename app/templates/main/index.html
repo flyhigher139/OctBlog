@@ -23,7 +23,7 @@
         <div class="col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1">
             {% for post in posts %}
             <div class="post-preview">
-                <a href="#">
+                <a href="{{ url_for('main.post_detail', slug=post.slug) }}">
                     <h2 class="post-title">
                         {{ post.title }}
                     </h2>

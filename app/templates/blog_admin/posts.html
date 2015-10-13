@@ -21,7 +21,7 @@
             {% for post in posts %}
             <tr id="post-{{ post.id }}">
                 <td>{{ loop.index }}</td>
-                <td><a href="#" target="_blank">{{ post.title }}</td>
+                <td><a href="{{ url_for('main.post_detail', slug=post.slug) }}" target="_blank">{{ post.title }}</td>
                 <td>{{ post.abstract }}</td>
                 <td>Not Yet</td>
                 <td>{{ post.pub_time }}</td>
