@@ -1,0 +1,60 @@
+{% extends "admin_base.html" %}
+{% block title %}Posts{% endblock %}
+{% block main %}
+<div class="row">
+    <!-- <div class="col-md-10"> -->
+    <!-- <h1>New Post</h1> -->
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th>Abstract</th>
+                <th>Author</th>
+                <th>Publish Date</th>
+                <th>Update Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr id="post-{{ post.id }}">
+                <td>{{ loop.index }}</td>
+                <td><a href="#" target="_blank">{{ post.title }}</td>
+                <td>{{ post.abstract }}</td>
+                <td>Not Yet</td>
+                <td>{{ post.pub_time }}</td>
+                <td>{{ post.update_time }}</td>
+                <td>
+                    <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a>
+                    &nbsp
+                    <a href="#"  class="del-post"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="7" style="text-align: left">No posts yet</td></tr>
+            {% endfor %}      
+        </tbody>
+    </table>
+    <!-- </div> -->
+    <!-- <div class="col-md-2">.col-md-2</div> -->
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+$('.del-post').on('click', function (event) {
+    // var answer = confirm("Delete post?");
+    // return answer;
+    var url = $(this).attr('href');
+    bootbox.confirm("Are you sure?", function(result) {
+      if(result){
+        $.get(url, function(){
+            location.reload();
+        });
+        }
+    });
+    return false;
+  });
+</script>
+{% endblock %}
