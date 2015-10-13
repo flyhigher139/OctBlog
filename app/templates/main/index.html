@@ -31,7 +31,7 @@
                 <p class="post-subtitle">
                     {{ post.abstract }}
                 </p>
-                <p class="post-meta">Posted by <a href="#">author</a> on {{post.pub_time}}</p>
+                <p class="post-meta">Posted by <a href="#">author</a> on {{ post.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</p>
                 <p class="post-meta">category: <a href="#">None</a></p>
             </div>
             {% if not loop.last %}
