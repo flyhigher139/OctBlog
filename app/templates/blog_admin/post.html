@@ -1,0 +1,154 @@
+{% extends "admin_base.html" %}
+{% block title %}
+    {% if edit_flag %}
+        Edit Post
+    {% else %}
+        New Post
+    {% endif %}
+{% endblock %}
+{% block css %}
+<link href="http://cdn.staticfile.org/bootstrap-select/1.6.3/css/bootstrap-select.min.css" rel="stylesheet">
+{% endblock %}
+{% block main %}
+
+<form method="POST" action="" id='new-post'>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="row">
+                {% import "_form.html" as forms %}
+                {{ form.csrf_token() }}
+                {% if form.title.errors %}
+                    <div class="clearfix has-error form-group">
+                    {{ form.title.label }}
+                    {{ form.title(class_="form-control") }}
+                    <span class="help-block">{{ form.title.errors|join(' ') }}</span>
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                    {{ form.title.label }}
+                    {{ form.title(class_="form-control") }}
+                    </div>
+                {% endif %}
+
+                {% if form.slug.errors %}
+                    <div class="clearfix has-error form-group">
+                    {{ form.slug.label }}
+                    {{ form.slug(class_="form-control") }}
+                    <span class="help-block">{{ form.slug.errors|join(' ') }}</span>
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                    {{ form.slug.label }}
+                    {{ form.slug(class_="form-control") }}
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    {{ form.raw.label }}
+                    {{ form.raw(class_="form-control", rows=30) }}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.abstract.label }}
+                    {{ form.abstract(class_="form-control", rows=5) }}
+                </div>
+
+            </div>
+        
+            <div class="row">
+                <div class="col-md-5">
+                    <h3>Tags</h3>
+                    <hr>
+                    <select multiple class="selectpicker" name="tags">
+                        {% for tag in tags %}
+                        <option value="{{ tag.id }}" {% if tag in posted_tags %} selected="selected" {% endif %} >
+                            {{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-md-5">
+                    <h3>Category</h3>
+                        <hr>
+                        <select class="selectpicker" name="category">
+                            {% for category in catagories %}
+                            <option value="{{ category.id }}" {% if category == posted_category %} selected="selected" {% endif %} >
+                                {{ category.name }}</option>
+                            {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <br><br><br><br>
+            <div class="row">
+                <button type="submit" class="btn btn-primary" name="publish" value="publish">Publish</button>
+                <button type="submit" class="btn btn-success" name="draft" value="draft">Save draft</button>
+                <button type="submit" class="btn btn-default" name="preview" value="preview" id="btn-preview">Preview</button>
+            </div>
+        
+        </div>
+    </div>
+            
+    
+</form>
+{% endblock %}
+{% block js %}
+<script src="http://cdn.staticfile.org/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<script type="text/javascript">
+    // using jQuery
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    $('#btn-preview').on('click', function(event){
+        // alert('preview clicked');
+        var pk = {{ pk }};
+        var post_url = '';
+        if(pk == 0)
+            post_url = "#";
+        else
+            post_url = "#";
+        // alert(post_url);
+        $.ajax({
+            url: post_url,
+            type: 'POST',
+            data: {
+                    title: $('#id_title').val(),
+                    content: $('#id_content').val(),
+                    abstract: $('#id_abstract').val(),
+                    preview: 'preview'
+                },
+            success: function(data){
+                pk = $.trim(data);
+                url = "#";
+                window.open(url, '_blank');
+            },
+            async: false
+          });
+        event.preventDefault();
+        return false
+    });
+</script>
+{% endblock %}

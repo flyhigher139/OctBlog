@@ -27,7 +27,7 @@
                 <td>{{ post.pub_time }}</td>
                 <td>{{ post.update_time }}</td>
                 <td>
-                    <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a>
+                    <a href="{{ url_for('blog_admin.edit_post', slug=post.slug) }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a>
                     &nbsp
                     <a href="#"  class="del-post"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
                 </td>
