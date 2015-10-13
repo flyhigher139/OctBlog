@@ -12,8 +12,8 @@ class Post(db.Document):
     slug = db.StringField(max_length=255, required=True, unique=True)
     abstract = db.StringField()
     raw = db.StringField(required=True)
-    pub_time = db.DateTimeField(default=datetime.datetime.now, required=True)
-    update_time = db.DateTimeField(default=datetime.datetime.now, required=True)
+    pub_time = db.DateTimeField(default=datetime.datetime.now(), required=True)
+    update_time = db.DateTimeField(default=datetime.datetime.now(), required=True)
     content_html = db.StringField(required=True)
     # author = db.ForeignKey(User)
     # tags = db.ManyToManyField('Tag', blank=True)
@@ -24,7 +24,7 @@ class Post(db.Document):
         return url_for('post_detail', kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
-        self.update_time = datetime.datetime.now
+        self.update_time = datetime.datetime.now()
         # self.content_html = self.raw
         self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks']).encode('utf-8')
         return super(Post, self).save(*args, **kwargs)

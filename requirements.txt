@@ -6,3 +6,4 @@ Flask-WTF
 WTForms
 mongoengine
 flask_mongoengine
+markdown2==2.3.0
