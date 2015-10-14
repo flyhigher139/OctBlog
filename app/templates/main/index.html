@@ -32,7 +32,7 @@
                     {{ post.abstract }}
                 </p>
                 <p class="post-meta">Posted by <a href="#">{{ post.author.username }}</a> on {{ post.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</p>
-                <p class="post-meta">category: <a href="#">None</a></p>
+                <p class="post-meta">category: <a href="#">{{ post.category }}</a></p>
             </div>
             {% if not loop.last %}
             <hr>
@@ -60,7 +60,17 @@
             
             <h3>Category</h3><hr/>
             <div class="list-group">
-                Nothong yet!
+                {% for category in categories %}
+                    {% if cur_category == category %}
+                        <a href="?category={{ category }}" class="list-group-item category-list active">{{ category }} 
+                        <small><span class="glyphicon glyphicon-remove small rm-filter" aria-hidden="true"></span></small>
+                        <span class="badge">&nbsp;1000&nbsp;</span></a>
+                    {% else %}
+                        <a href="?category={{ category }}" class="list-group-item category-list ">{{ category }} 
+                        <span class="badge">&nbsp;1000&nbsp;</span></a>
+                    {% endif %}
+                    
+                {% endfor %}
             </div>
 
                         

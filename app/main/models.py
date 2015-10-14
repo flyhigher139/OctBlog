@@ -17,8 +17,8 @@ class Post(db.Document):
     update_time = db.DateTimeField(default=datetime.datetime.now(), required=True)
     content_html = db.StringField(required=True)
     author = db.ReferenceField(User)
+    category = db.StringField(default='default')
     # tags = db.ManyToManyField('Tag', blank=True)
-    # category = db.ForeignKey('Category', null=True, blank=True)
     is_draft = db.BooleanField(default=False)
 
     def get_absolute_url(self):

@@ -12,7 +12,13 @@ def index():
 
 def list_posts():
     posts = models.Post.objects.all()
-    return render_template('main/index.html', posts=posts)
+    categories = posts.distinct('category')
+    cur_category = request.args.get('category')
+    if cur_category:
+        posts = posts.filter(category=cur_category)
+
+    data = { 'posts':posts, 'categories':categories, 'cur_category':cur_category}
+    return render_template('main/index.html', **data)
 
 def post_detail(slug):
     try:

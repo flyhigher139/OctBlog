@@ -63,6 +63,7 @@ class Post(MethodView):
         post.raw = form.raw.data.strip()
         abstract = form.abstract.data.strip()
         post.abstract = abstract if abstract else post.raw[:140]
+        post.category = request.form.get('category')
 
         if request.form.get('publish'):
             post.is_draft = False
