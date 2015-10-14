@@ -8,7 +8,7 @@
                     <div class="post-heading">
                         <h1>{{ post.title }}</h1>
                         <!-- <h2 class="subheading">Problems look mighty small from 150 miles up</h2> -->
-                        <span class="meta">Posted by <a href="#">unknown</a> on {{ post.pub_time }}</span>
+                        <span class="meta">Posted by <a href="#">{{ post.author.username }}</a> on {{ post.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</span>
                         <span class="meta">Category:Not yet</span>
                         <span class="meta">Tags:Not yet</span>
                     </div>

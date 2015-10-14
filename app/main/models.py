@@ -6,6 +6,7 @@ import markdown2
 # from mongoengine import *
 
 from OctBlog import db
+from accounts.models import User
 
 class Post(db.Document):
     title = db.StringField(max_length=255, default='new blog', required=True)
@@ -15,7 +16,7 @@ class Post(db.Document):
     pub_time = db.DateTimeField(default=datetime.datetime.now(), required=True)
     update_time = db.DateTimeField(default=datetime.datetime.now(), required=True)
     content_html = db.StringField(required=True)
-    # author = db.ForeignKey(User)
+    author = db.ReferenceField(User)
     # tags = db.ManyToManyField('Tag', blank=True)
     # category = db.ForeignKey('Category', null=True, blank=True)
     is_draft = db.BooleanField(default=False)

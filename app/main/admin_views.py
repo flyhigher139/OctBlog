@@ -1,7 +1,13 @@
 from flask import request, redirect, render_template, url_for, abort, flash
 from flask.views import MethodView
+from flask.ext.login import current_user
 
 from . import models, forms
+from accounts.models import User
+
+def get_current_user(): 
+    user = User.objects.get(username=current_user.get_id())
+    return user
 
 class AdminIndex(MethodView):
     template_name = 'blog_admin/index.html'
@@ -50,6 +56,7 @@ class Post(MethodView):
             post = models.Post.objects.get_or_404(slug=slug)
         else:
             post = models.Post()
+            post.author = get_current_user()
 
         post.title = form.title.data.strip()
         post.slug = form.slug.data.strip()

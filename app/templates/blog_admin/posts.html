@@ -23,7 +23,7 @@
                 <td>{{ loop.index }}</td>
                 <td><a href="{{ url_for('main.post_detail', slug=post.slug) }}" target="_blank">{{ post.title }}</td>
                 <td>{{ post.abstract }}</td>
-                <td>Not Yet</td>
+                <td>{{ post.author.username }}</td>
                 <td>{{ post.pub_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                 <td>{{ post.update_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                 <td>
