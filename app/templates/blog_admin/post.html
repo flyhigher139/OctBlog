@@ -60,12 +60,7 @@
                 <div class="col-md-5">
                     <h3>Tags</h3>
                     <hr>
-                    <select multiple class="selectpicker" name="tags">
-                        {% for tag in tags %}
-                        <option value="{{ tag.id }}" {% if tag in posted_tags %} selected="selected" {% endif %} >
-                            {{ tag.name }}</option>
-                        {% endfor %}
-                    </select>
+                    {{ form.tags_str(class_="form-control") }}
                 </div>
                 
                 <div class="col-md-5">
@@ -98,7 +93,6 @@
 </form>
 {% endblock %}
 {% block js %}
-<script src="http://cdn.staticfile.org/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
     // using jQuery
     
