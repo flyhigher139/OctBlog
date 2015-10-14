@@ -4,6 +4,9 @@
   {% if messages %}
     <div class="flash_msg">
     {% for category, message in messages %}
+      {% if category == 'message' %}
+        {% set category='info' %}
+      {% endif %}
       <div class="alert alert-{{ category }} alert-dismissible" role="alert" style="margin-bottom: 0px">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           {{ message }}
