@@ -12,12 +12,22 @@ def index():
 
 def list_posts():
     posts = models.Post.objects.all()
-    categories = posts.distinct('category')
+    # categories = posts.distinct('category')
     cur_category = request.args.get('category')
     if cur_category:
         posts = posts.filter(category=cur_category)
 
-    data = { 'posts':posts, 'categories':categories, 'cur_category':cur_category}
+    #group by aggregate
+    category_cursor = models.Post._get_collection().aggregate([
+            { '$group' : 
+                { '_id' : { 'post' : '$post', 'category' : '$category' }, 
+                  'name' : { '$first' : '$category' },
+                  'count' : { '$sum' : 1 },
+                }
+            }
+        ])
+
+    data = { 'posts':posts, 'cur_category':cur_category, 'category_cursor':category_cursor}
     return render_template('main/index.html', **data)
 
 def post_detail(slug):
