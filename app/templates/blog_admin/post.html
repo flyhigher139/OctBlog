@@ -114,10 +114,11 @@
         // alert(category);
         var elem = document.getElementById("tags_str");
         if(elem.value==''){
-            elem.value += tag;
+            elem.value = tag;
         }else{
-            elem.value += ', ';
-            elem.value += tag;
+            // elem.value += ', ';
+            // elem.value += tag;
+            elem.value = [elem.value, tag].join(', ')
         }
 
         // $(this).remove();
