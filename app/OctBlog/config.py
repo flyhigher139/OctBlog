@@ -1,5 +1,17 @@
 import os, sys
 
+OctBlogSettings = {
+    'allow_registration': False,
+    'blog_meta': {
+        'name': 'Oct Blog',
+        'subtitle': 'Oct Blog Subtitle',
+        'description': 'Oct Blog Description',
+        'owner': 'Gevin',
+        'keywords': ['python', 'Django', 'Flask', 'Docker', 'MongoDB']
+    }
+        
+}
+
 class Config(object):
     BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
     

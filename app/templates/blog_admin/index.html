@@ -3,30 +3,26 @@
 {%block main %}
 <div class="col-md-8 col-md-offset-2">
     <div class="row">
-        <h3>
-            Blog Meta Data &nbsp;
-            <small><a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a></small>
-        </h3>
-        <hr>
+        <h3>Blog Meta Data</h3><hr>
         <dl class="dl-horizontal">
             <dt>Blog Name:</dt>
-            <dd>Oct Blog</dd>
+            <dd>{{ blog_meta.name }}</dd>
         </dl>
         <dl class="dl-horizontal">
             <dt>Blog Subtitle:</dt>
-            <dd>Oct Blog</dd>
+            <dd>{{ blog_meta.subtitle }}</dd>
         </dl>
         <dl class="dl-horizontal">
             <dt>Blog Description:</dt>
-            <dd>Oct Blog</dd>
+            <dd>{{ blog_meta.description }}</dd>
         </dl>
         <dl class="dl-horizontal">
             <dt>Blog Owner:</dt>
-            <dd>Gevin</dd>
+            <dd>{{ blog_meta.owner }}</dd>
         </dl>
         <dl class="dl-horizontal">
             <dt>Blog Keywords:</dt>
-            <dd>python, django, flask, docker, mongodb</dd>
+            <dd>{{ blog_meta.keywords|join(', ') }}</dd>
         </dl>
     </div>
     <div class="row">

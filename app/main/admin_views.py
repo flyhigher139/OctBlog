@@ -4,6 +4,7 @@ from flask.ext.login import current_user, login_required
 
 from . import models, forms
 from accounts.models import User
+from OctBlog.config import OctBlogSettings
 
 def get_current_user(): 
     user = User.objects.get(username=current_user.get_id())
@@ -14,7 +15,8 @@ class AdminIndex(MethodView):
     template_name = 'blog_admin/index.html'
 
     def get(self):
-        return render_template(self.template_name)
+        blog_meta = OctBlogSettings['blog_meta']
+        return render_template(self.template_name, blog_meta=blog_meta)
 
 class PostsList(MethodView):
     decorators = [login_required]

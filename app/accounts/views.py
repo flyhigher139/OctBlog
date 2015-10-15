@@ -2,6 +2,7 @@ from flask import render_template, redirect, request, flash, url_for
 from flask.ext.login import login_user, logout_user, login_required, current_user
 
 from . import models, forms
+from OctBlog.config import OctBlogSettings
 
 def login():
     form = forms.LoginForm()
@@ -26,6 +27,10 @@ def logout():
     return redirect(url_for('accounts.login'))
 
 def register():
+    if not OctBlogSettings['allow_registration']:
+        msg = 'Register is forbidden, please contact administrator'
+        return msg
+        
     form = forms.RegistrationForm()
     if form.validate_on_submit():
         user = models.User()

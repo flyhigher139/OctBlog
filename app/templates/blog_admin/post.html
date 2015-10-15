@@ -37,12 +37,14 @@
                     <div class="clearfix has-error form-group">
                     {{ form.slug.label }}
                     {{ form.slug(class_="form-control") }}
+                    <!-- <span class="help-block">{{ url_for('main.post_detail', slug=display_slug) }}</span> -->
                     <span class="help-block">{{ form.slug.errors|join(' ') }}</span>
                     </div>
                 {% else %}
                     <div class="form-group">
                     {{ form.slug.label }}
                     {{ form.slug(class_="form-control") }}
+                    <!-- <span class="help-block">{{ url_for('main.post_detail', slug=display_slug) }}</span> -->
                     </div>
                 {% endif %}
 
