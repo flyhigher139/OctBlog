@@ -47,8 +47,9 @@ class Post(MethodView):
                 form = forms.PostForm()
 
         categories = models.Post.objects.distinct('category')
+        tags = models.Post.objects.distinct('tags')
         
-        context = {'edit_flag':edit_flag, 'form':form, 'display_slug':display_slug, 'categories':categories}
+        context = {'edit_flag':edit_flag, 'form':form, 'display_slug':display_slug, 'categories':categories, 'tags':tags}
 
         return context
 
