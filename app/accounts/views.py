@@ -38,6 +38,20 @@ def register():
 
     return render_template('blog_admin/registration.html', form=form)
 
+@login_required
+def add_user():
+    form = forms.RegistrationForm()
+    if form.validate_on_submit():
+        user = models.User()
+        user.username = form.username.data
+        user.password = form.password.data
+        user.email = form.email.data
+        user.save()
+
+        return redirect(url_for('blog_admin.index'))
+
+    return render_template('blog_admin/registration.html', form=form)
+
 def get_current_user():
     user = models.User.objects.get(username=current_user.username)
     return user
