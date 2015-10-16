@@ -35,7 +35,7 @@
                 <td>
                     <a href="{{ url_for('blog_admin.edit_post', slug=post.slug) }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a>
                     &nbsp
-                    <a href="#"  class="del-post"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
+                    <a href="{{ url_for('blog_admin.edit_post', slug=post.slug) }}"  class="del-post"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
                 </td>
             </tr>
             {% else %}
@@ -53,11 +53,20 @@ $('.del-post').on('click', function (event) {
     // var answer = confirm("Delete post?");
     // return answer;
     var url = $(this).attr('href');
+    url = url + '?ajax=true';
     bootbox.confirm("Are you sure?", function(result) {
       if(result){
-        $.get(url, function(){
-            location.reload();
-        });
+        // $.get(url, function(){
+        //     location.reload();
+        // });
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            success: function(result){
+                location.reload();
+            }
+
+        })
         }
     });
     return false;
