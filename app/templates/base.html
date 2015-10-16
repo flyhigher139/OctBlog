@@ -5,12 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <meta name="title" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="keywords" content="">
-    <meta name="google-site-verification" content="">
-    <meta name="baidu-site-verification" content="">
+    {% if post %}
+    <meta name="title" content="{{ post.title }}">
+    <meta name="description" content="{{ post.abstract }}">
+    <meta name="author" content="{{ post.author.username }}">
+    <meta name="keywords" content="{{ post.tags|join(',') }}">
+    {% else %}
+    <meta name="title" content="{{ blog_meta.name }}">
+    <meta name="description" content="{{ blog_meta.description }}">
+    <meta name="author" content="{{ blog_meta.owner }}">
+    <meta name="keywords" content="{{ blog_meta.keywords }}">
+    {% endif %}
+
+    <meta name="google-site-verification" content="{{ blog_meta.google_site_verification }}">
+    <meta name="baidu-site-verification" content="{{ blog_meta.baidu_site_verification }}">
+
     <title>{% block title %}Oct Blog{% endblock %}</title>
 
     <!-- Bootstrap Core CSS -->

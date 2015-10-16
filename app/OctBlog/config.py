@@ -7,7 +7,10 @@ OctBlogSettings = {
         'subtitle': os.environ.get('subtitle') or 'Oct Blog Subtitle',
         'description': os.environ.get('description') or 'Oct Blog Description',
         'owner': os.environ.get('owner') or 'Gevin',
-        'keywords': [keyword.strip() for keyword in os.environ.get('keywords').split(',')] if os.environ.get('keywords') else ['python', 'Django', 'Flask', 'Docker', 'MongoDB']
+        # 'keywords': [keyword.strip() for keyword in os.environ.get('keywords').split(',')] if os.environ.get('keywords') else ['python', 'Django', 'Flask', 'Docker', 'MongoDB'],
+        'keywords': os.environ.get('keywords') or 'python,django,flask,docker,MongoDB',
+        'google_site_verification': '',
+        'baidu_site_verification': '',
     }
         
 }
