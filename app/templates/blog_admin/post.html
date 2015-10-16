@@ -2,9 +2,9 @@
 
 {% block title %}
     {% if edit_flag %}
-        Edit Post
+        Edit {{ form.post_type.data|capitalize }}
     {% else %}
-        New Post
+        New {{ form.post_type.data|capitalize }}
     {% endif %}
 {% endblock %}
 
@@ -20,6 +20,7 @@
                 {% import "_form.html" as forms %}
                 {{ form.csrf_token() }}
                 {{ form.post_id() }}
+                {{ form.post_type() }}
                 {% if form.title.errors %}
                     <div class="clearfix has-error form-group">
                     {{ form.title.label }}

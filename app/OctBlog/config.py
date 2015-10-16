@@ -3,11 +3,11 @@ import os, sys
 OctBlogSettings = {
     'allow_registration': False,
     'blog_meta': {
-        'name': 'Oct Blog',
-        'subtitle': 'Oct Blog Subtitle',
-        'description': 'Oct Blog Description',
-        'owner': 'Gevin',
-        'keywords': ['python', 'Django', 'Flask', 'Docker', 'MongoDB']
+        'name': os.environ.get('name') or 'Oct Blog',
+        'subtitle': os.environ.get('subtitle') or 'Oct Blog Subtitle',
+        'description': os.environ.get('description') or 'Oct Blog Description',
+        'owner': os.environ.get('owner') or 'Gevin',
+        'keywords': [keyword.strip() for keyword in os.environ.get('keywords').split(',')] if os.environ.get('keywords') else ['python', 'Django', 'Flask', 'Docker', 'MongoDB']
     }
         
 }

@@ -13,6 +13,7 @@ class PostForm(Form):
     category = StringField('Category')
     tags_str = StringField('Tags')
     post_id = HiddenField('post_id')
+    post_type = HiddenField('post_type')
 
     def validate_slug(self, field):
         posts = models.Post.objects.filter(slug=field.data)

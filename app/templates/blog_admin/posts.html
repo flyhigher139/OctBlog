@@ -1,5 +1,5 @@
 {% extends "admin_base.html" %}
-{% block title %}Posts{% endblock %}
+{% block title %}{{ post_type|capitalize }}s{% endblock %}
 {% block main %}
 <div class="row">
     <!-- <div class="col-md-10"> -->
@@ -21,7 +21,13 @@
             {% for post in posts %}
             <tr id="post-{{ post.id }}">
                 <td>{{ loop.index }}</td>
-                <td><a href="{{ url_for('main.post_detail', slug=post.slug) }}" target="_blank">{{ post.title }}</td>
+                <td>
+                    {% if post_type=='page' %}
+                    <a href="{{ url_for('main.page_detail', slug=post.slug) }}" target="_blank">{{ post.title }}</a>
+                    {% else %}
+                    <a href="{{ url_for('main.post_detail', slug=post.slug) }}" target="_blank">{{ post.title }}</a>
+                    {% endif %}                    
+                </td>
                 <td>{{ post.abstract }}</td>
                 <td>{{ post.author.username }}</td>
                 <td>{{ post.pub_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
@@ -33,7 +39,7 @@
                 </td>
             </tr>
             {% else %}
-            <tr><td colspan="7" style="text-align: left">No posts yet</td></tr>
+            <tr><td colspan="7" style="text-align: left">No {{ post_type }}s yet</td></tr>
             {% endfor %}      
         </tbody>
     </table>

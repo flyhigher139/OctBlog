@@ -22,20 +22,20 @@ class PostsList(MethodView):
     decorators = [login_required]
     template_name = 'blog_admin/posts.html'
     
-    def get(self):
-        posts = models.Post.objects.all()
+    def get(self, post_type='post'):
+        posts = models.Post.objects.filter(post_type=post_type)
         if request.args.get('draft'):
             posts = posts.filter(is_draft=True)
         else:
             posts = posts.filter(is_draft=False)
 
-        return render_template(self.template_name, posts=posts)
+        return render_template(self.template_name, posts=posts, post_type=post_type)
 
 class Post(MethodView):
     decorators = [login_required]
     template_name = 'blog_admin/post.html'
 
-    def get_context(self, slug=None, form=None):
+    def get_context(self, slug=None, form=None, post_type='post'):
         edit_flag = slug is not None or False
         display_slug = slug if slug else 'slug-value'
 
@@ -46,20 +46,22 @@ class Post(MethodView):
                 post.tags_str = ', '.join(post.tags)
                 form = forms.PostForm(obj=post)
             else:
-                form = forms.PostForm()
+                form = forms.PostForm(post_type=post_type)
 
         categories = models.Post.objects.distinct('category')
         tags = models.Post.objects.distinct('tags')
         
-        context = {'edit_flag':edit_flag, 'form':form, 'display_slug':display_slug, 'categories':categories, 'tags':tags}
+        context = {'edit_flag':edit_flag, 'form':form, 'display_slug':display_slug, 
+            'categories':categories, 'tags':tags
+        }
 
         return context
 
-    def get(self, slug=None, form=None):
-        context = self.get_context(slug, form)
+    def get(self, slug=None, form=None, post_type='post'):
+        context = self.get_context(slug, form, post_type)
         return render_template(self.template_name, **context)
 
-    def post(self, slug=None):
+    def post(self, slug=None, post_type='post'):
         form = forms.PostForm(obj=request.form)
         if not form.validate():
             return self.get(slug, form)
@@ -75,20 +77,23 @@ class Post(MethodView):
         post.raw = form.raw.data.strip()
         abstract = form.abstract.data.strip()
         post.abstract = abstract if abstract else post.raw[:140]
-        post.category = request.form.get('category')
-        post.tags = [tag.strip() for tag in form.tags_str.data.split(',')]
+        post.category = form.category.data.strip() if form.category.data.strip() else None
+        post.tags = [tag.strip() for tag in form.tags_str.data.split(',')] if form.tags_str.data else None
+        post.post_type = form.post_type.data if form.post_type.data else None
+
+        redirect_url = url_for('blog_admin.pages') if form.post_type.data == 'page' else url_for('blog_admin.posts')
 
         if request.form.get('publish'):
             post.is_draft = False
             post.save()
-            flash('Succeed to publish the post', 'success')
-            return redirect(url_for('blog_admin.posts'))
+            flash('Succeed to publish the {0}'.format(post_type), 'success')
+            return redirect(redirect_url)
 
         elif request.form.get('draft'):
             post.is_draft = True
             post.save()
             flash('Succeed to save the draft', 'success')
-            return redirect('{0}?draft=true'.format(url_for('blog_admin.posts')))
+            return redirect('{0}?draft=true'.format(redirect_url))
 
 
         return self.get(slug, form)

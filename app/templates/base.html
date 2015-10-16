@@ -59,16 +59,19 @@
                     <li>
                         <a href="#">Archive</i></a>
                     </li>
+
+                   
+                    {% for page in pages %}
+                    <li>
+                        <a href="{{ url_for('main.page_detail', slug=page.slug) }}">{{ page.slug }}</a>
+                    </li>
+                    {% endfor %}
+
                     <li>
                         {% if current_user.is_authenticated %}
                         <a href="{{ url_for('blog_admin.index') }}">{{ current_user.username }}</i></a>
                         {% endif %}
                     </li>
-                    {% for page in pages %}
-                    <li>
-                        <a href="#">{{ page.slug }}</a>
-                    </li>
-                    {% endfor %}
                     
                 </ul>
             </div>
