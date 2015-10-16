@@ -9,6 +9,7 @@ main.add_url_rule('/posts/', 'posts', views.list_posts)
 main.add_url_rule('/posts/<slug>/', 'post_detail', views.post_detail)
 main.add_url_rule('/pages/<slug>/', 'page_detail', views.post_detail, defaults={'post_type':'page'})
 main.add_url_rule('/atom/', 'recent_feed', views.recent_feed)
+main.add_url_rule('/sitemap.xml/', 'sitemap', views.sitemap)
 
 
 blog_admin = Blueprint('blog_admin', __name__)
