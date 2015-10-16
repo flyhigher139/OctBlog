@@ -36,6 +36,14 @@
     <link href="{{ url_for('static', filename='css/clean-blog.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/mayblog.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="http://cdn.staticfile.org/highlight.js/8.3/styles/default.min.css">
+
+    <link href="{{ url_for('main.recent_feed') }}"
+      rel="alternate"
+      title="Recent Changes" 
+      type="application/atom+xml">
+
+    {% block custom_head %}{% endblock %}
+
     <!-- Custom Fonts -->
     <!-- <link href="http://libs.useso.com/js/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -63,7 +71,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#">RSS</i></a>
+                        <a href="{{ url_for('main.recent_feed') }}" target="_blank">RSS</i></a>
                     </li>
                     <li>
                         <a href="#">Archive</i></a>

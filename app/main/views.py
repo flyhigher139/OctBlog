@@ -1,5 +1,8 @@
+from urlparse import urljoin
 from flask import request, redirect, render_template, url_for, abort, flash
 from flask.views import MethodView
+
+from werkzeug.contrib.atom import AtomFeed
 
 from . import models
 from OctBlog.config import OctBlogSettings
@@ -56,3 +59,20 @@ def post_detail(slug, post_type='post'):
     data = get_base_data()
     data['post'] = post
     return render_template('main/post.html', **data)
+
+def make_external(url):
+    return urljoin(request.url_root, url)
+
+def recent_feed():
+    feed = AtomFeed('Recent Articles', feed_url=request.url, url=request.url_root)
+
+    posts = models.Post.objects.filter(post_type='post', is_draft=False)[:15]
+    for post in posts:
+        # return post.get_absolute_url()
+        feed.add(post.title, unicode(post.content_html),
+                 content_type='html',
+                 author=post.author.username,
+                 url=make_external(post.get_absolute_url()),
+                 updated=post.update_time,
+                 published=post.pub_time)
+    return feed.get_response()

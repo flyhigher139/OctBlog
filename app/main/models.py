@@ -23,7 +23,7 @@ class Post(db.Document):
     post_type = db.StringField(max_length=64, default='post')
 
     def get_absolute_url(self):
-        return url_for('post_detail', kwargs={"slug": self.slug})
+        return url_for('main.post_detail', slug=self.slug)
 
     def save(self, *args, **kwargs):
         self.update_time = datetime.datetime.now()
