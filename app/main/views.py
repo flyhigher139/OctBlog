@@ -7,6 +7,7 @@ from flask.views import MethodView
 from flask.ext.login import login_required, current_user
 
 from werkzeug.contrib.atom import AtomFeed
+from mongoengine.queryset.visitor import Q
 
 from . import models
 from OctBlog.config import OctBlogSettings
@@ -28,6 +29,11 @@ def list_posts():
 
     cur_category = request.args.get('category')
     cur_tag = request.args.get('tag')
+    keywords = request.args.get('keywords')
+
+    if keywords:
+        # posts = posts.filter(raw__contains=keywords )
+        posts = posts.filter(Q(raw__contains=keywords) | Q(title__contains=keywords))
 
     if cur_category:
         posts = posts.filter(category=cur_category)
@@ -51,6 +57,7 @@ def list_posts():
     data['category_cursor'] = category_cursor
     data['cur_tag'] = cur_tag
     data['tags'] = tags
+    data['keywords'] = keywords
 
     return render_template('main/index.html', **data)
 
