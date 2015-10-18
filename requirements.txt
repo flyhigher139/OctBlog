@@ -3,6 +3,7 @@ flask-script
 flask-login
 flask-admin
 Flask-WTF
+flask-principal
 WTForms
 mongoengine
 flask_mongoengine
