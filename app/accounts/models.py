@@ -9,6 +9,8 @@ class User(UserMixin, db.Document):
     password_hash = db.StringField(required=True)
     create_time = db.DateTimeField(default=datetime.datetime.now, required=True)
     last_login = db.DateTimeField(default=datetime.datetime.now, required=True)
+    is_email_confirmed = db.BooleanField(default=False)
+    role = db.StringField(max_length=32, default='reader')
 
     @property
     def password(self):
