@@ -79,8 +79,8 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Users <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">All Users</a></li>
-                <li><a href="#">New User</a></li>
+                <li><a href="{{ url_for('accounts.users') }}">All Users</a></li>
+                <li><a href="{{ url_for('accounts.add_user') }}">New User</a></li>
                 <li class="divider"></li>
                 <li><a href="#">User Groups</a></li>
                 <!-- <li class="divider"></li>

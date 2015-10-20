@@ -1,0 +1,16 @@
+{% extends 'admin_base.html' %}
+{% block title %} Edit User {% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        <h3>User Details</h3>
+        <hr>
+        {% import "_form.html" as forms %}
+        <form method="POST" action="">
+            {{ forms.render(form) }}
+            <button type="submit" class="btn btn-primary" name="user" value="user">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

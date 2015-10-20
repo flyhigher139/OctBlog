@@ -1,0 +1,67 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Users{% endblock %}
+{% block main %}
+<div class="row">
+    <div class="col-md-10">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Is Active</th>
+                <th>Last Login</th>
+                <th>Create Date</th>
+                <th>Actions</th>
+            </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr id="user-{{ user.username }}">
+            <td>{{ loop.counter }}</td>
+            <td><a href="#">{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.is_active }}</td>
+            <td>{{ user.last_login.strftime('%Y/%m/%d %H:%M:%S') }}</td>
+            <td>{{ user.create_time.strftime('%Y/%m/%d') }}</td>
+            <td>
+                <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a>
+                &nbsp
+                <a href="#"  class="del-user"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7">No user yet</td></tr>
+    {% endfor %}     
+    </tbody>
+    </table>
+
+    </div>
+    <div class="col-md-2">
+        <!-- <h4>Filter By Group</h4> -->
+        <p><strong>Filter By Role</strong></p>
+        <hr>
+        <div class="list-group">
+          Not yet
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+$('.del-user').on('click', function (event) {
+    // var answer = confirm("Delete post?");
+    // return answer;
+    var url = $(this).attr('href');
+    bootbox.confirm("Are you sure?", function(result) {
+      if(result){
+        $.get(url, function(){
+            location.reload();
+        });
+        }
+    });
+    return false;
+  });
+</script>
+{% endblock %}
