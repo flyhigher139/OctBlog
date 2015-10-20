@@ -4,6 +4,7 @@ from flask.ext.login import current_user, login_required
 
 from . import models, forms
 from accounts.models import User
+from accounts.permissions import admin_permission, editor_permission, author_permission, reader_permission
 from OctBlog.config import OctBlogSettings
 
 def get_current_user(): 
@@ -32,7 +33,7 @@ class PostsList(MethodView):
         return render_template(self.template_name, posts=posts, post_type=post_type)
 
 class Post(MethodView):
-    decorators = [login_required]
+    decorators = [login_required, admin_permission.require(401)]
     template_name = 'blog_admin/post.html'
 
     def get_context(self, slug=None, form=None, post_type='post'):
@@ -60,6 +61,10 @@ class Post(MethodView):
     def get(self, slug=None, form=None, post_type='post'):
         context = self.get_context(slug, form, post_type)
         return render_template(self.template_name, **context)
+
+        # with admin_permission.require(401):
+        #     context = self.get_context(slug, form, post_type)
+        #     return render_template(self.template_name, **context)
 
     def post(self, slug=None, post_type='post'):
         form = forms.PostForm(obj=request.form)
