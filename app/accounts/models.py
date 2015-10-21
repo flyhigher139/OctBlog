@@ -16,7 +16,7 @@ class User(UserMixin, db.Document):
     create_time = db.DateTimeField(default=datetime.datetime.now, required=True)
     last_login = db.DateTimeField(default=datetime.datetime.now, required=True)
     is_email_confirmed = db.BooleanField(default=False)
-    is_active = db.BooleanField(default=True)
+    # is_active = db.BooleanField(default=True)
     is_superuser = db.BooleanField(default=False)
     role = db.StringField(max_length=32, default='reader', choices=ROLES)
 
