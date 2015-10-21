@@ -21,3 +21,6 @@ blog_admin.add_url_rule('/new-post/', view_func=admin_views.Post.as_view('new_po
 blog_admin.add_url_rule('/pages/', view_func=admin_views.PostsList.as_view('pages'), defaults={'post_type':'page'})
 blog_admin.add_url_rule('/new-page/', view_func=admin_views.Post.as_view('new_page'), defaults={'post_type':'page'})
 blog_admin.add_url_rule('/posts/<slug>/', view_func=admin_views.Post.as_view('edit_post'))
+
+blog_admin.add_url_rule('/su/posts/', view_func=admin_views.SuPostsList.as_view('su_posts'))
+blog_admin.add_url_rule('/su/posts/<slug>/', view_func=admin_views.SuPost.as_view('su_post_edit'))

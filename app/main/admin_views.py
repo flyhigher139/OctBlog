@@ -7,6 +7,8 @@ from accounts.models import User
 from accounts.permissions import admin_permission, editor_permission, writer_permission, reader_permission
 from OctBlog.config import OctBlogSettings
 
+POST_TYPES = ('post', 'page')
+
 def get_current_user(): 
     user = User.objects.get(username=current_user.get_id())
     return user
@@ -38,14 +40,18 @@ class Post(MethodView):
 
     def get_context(self, slug=None, form=None, post_type='post'):
         edit_flag = slug is not None or False
-        if edit_flag and not g.identity.can(editor_permission):
-            abort(401)
-            
+        post = None
+
+        if edit_flag:
+            post = models.Post.objects.get_or_404(slug=slug)
+            if not g.identity.can(editor_permission) and post.author.username != current_user.username:
+                abort(401)
+
         display_slug = slug if slug else 'slug-value'
 
         if not form:
-            if slug:
-                post = models.Post.objects.get_or_404(slug=slug)
+            if post:
+                # post = models.Post.objects.get_or_404(slug=slug)
                 post.post_id = str(post.id)
                 post.tags_str = ', '.join(post.tags)
                 form = forms.PostForm(obj=post)
@@ -123,4 +129,75 @@ class Post(MethodView):
             return 'success'
             
         return redirect(redirect_url)
+
+class SuPostsList(MethodView):
+    decorators = [login_required, admin_permission.require(401)]
+    template_name = 'blog_admin/su_posts.html'
+    
+    def get(self, post_type='post'):
+        # posts = models.Post.objects.filter(post_type=post_type)
+        posts = models.Post.objects.all()
+        # if request.args.get('draft'):
+        #     posts = posts.filter(is_draft=True)
+        # else:
+        #     posts = posts.filter(is_draft=False)
+
+        return render_template(self.template_name, posts=posts)
+
+class SuPost(MethodView):
+    decorators = [login_required, admin_permission.require(401)]
+    template_name = 'blog_admin/su_post.html'
+
+    def get_context(self, slug, form=None):
+        post = models.Post.objects.get_or_404(slug=slug)
+
+        if not form:
+            # post.post_id = str(post.id)
+            # post.tags_str = ', '.join(post.tags)
+            form = forms.SuPostForm(obj=post)
+
+        categories = models.Post.objects.distinct('category')
+        tags = models.Post.objects.distinct('tags')
+        
+        context = {'form':form, 'display_slug':slug, 
+            'categories':categories, 'tags':tags, 'post_types': POST_TYPES
+        }
+
+        return context
+
+    def get(self, slug, form=None):
+        context = self.get_context(slug, form)
+        return render_template(self.template_name, **context)
+
+    def post(self, slug):
+        form = forms.SuPostForm(request.form)
+        if not form.validate():
+            return self.get(slug, form)
+
+        # return form.author.data.username
+
+        # if slug:
+        #     post = models.Post.objects.get_or_404(slug=slug)
+        # else:
+        #     post = models.Post()
+        #     post.author = get_current_user()
+
+        post = models.Post.objects.get_or_404(slug=slug)
+
+        post.title = form.title.data.strip()
+        post.slug = form.slug.data.strip()
+        post.raw = form.raw.data.strip()
+        abstract = form.abstract.data.strip()
+        post.abstract = abstract if abstract else post.raw[:140]
+        post.is_draft = form.is_draft.data
+        post.author = form.author.data
+
+        post.post_type = form.post_type.data if form.post_type.data else None
+
+        redirect_url = url_for('blog_admin.su_posts')
+
+        post.save()
+        flash('Succeed to update post', 'success')
+        return redirect(redirect_url)
+
 

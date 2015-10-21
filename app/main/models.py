@@ -18,7 +18,7 @@ class Post(db.Document):
     content_html = db.StringField(required=True)
     author = db.ReferenceField(User)
     category = db.StringField(max_length=64, default='default')
-    tags = db.ListField()
+    tags = db.ListField(db.StringField(max_length=30))
     is_draft = db.BooleanField(default=False)
     post_type = db.StringField(max_length=64, default='post')
 
