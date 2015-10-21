@@ -109,3 +109,15 @@ class User(MethodView):
             flash('Succeed to update user details', 'success')
             return redirect(url_for('accounts.edit_user', username=username))
         return self.get(username, form)
+
+    def delete(self, username):
+        user = models.User.objects.get_or_404(username=username)
+        user.delete()
+
+        if request.args.get('ajax'):
+            return 'success'
+
+        msg = 'Succeed to delete user'
+
+        flash(msg, 'success')
+        return redirect(url_for('accounts.users'))
