@@ -1,4 +1,4 @@
-from flask import request, redirect, render_template, url_for, abort, flash
+from flask import request, redirect, render_template, url_for, abort, flash, g
 from flask.views import MethodView
 from flask.ext.login import current_user, login_required
 
@@ -33,11 +33,14 @@ class PostsList(MethodView):
         return render_template(self.template_name, posts=posts, post_type=post_type)
 
 class Post(MethodView):
-    decorators = [login_required, editor_permission.require(401)]
+    decorators = [login_required, writer_permission.require(401)]
     template_name = 'blog_admin/post.html'
 
     def get_context(self, slug=None, form=None, post_type='post'):
         edit_flag = slug is not None or False
+        if edit_flag and not g.identity.can(editor_permission):
+            abort(401)
+            
         display_slug = slug if slug else 'slug-value'
 
         if not form:
