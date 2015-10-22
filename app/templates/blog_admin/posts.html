@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for post in posts %}
+            {% for post in posts.items %}
             <tr id="post-{{ post.id }}">
                 <td>{{ loop.index }}</td>
                 <td>
@@ -43,6 +43,8 @@
             {% endfor %}      
         </tbody>
     </table>
+    {% import '_pagination.html' as pagination %}
+    {{ pagination.render_pagination(posts) }}
     <!-- </div> -->
     <!-- <div class="col-md-2">.col-md-2</div> -->
 </div>

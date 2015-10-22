@@ -8,6 +8,7 @@ from accounts.permissions import admin_permission, editor_permission, writer_per
 from OctBlog.config import OctBlogSettings
 
 POST_TYPES = ('post', 'page')
+PER_PAGE = OctBlogSettings['pagination'].get('admin_per_page', 10)
 
 def get_current_user(): 
     user = User.objects.get(username=current_user.get_id())
@@ -31,6 +32,9 @@ class PostsList(MethodView):
             posts = posts.filter(is_draft=True)
         else:
             posts = posts.filter(is_draft=False)
+
+        cur_page = request.args.get('page', 1)
+        posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
 
         return render_template(self.template_name, posts=posts, post_type=post_type)
 
