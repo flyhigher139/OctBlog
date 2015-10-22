@@ -1,34 +1,30 @@
 {% macro render_pagination(pagination) %}
-  <div class=pagination>
-  {%- for page in pagination.iter_pages() %}
-    {% if page %}
-      {% if page != pagination.page %}
-        <a href="?page={{ page }}">{{ page }}</a>
-      {% else %}
-        <strong>{{ page }}</strong>
-      {% endif %}
-    {% else %}
-      <span class=ellipsis>…</span>
-    {% endif %}
-  {%- endfor %}
   <nav>
     <ul class="pagination">
-      <li>
-        <a href="#" aria-label="Previous">
+    
+      <li {% if not pagination.has_prev %}class="disabled"{% endif %}>
+        <a href="?page={{ pagination.pre_num }}" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-      <li>
-        <a href="#" aria-label="Next">
+    
+    {%- for page in pagination.iter_pages() %}
+      {% if page %}
+        {% if page != pagination.page %}
+          <li><a href="?page={{ page }}">{{ page }}</a></li>
+        {% else %}
+          <li class="disabled"><a href="?page={{ page }}"><strong>{{ page }}</strong></a></li>
+        {% endif %}
+      {% else %}
+        <span class=ellipsis>…</span>
+      {% endif %}
+    {%- endfor %}
+      <li {% if not pagination.has_next %}class="disabled"{% endif %}>
+        <a href="?page={{ pagination.next_num }}" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
+      
     </ul>
   </nav>
-  </div>
 {% endmacro %}
