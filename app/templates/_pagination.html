@@ -1,30 +1,43 @@
 {% macro render_pagination(pagination) %}
   <nav>
     <ul class="pagination">
-    
-      <li {% if not pagination.has_prev %}class="disabled"{% endif %}>
+      {% if not pagination.has_prev %}
+        <li class="disabled">
+          <a href="?page={{ pagination.pre_num }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      {% else %}
+        <li {% if not pagination.has_prev %}class="disabled"{% endif %}>
         <a href="?page={{ pagination.pre_num }}" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
-      </li>
-    
-    {%- for page in pagination.iter_pages() %}
-      {% if page %}
-        {% if page != pagination.page %}
-          <li><a href="?page={{ page }}">{{ page }}</a></li>
-        {% else %}
-          <li class="disabled"><a href="?page={{ page }}"><strong>{{ page }}</strong></a></li>
-        {% endif %}
-      {% else %}
-        <span class=ellipsis>…</span>
+        </li>
       {% endif %}
-    {%- endfor %}
-      <li {% if not pagination.has_next %}class="disabled"{% endif %}>
-        <a href="?page={{ pagination.next_num }}" aria-label="Next">
+    
+      {%- for page in pagination.iter_pages() %}
+        {% if page %}
+          {% if page != pagination.page %}
+            <li><a href="?page={{ page }}">{{ page }}</a></li>
+          {% else %}
+            <li class="disabled"><a href="?page={{ page }}"><strong>{{ page }}</strong></a></li>
+          {% endif %}
+        {% else %}
+          <span class=ellipsis>…</span>
+        {% endif %}
+      {%- endfor %}
+
+      {% if not pagination.has_next %}
+        <li class="disabled">
           <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-      
+        </li>
+      {% else %}
+        <li>
+          <a href="?page={{ pagination.next_num }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      {% endif %}      
     </ul>
   </nav>
 {% endmacro %}

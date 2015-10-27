@@ -34,6 +34,8 @@ class PostsList(MethodView):
             posts = posts.filter(is_draft=False)
 
         cur_page = request.args.get('page', 1)
+        if not cur_page:
+            abort(404)
         posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
 
         return render_template(self.template_name, posts=posts, post_type=post_type)
