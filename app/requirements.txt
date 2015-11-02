@@ -1,0 +1,10 @@
+flask
+flask-script
+flask-login
+flask-admin
+Flask-WTF
+flask-principal
+WTForms
+mongoengine
+flask_mongoengine
+markdown2==2.3.0

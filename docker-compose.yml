@@ -1,0 +1,27 @@
+blog:
+  # restart: always
+  build: ./app
+  ports:
+    - "5000:5000"
+  links:
+    - mongo:mongo
+  # volumes:
+  #   - /usr/src/app/static
+  env_file: .env
+
+mongo:
+  # restart: always
+  image: daocloud.io/library/mongo:latest
+  env_file: .env
+
+  volumes:
+    - /mongo/data
+  ports:
+    - "27017:27017"
+# data:
+#   restart: always
+#   image: sameersbn/mysql:latest
+#   volumes:
+#     # - /var/lib/mysql
+#     - /home/mayblog/data:/opt/mayblog/data
+#   command: true
