@@ -35,7 +35,17 @@ class Config(object):
 class DevConfig(Config):
     DEBUG = True
 
+class PrdConfig(Config):
+    DEBUG = False
+    MONGODB_SETTINGS = {
+            'db': 'OctBlog',
+            'host': os.environ.get('MONGO_HOST') or 'localhost',
+            # 'port': 12345
+        }
+
+
 config = {
     'dev': DevConfig,
-    'default': DevConfig
+    'prd': PrdConfig,
+    'default': DevConfig,
 }

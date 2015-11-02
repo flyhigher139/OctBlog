@@ -19,12 +19,8 @@ WORKDIR /usr/src/app
 ADD requirements.txt /usr/src/app/requirements.txt
 RUN pip install -r /usr/src/app/requirements.txt
 COPY . /usr/src/app
-RUN ln -s /usr/src/app/mayblog_nginx.conf /etc/nginx/sites-enabled
-# RUN /usr/bin/python2.7 manage.py migrate && \
-#     /usr/bin/python2.7 manage.py collectstatic --noinput && \
-#     /usr/bin/python2.7 manage.py createsuperuser --username admin --email admin@gmail.com --noinput
-# ADD supervisord.conf /etc/supervisord.conf
-RUN /usr/bin/python2.7 manage.py collectstatic --noinput
-EXPOSE 5000
+RUN ln -s /usr/src/app/nginx.conf /etc/nginx/sites-enabled
+
+EXPOSE 8000
 
 CMD ["/bin/bash", "/usr/src/app/init.sh"]
