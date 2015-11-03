@@ -2,6 +2,7 @@ blog:
   # restart: always
   build: ./app
   ports:
+    - "8000:8000"
     - "5000:5000"
   links:
     - mongo:mongo
@@ -16,12 +17,4 @@ mongo:
 
   volumes:
     - /mongo/data
-  ports:
-    - "27017:27017"
-# data:
-#   restart: always
-#   image: sameersbn/mysql:latest
-#   volumes:
-#     # - /var/lib/mysql
-#     - /home/mayblog/data:/opt/mayblog/data
-#   command: true
+

@@ -18,9 +18,13 @@ RUN mkdir -p /usr/src/app && mkdir -p /var/log/gunicorn
 WORKDIR /usr/src/app
 ADD requirements.txt /usr/src/app/requirements.txt
 RUN pip install -r /usr/src/app/requirements.txt
+
 COPY . /usr/src/app
-RUN ln -s /usr/src/app/nginx.conf /etc/nginx/sites-enabled
+RUN ln -s /usr/src/app/octblog_nginx.conf /etc/nginx/sites-enabled
 
-EXPOSE 8000
+EXPOSE 8000 5000
 
-CMD ["/bin/bash", "/usr/src/app/init.sh"]
+# CMD ["/bin/bash", "/usr/src/app/init.sh"]
+# CMD ["/bin/bash"]
+CMD ["/usr/local/bin/supervisord", "-n"]
+# CMD ["/usr/bin/python2.7", "manage.py", "runserver"]
