@@ -12,8 +12,8 @@ OctBlogSettings = {
         'baidu_site_verification': '',
     },
     'pagination':{
-        'per_page': 2,
-        'admin_per_page': 3,
+        'per_page': int(os.environ.get('per_page', 5)),
+        'admin_per_page': int(os.environ.get('admin_per_page', 10)),
     },
         
 }
@@ -36,7 +36,8 @@ class DevConfig(Config):
     DEBUG = True
 
 class PrdConfig(Config):
-    DEBUG = False
+    # DEBUG = False
+    DEBUG = os.environ.get('DEBUG', 'false').lower() == 'true'
     MONGODB_SETTINGS = {
             'db': 'OctBlog',
             'host': os.environ.get('MONGO_HOST') or 'localhost',
