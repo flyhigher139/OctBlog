@@ -1,7 +1,7 @@
 import os, sys
 
 OctBlogSettings = {
-    'allow_registration': True,
+    'allow_registration': os.environ.get('allow_registration', 'false').lower() == 'true',
     'blog_meta': {
         'name': os.environ.get('name') or 'Oct Blog',
         'subtitle': os.environ.get('subtitle') or 'Oct Blog Subtitle',
