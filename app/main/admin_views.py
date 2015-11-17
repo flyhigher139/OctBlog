@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import request, redirect, render_template, url_for, abort, flash, g
 from flask.views import MethodView
 from flask.ext.login import current_user, login_required

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from urlparse import urljoin
 from datetime import datetime, timedelta
 from flask import request, redirect, render_template, url_for, abort, flash

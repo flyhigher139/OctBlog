@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import current_app
 from flask.ext.principal import Permission, RoleNeed, UserNeed, identity_loaded
 from flask.ext.login import current_user
