@@ -27,7 +27,8 @@ class PostsList(MethodView):
     template_name = 'blog_admin/posts.html'
     
     def get(self, post_type='post'):
-        posts = models.Post.objects.filter(post_type=post_type)
+        # posts = models.Post.objects.filter(post_type=post_type)
+        posts = models.Post.objects.filter(post_type=post_type).order_by('-update_time')
         if request.args.get('draft'):
             posts = posts.filter(is_draft=True)
         else:
