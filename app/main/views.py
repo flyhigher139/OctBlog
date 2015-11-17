@@ -69,8 +69,8 @@ def list_posts():
 
     return render_template('main/index.html', **data)
 
-def post_detail(slug, post_type='post'):
-    post = models.Post.objects.get_or_404(slug=slug, post_type=post_type)
+def post_detail(slug, post_type='post', fix=False):
+    post = models.Post.objects.get_or_404(slug=slug, post_type=post_type) if not fix else models.Post.objects.get_or_404(fix_slug=slug, post_type=post_type)
     if post.is_draft and current_user.is_anonymous:
         abort(404)
 

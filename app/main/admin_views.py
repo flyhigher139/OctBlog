@@ -196,13 +196,14 @@ class SuPost(MethodView):
 
         post.title = form.title.data.strip()
         post.slug = form.slug.data.strip()
+        post.fix_slug = form.fix_slug.data.strip()
         post.raw = form.raw.data.strip()
         abstract = form.abstract.data.strip()
         post.abstract = abstract if abstract else post.raw[:140]
         post.is_draft = form.is_draft.data
         post.author = form.author.data
 
-        post.post_type = form.post_type.data if form.post_type.data else None
+        post.post_type = form.post_type.data.strip() if form.post_type.data else None
 
         redirect_url = url_for('blog_admin.su_posts')
 
