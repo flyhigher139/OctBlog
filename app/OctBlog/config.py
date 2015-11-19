@@ -11,8 +11,8 @@ OctBlogSettings = {
         'description': os.environ.get('description') or 'Oct Blog Description',
         'owner': os.environ.get('owner') or 'Gevin',
         'keywords': os.environ.get('keywords') or 'python,django,flask,docker,MongoDB',
-        'google_site_verification': '',
-        'baidu_site_verification': '',
+        'google_site_verification': os.environ.get('google_site_verification') or '12345678',
+        'baidu_site_verification': os.environ.get('baidu_site_verification') or '87654321',
     },
     'pagination':{
         'per_page': int(os.environ.get('per_page', 5)),
