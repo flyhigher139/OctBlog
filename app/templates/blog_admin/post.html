@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block css %}
+    <link href="http://7xogax.com1.z0.glb.clouddn.com/widearea.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block main %}
@@ -51,7 +52,7 @@
 
                 <div class="form-group">
                     {{ form.raw.label }}
-                    {{ form.raw(class_="form-control", rows=30) }}
+                    {{ form.raw(class_="form-control", rows=30, data_widearea="enable") }}
                 </div>
 
                 <div class="form-group">
@@ -109,8 +110,11 @@
 {% endblock %}
 
 {% block js %}
+<script src="http://7xogax.com1.z0.glb.clouddn.com/widearea.min.js"></script>
 <script type="text/javascript">
     // using jQuery
+
+    wideArea();
     
     $('.tag').on('click', function(event){
         var tag = $(this).data('tag');
