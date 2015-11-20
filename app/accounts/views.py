@@ -8,6 +8,7 @@ from flask.ext.login import login_user, logout_user, login_required, current_use
 from flask.ext.principal import Identity, AnonymousIdentity, identity_changed
 
 from . import models, forms
+from permissions import admin_permission
 from OctBlog.config import OctBlogSettings
 
 def login():
@@ -79,12 +80,14 @@ def get_current_user():
 
 
 class Users(MethodView):
+    decorators = [login_required, admin_permission.require(401)]
     template_name = 'accounts/users.html'
     def get(self):
         users = models.User.objects.all()
         return render_template(self.template_name, users=users)
 
 class User(MethodView):
+    decorators = [login_required, admin_permission.require(401)]
     template_name = 'accounts/user.html'
 
     def get_context(self, username, form=None):
