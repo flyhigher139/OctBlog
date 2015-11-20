@@ -32,6 +32,10 @@ class PostsList(MethodView):
     def get(self, post_type='post'):
         # posts = models.Post.objects.filter(post_type=post_type)
         posts = models.Post.objects.filter(post_type=post_type).order_by('-update_time')
+
+        if not g.identity.can(editor_permission):
+            posts = posts.filter(author=get_current_user())
+
         if request.args.get('draft'):
             posts = posts.filter(is_draft=True)
         else:
