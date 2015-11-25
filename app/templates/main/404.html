@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %} 404 Not Found {% endblock %}
+
+{% block header %}
+<header class="intro-header" style="background-image: url('http://7d9q7a.com1.z0.glb.clouddn.com/mayblog-home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>{{ blog_meta.name }}</h1>
+                        <hr class="small">
+                        <span class="subheading">{{ blog_meta.subtitle }} <a href="{{ url_for('main.recent_feed') }}"><i class="fa fa-rss"></i></a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block main %}
+<!-- <p>Nothing Found</p> -->
+<div class="container">
+    <div class="row">
+        <p>Nothing Found</p>
+    </div>
+</div>
+
+<hr>
+{% endblock %}
