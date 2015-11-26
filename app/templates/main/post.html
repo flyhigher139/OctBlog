@@ -28,11 +28,13 @@
                     {{post.content_html|safe}}
                 </div>
             </div>
+            {% if allow_share_article %}
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    {{ jiathis_share }}
+                    {{ share_html|safe }}
                 </div>
             </div>
+            {% endif %}
             <br>
             {% if allow_donate %}
             <div class="row">

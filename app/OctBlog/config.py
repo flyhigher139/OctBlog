@@ -27,7 +27,8 @@ OctBlogSettings = {
         'comment_opt':{
             'duoshuo': 'oct-blog', # shotname of duoshuo
             }
-    }
+    },
+    'allow_share_article': os.environ.get('allow_share_article', 'true').lower() == 'true',
         
 }
 
