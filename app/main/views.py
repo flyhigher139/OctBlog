@@ -76,7 +76,46 @@ def post_detail(slug, post_type='post', fix=False):
 
     data = get_base_data()
     data['post'] = post
+    data['allow_donate'] = OctBlogSettings['allow_donate']
+    data['allow_comment'] = OctBlogSettings['blog_comment']['allow_comment']
+    if data['allow_comment']:
+        comment_type = OctBlogSettings['blog_comment']['comment_type']
+        comment_shortname = OctBlogSettings['blog_comment']['comment_opt']['duoshuo']
+        comment_func = get_comment_func(comment_type)
+        data['comment_html'] = comment_func(comment_shortname, slug, post.title, request.base_url) if comment_func else ''
     return render_template('main/post.html', **data)
+
+
+def get_comment_func(comment_type):
+    if comment_type == 'duoshuo':
+        return duoshuo_comment
+    else:
+        return None
+
+def duoshuo_comment(duoshuo_shortname, post_id, post_title, post_url):
+    '''
+    Create duoshuo script by params
+    '''
+    template_name = 'main/misc/duoshuo.html'
+    data = {
+        'duoshuo_shortname': duoshuo_shortname,
+        'post_id': post_id,
+        'post_title': post_title,
+        'post_url': post_url,
+    }
+
+    return render_template(template_name, **data)
+
+def jiathis_share(request):
+    '''
+    Create duoshuo script by params
+    '''
+    template_name = 'main/misc/jiathis_share.html'
+
+    template = loader.get_template(template_name)
+    data = {}
+    context = RequestContext(request, data)
+    return template.render(context)
 
 def make_external(url):
     return urljoin(request.url_root, url)

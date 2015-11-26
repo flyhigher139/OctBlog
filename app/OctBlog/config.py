@@ -6,6 +6,7 @@ import os, sys
 OctBlogSettings = {
     'allow_registration': os.environ.get('allow_registration', 'false').lower() == 'true',
     'allow_su_creation': os.environ.get('allow_su_creation', 'false').lower() == 'true',
+    'allow_donate': os.environ.get('allow_donate', 'true').lower() == 'true',
     'auto_role': os.environ.get('auto_role', 'reader').lower(),
     'blog_meta': {
         'name': os.environ.get('name').decode('utf8') if os.environ.get('name') else 'Oct Blog',
@@ -20,6 +21,13 @@ OctBlogSettings = {
         'per_page': int(os.environ.get('per_page', 5)),
         'admin_per_page': int(os.environ.get('admin_per_page', 10)),
     },
+    'blog_comment':{
+        'allow_comment': os.environ.get('allow_comment', 'true').lower() == 'true',
+        'comment_type': os.environ.get('comment_type', 'duoshuo').lower(), # currently, OctBlog only supports duoshuo comment
+        'comment_opt':{
+            'duoshuo': 'oct-blog', # shotname of duoshuo
+            }
+    }
         
 }
 
