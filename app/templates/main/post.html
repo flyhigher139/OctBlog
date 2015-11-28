@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block title %} {{ post.title }} {% endblock %}
+
+{% block custom_head %}
+    <link href="{{ url_for('static', filename='css/share.min.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block header %}
 <header class="intro-header" style="background-image: url('http://7d9q7a.com1.z0.glb.clouddn.com/mayblog-home-bg.jpg')">
         <div class="container">
@@ -31,8 +36,9 @@
             {% if allow_share_article %}
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    {{ share_html|safe }}
+                    <div class="share-component" data-sites="weibo,wechat,douban,twitter,qq,google,facebook,linkedin"></div>
                 </div>
+
             </div>
             {% endif %}
             <br>
@@ -72,13 +78,10 @@
     {% endif %}
 </div>
 {% endblock %}
+
 {% block js %}
+<script src="{{ url_for('static', filename='js/share.min.js') }}"></script>
 <script type="text/javascript">
-    // $('#btn_donate').on('click', function(event){
-    //     $('#donate_guide').removeClass('hidden');
-    //     // $(this).attr('id', 'btn_donate_hidden');
-    //     return false
-    // });
     $('#btn_donate').on('click', function(event){
         if($('#donate_guide').hasClass('hidden'))
             $('#donate_guide').removeClass('hidden');

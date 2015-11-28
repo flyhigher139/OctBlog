@@ -87,8 +87,8 @@ def post_detail(slug, post_type='post', fix=False):
         data['comment_html'] = comment_func(comment_shortname, slug, post.title, request.base_url) if comment_func else ''
 
     data['allow_share_article'] = OctBlogSettings['allow_share_article']
-    if data['allow_share_article']:
-        data['share_html'] = jiathis_share()
+    # if data['allow_share_article']:
+    #     data['share_html'] = jiathis_share()
     
     return render_template('main/post.html', **data)
 
@@ -113,11 +113,11 @@ def duoshuo_comment(duoshuo_shortname, post_id, post_title, post_url):
 
     return render_template(template_name, **data)
 
-def jiathis_share():
-    '''
-    Create duoshuo script by params
-    '''
-    template_name = 'main/misc/jiathis_share.html'
+# def jiathis_share():
+#     '''
+#     Create duoshuo script by params
+#     '''
+#     template_name = 'main/misc/jiathis_share.html'
 
     return render_template(template_name)
 
