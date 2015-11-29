@@ -133,3 +133,4 @@ class User(MethodView):
 
         flash(msg, 'success')
         return redirect(url_for('accounts.users'))
+

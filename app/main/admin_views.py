@@ -23,7 +23,8 @@ class AdminIndex(MethodView):
 
     def get(self):
         blog_meta = OctBlogSettings['blog_meta']
-        return render_template(self.template_name, blog_meta=blog_meta)
+        user = get_current_user()
+        return render_template(self.template_name, blog_meta=blog_meta, user=user)
 
 class PostsList(MethodView):
     decorators = [login_required]

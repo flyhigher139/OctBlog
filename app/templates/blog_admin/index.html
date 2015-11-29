@@ -33,32 +33,47 @@
         <hr>
         <dl class="dl-horizontal">
             <dt>Username Name:</dt>
-            <dd>Gevin</dd>
+            <dd>{{ user.username }}</dd>
         </dl>
         <dl class="dl-horizontal">
             <dt>Display Name:</dt>
-            <dd>Gevin</dd>
+            <dd>{{ user.display_name }}</dd>
         </dl>
         <dl class="dl-horizontal">
             <dt>Biography:</dt>
-            <dd>python developer</dd>
+            <dd>{{ user.biography }}</dd>
         </dl>
         <dl class="dl-horizontal">
             <dt>Social Network:</dt>
             <dd>
-                
-                    <a href='#'><i class="fa fa-github fa-lg"></i></a>
-                
-                    <a href='#'><i class="fa fa-twitter fa-lg"></i></a>
-                
-                    <a href='#'><i class="fa fa-weibo fa-lg"></i></a>
-                
+                {% if user.social_networks['github']['url'] %}
+                    <a href='{{ user.social_networks["github"]["url"] }}'><i class="fa fa-github fa-lg"></i></a>
+                {% endif %}
+                {% if user.social_networks['twitter']['url'] %}
+                    <a href='{{ user.social_networks["twitter"]["url"] }}'><i class="fa fa-twitter fa-lg"></i></a>
+                {% endif %}
+                {% if user.social_networks['weibo']['url'] %}
+                    <a href='{{ user.social_networks["weibo"]["url"] }}'><i class="fa fa-weibo fa-lg"></i></a>
+                {% endif %}
+                {% if user.social_networks['weixin']['url'] %}
+                    <a href='{{ user.social_networks["weixin"]["url"] }}'><i class="fa fa-weixin fa-lg"></i></a>
+                {% endif %}
+                {% if user.social_networks['facebook']['url'] %}
+                    <a href='{{ user.social_networks["facebook"]["url"] }}'><i class="fa fa-facebook fa-lg"></i></a>
+                {% endif %}
+                {% if user.social_networks['linkedin']['url'] %}
+                    <a href='{{ user.social_networks["linkedin"]["url"] }}'><i class="fa fa-linkedin fa-lg"></i></a>
+                {% endif %}
             </dd>
         </dl>
         <dl class="dl-horizontal">
             <dt>Homepage:</dt>
             <dd>
-                <a href="#"><i class="fa fa-home fa-lg"></i></a> http://blog.igevin.info
+                {% if user.homepage_url %}
+                <a href="{{ user.homepage_url }}"><i class="fa fa-home fa-lg"></i></a> {{ user.homepage_url }}
+                {% else %}
+                Not yet
+                {% endif %}
             </dd>
         </dl>
     </div>

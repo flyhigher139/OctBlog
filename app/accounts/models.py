@@ -8,6 +8,14 @@ ROLES = (('admin', 'admin'),
             ('editor', 'editor'),
             ('writer', 'writer'),
             ('reader', 'reader'))
+SOCIAL_NETWORKS = {
+    'weibo': {'fa_icon': 'fa fa-weibo', 'url': None},
+    'weixin': {'fa_icon': 'fa fa-weixin', 'url': None},
+    'twitter': {'fa_icon': 'fa fa fa-twitter', 'url': None},
+    'github': {'fa_icon': 'fa fa-github', 'url': None},
+    'facebook': {'fa_icon': 'fa fa-facebook', 'url': None},
+    'linkedin': {'fa_icon': 'fa fa-linkedin', 'url': None},
+}
 
 class User(UserMixin, db.Document):
     username = db.StringField(max_length=255, required=True)
@@ -19,6 +27,10 @@ class User(UserMixin, db.Document):
     # is_active = db.BooleanField(default=True)
     is_superuser = db.BooleanField(default=False)
     role = db.StringField(max_length=32, default='reader', choices=ROLES)
+    display_name = db.StringField(max_length=255, default='Anonymous')
+    biography = db.StringField()
+    social_networks = db.DictField(default=SOCIAL_NETWORKS)
+    homepage_url = db.URLField()
 
     @property
     def password(self):
