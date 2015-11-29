@@ -1,6 +1,8 @@
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, SelectField, ValidationError
-from wtforms.validators import Required, Length, Email, Regexp, EqualTo
+from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL
+
+from flask.ext.mongoengine.wtf import model_form
 
 from . import models
 
@@ -29,3 +31,17 @@ class UserForm(Form):
     # is_active = BooleanField('Is activie')
     is_superuser = BooleanField('Is superuser')
     role = SelectField('Role', choices=models.ROLES)
+
+# ProfileForm = model_form(models.User, exclude=['username', 'password_hash', 'create_time', 'last_login', 
+#     'is_email_confirmed', 'is_superuser', 'role'])
+class ProfileForm(Form):
+    email = StringField('Email', validators=[Required(), Length(1,128), Email()])
+    display_name = StringField('Display Name', validators=[Length(1,128)])
+    biography = StringField('Biograpyh')
+    homepage_url = StringField('Homepage', validators=[URL()])
+    weibo = StringField('Weibo', validators=[URL()])
+    weixin = StringField('Weixin', validators=[URL()])
+    twitter = StringField('Twitter', validators=[URL()])
+    github = StringField('github', validators=[URL()])
+    facebook = StringField('Facebook', validators=[URL()])
+    linkedin = StringField('Linkedin', validators=[URL()])

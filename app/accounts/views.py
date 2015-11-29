@@ -134,3 +134,21 @@ class User(MethodView):
         flash(msg, 'success')
         return redirect(url_for('accounts.users'))
 
+class Profile(MethodView):
+    decorators = [login_required]
+    template_name = 'accounts/settings.html'
+
+    def get(self, form=None):
+        if not form:
+            user = get_current_user()
+            user.weibo = user.social_networks['weibo']['url']
+            user.weixin = user.social_networks['weixin']['url']
+            user.twitter = user.social_networks['twitter']['url']
+            user.github = user.social_networks['github']['url']
+            user.facebook = user.social_networks['facebook']['url']
+            user.linkedin = user.social_networks['linkedin']['url']
+            form = forms.ProfileForm(obj=user)
+        data = {'form': form}
+        return render_template(self.template_name, **data)
+
+
