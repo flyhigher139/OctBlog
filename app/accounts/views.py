@@ -140,15 +140,67 @@ class Profile(MethodView):
 
     def get(self, form=None):
         if not form:
-            user = get_current_user()
-            user.weibo = user.social_networks['weibo']['url']
-            user.weixin = user.social_networks['weixin']['url']
-            user.twitter = user.social_networks['twitter']['url']
-            user.github = user.social_networks['github']['url']
-            user.facebook = user.social_networks['facebook']['url']
-            user.linkedin = user.social_networks['linkedin']['url']
+            # user = get_current_user()
+            user = current_user
+            user.weibo = user.social_networks['weibo'].get('url')
+            user.weixin = user.social_networks['weixin'].get('url')
+            user.twitter = user.social_networks['twitter'].get('url')
+            user.github = user.social_networks['github'].get('url')
+            user.facebook = user.social_networks['facebook'].get('url')
+            user.linkedin = user.social_networks['linkedin'].get('url')
             form = forms.ProfileForm(obj=user)
         data = {'form': form}
         return render_template(self.template_name, **data)
 
+    def post(self):
+        form = forms.ProfileForm(obj=request.form)
+        if form.validate():
+            # user = get_current_user()
+            user = current_user
+            if user.email != form.email.data:
+                user.email = form.email.data
+                user.is_email_confirmed = False
+
+            user.display_name = form.display_name.data
+            user.biography = form.biography.data
+            user.homepage_url = form.homepage_url.data or None
+            user.social_networks['weibo']['url'] = form.weibo.data or None
+            user.social_networks['weixin']['url'] = form.weixin.data or None
+            user.social_networks['twitter']['url'] = form.twitter.data or None
+            user.social_networks['github']['url'] = form.github.data or None
+            user.social_networks['facebook']['url'] = form.facebook.data or None
+            user.social_networks['linkedin']['url'] = form.linkedin.data or None
+            user.save()
+
+            msg = 'Succeed to update user profile'
+            flash(msg, 'success')
+
+            return redirect(url_for('blog_admin.index'))
+
+        return self.get(form)
+
+class Password(MethodView):
+    decorators = [login_required]
+    template_name = 'accounts/password.html'
+
+    def get(self, form=None):
+        if not form:
+            form = forms.PasswordForm()
+        data = {'form': form}
+        return render_template(self.template_name, **data)
+
+    def post(self):
+        form = forms.PasswordForm(obj=request.form)
+        if form.validate():
+            # if not current_user.verify_password(form.current_password.data):
+            #     return 'current password error', 403 
+            current_user.password = form.new_password.data
+            current_user.save()
+            # return 'waiting to code'
+            msg = 'Succeed to update password'
+            flash(msg, 'success')
+
+            return redirect(url_for('accounts.password'))
+
+        return self.get(form)
 

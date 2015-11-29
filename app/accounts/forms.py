@@ -1,7 +1,7 @@
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, SelectField, ValidationError
-from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL
-
+from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL, Optional
+from flask.ext.login import current_user
 from flask.ext.mongoengine.wtf import model_form
 
 from . import models
@@ -38,10 +38,19 @@ class ProfileForm(Form):
     email = StringField('Email', validators=[Required(), Length(1,128), Email()])
     display_name = StringField('Display Name', validators=[Length(1,128)])
     biography = StringField('Biograpyh')
-    homepage_url = StringField('Homepage', validators=[URL()])
-    weibo = StringField('Weibo', validators=[URL()])
-    weixin = StringField('Weixin', validators=[URL()])
-    twitter = StringField('Twitter', validators=[URL()])
-    github = StringField('github', validators=[URL()])
-    facebook = StringField('Facebook', validators=[URL()])
-    linkedin = StringField('Linkedin', validators=[URL()])
+    homepage_url = StringField('Homepage', validators=[URL(), Optional()])
+    weibo = StringField('Weibo', validators=[URL(), Optional()])
+    weixin = StringField('Weixin', validators=[Optional(), URL()])
+    twitter = StringField('Twitter', validators=[URL(), Optional()])
+    github = StringField('github', validators=[URL(), Optional()])
+    facebook = StringField('Facebook', validators=[URL(), Optional()])
+    linkedin = StringField('Linkedin', validators=[URL(), Optional()])
+
+class PasswordForm(Form):
+    current_password = PasswordField('Current Password', validators=[Required()])
+    new_password = PasswordField('New Password', validators=[Required(), EqualTo('password2', message='Passwords must match')])
+    password2 = PasswordField('Confirm password', validators=[Required()])
+
+    def validate_current_password(self, field):
+        if not current_user.verify_password(field.data):
+            raise ValidationError('Current password is wrong')
