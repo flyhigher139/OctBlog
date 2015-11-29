@@ -55,15 +55,20 @@
                 {% if user.social_networks['weibo']['url'] %}
                     <a href='{{ user.social_networks["weibo"]["url"] }}'><i class="fa fa-weibo fa-lg"></i></a>
                 {% endif %}
-                {% if user.social_networks['weixin']['url'] %}
-                    <a href='{{ user.social_networks["weixin"]["url"] }}'><i class="fa fa-weixin fa-lg"></i></a>
-                {% endif %}
                 {% if user.social_networks['facebook']['url'] %}
                     <a href='{{ user.social_networks["facebook"]["url"] }}'><i class="fa fa-facebook fa-lg"></i></a>
                 {% endif %}
                 {% if user.social_networks['linkedin']['url'] %}
                     <a href='{{ user.social_networks["linkedin"]["url"] }}'><i class="fa fa-linkedin fa-lg"></i></a>
                 {% endif %}
+                {% if user.social_networks['weixin']['url'] %}
+                    <a id="btn_weixin" href='{{ user.social_networks["weixin"]["url"] }}'><i class="fa fa-weixin fa-lg"></i></a>
+                    <!-- weixin -->
+                    <div id="weixin" class="hidden">
+                        <br>
+                        <img src="{{ user.social_networks["weixin"]["url"] }}?imageView/2/w/150" title="Donate">
+                    </div> 
+                {% endif %}                
             </dd>
         </dl>
         <dl class="dl-horizontal">
@@ -78,4 +83,18 @@
         </dl>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    $('#btn_weixin').on('click', function(event){
+        if($('#weixin').hasClass('hidden'))
+            $('#weixin').removeClass('hidden');
+        else
+            $('#weixin').addClass('hidden');
+        return false
+    })
+    
+    
+</script>
 {% endblock %}
