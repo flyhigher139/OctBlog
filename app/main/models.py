@@ -14,8 +14,8 @@ class Post(db.Document):
     fix_slug = db.StringField(max_length=255, required=False)
     abstract = db.StringField()
     raw = db.StringField(required=True)
-    pub_time = db.DateTimeField(default=datetime.datetime.now(), required=True)
-    update_time = db.DateTimeField(default=datetime.datetime.now(), required=True)
+    pub_time = db.DateTimeField(required=True)
+    update_time = db.DateTimeField(required=True)
     content_html = db.StringField(required=True)
     author = db.ReferenceField(User)
     category = db.StringField(max_length=64, default='default')
@@ -27,7 +27,10 @@ class Post(db.Document):
         return url_for('main.post_detail', slug=self.slug)
 
     def save(self, *args, **kwargs):
-        self.update_time = datetime.datetime.now()
+        now = datetime.datetime.now()
+        if not self.pub_time:
+            self.pub_time = now
+        self.update_time = now
         # self.content_html = self.raw
         self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks']).encode('utf-8')
         return super(Post, self).save(*args, **kwargs)
