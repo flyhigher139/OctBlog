@@ -10,7 +10,8 @@ from accounts.models import User
 from accounts.permissions import admin_permission, editor_permission, writer_permission, reader_permission
 from OctBlog.config import OctBlogSettings
 
-POST_TYPES = ('post', 'page')
+# POST_TYPES = ('post', 'page')
+POST_TYPES = OctBlogSettings['post_types']
 PER_PAGE = OctBlogSettings['pagination'].get('admin_per_page', 10)
 
 def get_current_user(): 
@@ -152,7 +153,7 @@ class SuPostsList(MethodView):
     def get(self):
         posts = models.Post.objects.all()
         cur_type = request.args.get('type')
-        post_types = posts.distinct('post_type')
+        # post_types = posts.distinct('post_type')
         if cur_type:
             posts = posts.filter(post_type=cur_type)
 
@@ -163,7 +164,7 @@ class SuPostsList(MethodView):
 
         data = {
             'posts':posts,
-            'post_types': post_types,
+            'post_types': POST_TYPES,
             'cur_type': cur_type
         }
 
@@ -184,8 +185,8 @@ class SuPost(MethodView):
         categories = models.Post.objects.distinct('category')
         tags = models.Post.objects.distinct('tags')
         
-        context = {'form':form, 'display_slug':slug, 
-            'categories':categories, 'tags':tags, 'post_types': POST_TYPES
+        context = {'form':form, 'display_slug':slug, 'post': post,
+            'categories':categories, 'tags':tags, 'post_types': POST_TYPES, 
         }
 
         return context
@@ -218,7 +219,8 @@ class SuPost(MethodView):
         post.is_draft = form.is_draft.data
         post.author = form.author.data
 
-        post.post_type = form.post_type.data.strip() if form.post_type.data else None
+        # post.post_type = form.post_type.data.strip() if form.post_type.data else None
+        post.post_type = request.form.get('post_type') or None
 
         redirect_url = url_for('blog_admin.su_posts')
 

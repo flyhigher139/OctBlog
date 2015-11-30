@@ -22,4 +22,4 @@ class PostForm(Form):
             if not self.post_id.data or str(posts[0].id) != self.post_id.data:
                 raise ValidationError('slug already in use')
 
-SuPostForm = model_form(models.Post, exclude=['pub_time', 'update_time', 'content_html', 'category', 'tags'])
+SuPostForm = model_form(models.Post, exclude=['pub_time', 'update_time', 'content_html', 'category', 'tags', 'post_type'])
