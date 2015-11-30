@@ -4,6 +4,25 @@
 <div class="row">
     <!-- <div class="col-md-10"> -->
     <!-- <h1>New Post</h1> -->
+    <a href="."><span class="label label-default">All</span></a>&nbsp;
+    {% for post_type in post_types %}
+        <a href="?type={{ post_type }}" class="post-tag">
+            {% if post_type == cur_type %}
+            <span class="label label-primary">
+                {{ post_type }}
+                <small><span class="glyphicon glyphicon-remove small rm-filter" aria-hidden="true"></span></small>
+            </span>
+            
+            {% else %}
+            <span class="label label-default">
+                {{ post_type }} 
+            </span>
+            
+            {% endif %}
+            
+        </a>
+        &nbsp;
+    {% endfor %}
     
     <table class="table table-striped">
         <thead>
@@ -19,7 +38,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for post in posts %}
+            {% for post in posts.items %}
             <tr id="post-{{ post.id }}">
                 <td>{{ loop.index }}</td>
                 <td>
@@ -41,6 +60,10 @@
             {% endfor %}      
         </tbody>
     </table>
+
+    {% import '_pagination.html' as pagination %}
+    {{ pagination.render_pagination(posts) }}
+
     <!-- </div> -->
     <!-- <div class="col-md-2">.col-md-2</div> -->
 </div>
@@ -69,5 +92,12 @@ $('.del-post').on('click', function (event) {
     });
     return false;
   });
+
+$('.rm-filter').on('click', function (event) {
+
+    location.href = "{{ url_for('blog_admin.su_posts') }}";
+    return false;
+  });
 </script>
+
 {% endblock %}

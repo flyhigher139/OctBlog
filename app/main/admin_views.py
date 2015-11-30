@@ -149,15 +149,25 @@ class SuPostsList(MethodView):
     decorators = [login_required, admin_permission.require(401)]
     template_name = 'blog_admin/su_posts.html'
     
-    def get(self, post_type='post'):
-        # posts = models.Post.objects.filter(post_type=post_type)
+    def get(self):
         posts = models.Post.objects.all()
-        # if request.args.get('draft'):
-        #     posts = posts.filter(is_draft=True)
-        # else:
-        #     posts = posts.filter(is_draft=False)
+        cur_type = request.args.get('type')
+        post_types = posts.distinct('post_type')
+        if cur_type:
+            posts = posts.filter(post_type=cur_type)
 
-        return render_template(self.template_name, posts=posts)
+        cur_page = request.args.get('page', 1)
+        if not cur_page:
+            abort(404)
+        posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
+
+        data = {
+            'posts':posts,
+            'post_types': post_types,
+            'cur_type': cur_type
+        }
+
+        return render_template(self.template_name, **data)
 
 class SuPost(MethodView):
     decorators = [login_required, admin_permission.require(401)]
