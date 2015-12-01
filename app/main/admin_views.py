@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import time
+import datetime
+
 from flask import request, redirect, render_template, url_for, abort, flash, g
 from flask.views import MethodView
 from flask.ext.login import current_user, login_required
@@ -220,11 +223,24 @@ class SuPost(MethodView):
         post.author = form.author.data
 
         # post.post_type = form.post_type.data.strip() if form.post_type.data else None
-        post.post_type = request.form.get('post_type') or None
+
+        post.post_type = request.form.get('post_type') or post.post_type
+        pub_time = request.form.get('publish_time')
+        update_time = request.form.get('update_time')
+
+        if pub_time:
+            post.pub_time = time.mktime(datetime.datetime.strptime(pub_time, "%d/%m/%Y").timetuple())
+
+        if update_time:
+            post.update_time = time.mktime(datetime.datetime.strptime(update_time, "%d/%m/%Y").timetuple())
 
         redirect_url = url_for('blog_admin.su_posts')
 
+        return str(post.update_time)
+
+        # post.save(allow_set_time=True)
         post.save()
+
         flash('Succeed to update post', 'success')
         return redirect(redirect_url)
 

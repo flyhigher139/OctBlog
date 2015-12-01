@@ -43,8 +43,19 @@
         </div>
 
         <div class="form-group">
-            <div class='input-group date' id='datetimepicker1'>
-                <input type='text' class="form-control" />
+            <label for="publish_time">Publish Time</label>
+            <div class='input-group date' id='publish_time'>
+                <input type='text' class="form-control" name="publish_time" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="update_time">Update Time</label>
+            <div class='input-group date' id='update_time'>
+                <input type='text' class="form-control" name="update_time" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -90,7 +101,7 @@
     });
 
     $(function () {
-        $('#datetimepicker1').datetimepicker();
+        $('.date').datetimepicker();
     }); 
 
 </script>
