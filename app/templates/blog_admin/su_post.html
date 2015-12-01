@@ -45,7 +45,7 @@
         <div class="form-group">
             <label for="publish_time">Publish Time</label>
             <div class='input-group date' id='publish_time'>
-                <input type='text' class="form-control" name="publish_time" />
+                <input type='text' class="form-control" name="publish_time" value="{{ post.pub_time.strftime('%Y-%m-%d %H:%M:%S') }}" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -55,7 +55,7 @@
         <div class="form-group">
             <label for="update_time">Update Time</label>
             <div class='input-group date' id='update_time'>
-                <input type='text' class="form-control" name="update_time" />
+                <input type='text' class="form-control" name="update_time" value="{{ post.update_time.strftime('%Y-%m-%d %H:%M:%S') }}" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -101,7 +101,7 @@
     });
 
     $(function () {
-        $('.date').datetimepicker();
+        $('.date').datetimepicker({format:'YYYY-MM-DD HH:mm:ss'});
     }); 
 
 </script>
