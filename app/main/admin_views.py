@@ -154,7 +154,7 @@ class SuPostsList(MethodView):
     template_name = 'blog_admin/su_posts.html'
     
     def get(self):
-        posts = models.Post.objects.all()
+        posts = models.Post.objects.all().order_by('-update_time')
         cur_type = request.args.get('type')
         # post_types = posts.distinct('post_type')
         if cur_type:
