@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ blog_meta.name }}{% endblock %}
+{% block header %}
+<header class="intro-header" style="background-image: url('http://7d9q7a.com1.z0.glb.clouddn.com/mayblog-home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>{{ blog_meta.name }}</h1>
+                        <hr class="small">
+                        <span class="subheading">{{ blog_meta.subtitle }} <a href="{{ url_for('main.recent_feed') }}"><i class="fa fa-rss"></i></a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="row">
+                {% for post in posts.items %}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                      <!-- <img src="..." alt="..."> -->
+                      <div class="caption">
+                        <h3><a href="{{ url_for('main.post_detail', slug=post.slug) }}">{{ post.title }}</a></h3><hr>
+                        <p><strong>Abstract: </strong>{{ post.abstract }}</p>
+                        <p><strong>Author: </strong>{{ post.author }}</p>
+                        <p><strong>Date: </strong>{{ post.pub_time.strftime('%Y/%m/%d') }}</p>
+                        
+                      </div>
+                    </div>          
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="row">
+                {% import '_pagination.html' as pagination %}
+                {{ pagination.render_pagination(posts) }}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<hr>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+$('.rm-filter').on('click', function (event) {
+
+    location.href = "/";
+    return false;
+  });
+</script>
+{% endblock %}
