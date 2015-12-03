@@ -19,7 +19,7 @@ def handle_forbidden(e):
 
 def handle_unauthorized(e):
     # return 'request forbidden', 403
-    return render_template('blog_admin/403.html'), 401
+    return render_template('blog_admin/401.html'), 401
 
 def admin_page_not_found(e):
     # return render_template('404.html'), 404
