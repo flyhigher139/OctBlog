@@ -28,3 +28,5 @@ blog_admin.add_url_rule('/posts/<slug>/', view_func=admin_views.Post.as_view('ed
 blog_admin.add_url_rule('/su/posts/', view_func=admin_views.SuPostsList.as_view('su_posts'))
 blog_admin.add_url_rule('/su/posts/<slug>/', view_func=admin_views.SuPost.as_view('su_post_edit'))
 blog_admin.errorhandler(404)(errors.admin_page_not_found)
+blog_admin.errorhandler(401)(errors.handle_unauthorized)
+blog_admin.errorhandler(403)(errors.handle_forbidden)
