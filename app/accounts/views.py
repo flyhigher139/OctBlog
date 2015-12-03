@@ -76,7 +76,7 @@ def add_user():
         user.email = form.email.data
         user.save()
 
-        return redirect(url_for('blog_admin.index'))
+        return redirect(url_for('accounts.users'))
 
     return render_template('accounts/registration.html', form=form)
 
