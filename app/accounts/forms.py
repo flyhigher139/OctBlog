@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, SelectField, ValidationError
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL, Optional
@@ -29,8 +32,25 @@ class RegistrationForm(Form):
 class UserForm(Form):
     email = StringField('Email', validators=[Required(), Length(1,128), Email()])
     # is_active = BooleanField('Is activie')
-    is_superuser = BooleanField('Is superuser')
+    # is_superuser = BooleanField('Is superuser')
     role = SelectField('Role', choices=models.ROLES)
+
+# SuUserForm = model_form(models.User, exclude=['create_time', 'last_login', 'password_hash'])
+
+class SuUserForm(Form):
+    email = StringField('Email', validators=[Required(), Length(1,128), Email()])
+    is_superuser = BooleanField('Is superuser')
+    is_email_confirmed = BooleanField('Is Email Confirmed') 
+    role = SelectField('Role', choices=models.ROLES)
+    display_name = StringField('Display Name', validators=[Length(1,128)])
+    biography = StringField('Biograpyh')
+    homepage_url = StringField('Homepage', validators=[URL(), Optional()])
+    weibo = StringField('Weibo', validators=[URL(), Optional()])
+    weixin = StringField('Weixin', validators=[Optional(), URL()])
+    twitter = StringField('Twitter', validators=[URL(), Optional()])
+    github = StringField('github', validators=[URL(), Optional()])
+    facebook = StringField('Facebook', validators=[URL(), Optional()])
+    linkedin = StringField('Linkedin', validators=[URL(), Optional()])
 
 # ProfileForm = model_form(models.User, exclude=['username', 'password_hash', 'create_time', 'last_login', 
 #     'is_email_confirmed', 'is_superuser', 'role'])
