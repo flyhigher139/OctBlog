@@ -4,7 +4,7 @@
 
 And as my customary, I named it OctBlog as OctBlog was started in October, 2015
 
-OctBlog offers every function in MayBlog, and aim to do it better, its features are as follow:
+OctBlog offers every function in MayBlog, and aims to do it better, its features are as follow:
 
 - multiple user
 - roles: su, admin, editor, writer, reader
