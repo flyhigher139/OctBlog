@@ -3,7 +3,6 @@ blog:
   build: ./app
   ports:
     - "8000:8000"
-    - "5000:5000"
   links:
     - mongo:mongo
   # volumes:
@@ -12,7 +11,7 @@ blog:
 
 mongo:
   # restart: always
-  image: daocloud.io/library/mongo:latest
+  image: mongo:latest
   env_file: .env
 
   volumes:
