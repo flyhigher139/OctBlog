@@ -1,7 +1,7 @@
 Welcome to OctBlog
 ====================
 
->OctBlog is powered by flask and MongoDB, here are some instruction on how to run it.
+>OctBlog is powered by Flask and MongoDB, here are some instructions on how to run it.
 
 ##How to run it ?
 
@@ -34,19 +34,19 @@ If you want to customize `manage.py`, checkout [Flask-Script](https://flask-scri
 
 Visit the following url and create a superuser
 
-http://localhost:8000/accounts/registration/su
+http://127.0.0.1:8000/accounts/registration/su
 
 If the url is forbidden, you need to modify your configurations to allow the creation.
 
 ####2\. Administrate OctBlog
 
-The admin home is: http://localhost:8000/admin
+The admin home is: http://127.0.0.1:8000/admin
 
 You will be redirected to login page if you haven't logged in
 
 ####3\. Modify the default configurations
 
-You either change settings in `app/OctBlog/config.py` file, or set environment variables defined in that file.
+You either change settings in `app/OctBlog/config.py` file, or set the environment variables defined in this file.
 
 **Setting environment variables is recommended, and once the configuration is changed, you need to restart the service.**
 
@@ -76,6 +76,7 @@ I recommend you to deploy OctBlog by `Ubuntu + nginx + gunicorn`.
 ###What's more
 
 If you find a bug or want to add a new feature, just issue me.
+
 Want to contribute? Please fork OctBlog and pull request to me.
 
 I'm not good at frontend development, so I used a free bootstrap blog theme. If you can redesign the blog theme and admin interface, I'll appriciate your work very much!
