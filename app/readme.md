@@ -24,7 +24,7 @@ Run OctBlog with this command:
 python manage.py runserver
 ```
 
-Then you can visit the blog with url: http://127.0.0.1:8000
+Then you can visit the blog with url: `http://127.0.0.1:5000`
 
 If you want to customize `manage.py`, checkout [Flask-Script](https://flask-script.readthedocs.org/en/latest/)
 
@@ -34,13 +34,13 @@ If you want to customize `manage.py`, checkout [Flask-Script](https://flask-scri
 
 Visit the following url and create a superuser
 
-http://127.0.0.1:8000/accounts/registration/su
+`http://127.0.0.1:5000/accounts/registration/su`
 
 If the url is forbidden, you need to modify your configurations to allow the creation.
 
 ####2\. Administrate OctBlog
 
-The admin home is: http://127.0.0.1:8000/admin
+The admin home is: `http://127.0.0.1:5000/admin`
 
 You will be redirected to login page if you haven't logged in
 
