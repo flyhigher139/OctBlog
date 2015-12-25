@@ -4,7 +4,7 @@
 
 And as my customary, I named it OctBlog as OctBlog was started in October, 2015
 
-OctBlog offers every function in OctBlog, and aims to do it better, its features are as follow:
+OctBlog offers every function in MayBlog, and aims to do it better, its features are as follow:
 
 - multiple user
 - roles: su, admin, editor, writer, reader
@@ -111,13 +111,13 @@ Maybe you would like to dig into the container, the following command will help:
 
 Visit the following url and create a superuser
 
-http://localhost:8000/accounts/registration/su
+`http://localhost:8000/accounts/registration/su`
 
 If the url is forbidden, you need to modify your configurations to allow the creation.
 
 ####2\. Administrate OctBlog
 
-The admin home is: http://localhost:8000/admin
+The admin home is: `http://localhost:8000/admin`
 
 You will be redirected to login page if you haven't logged in
 
