@@ -13,6 +13,7 @@ from werkzeug.contrib.atom import AtomFeed
 from mongoengine.queryset.visitor import Q
 
 from . import models
+from accounts.models import User
 from OctBlog.config import OctBlogSettings
 
 PER_PAGE = OctBlogSettings['pagination'].get('per_page', 10)
@@ -92,6 +93,24 @@ def post_detail(slug, post_type='post', fix=False):
     #     data['share_html'] = jiathis_share()
     
     return render_template('main/post.html', **data)
+
+def author_detail(username):
+    author = User.objects.get_or_404(username=username)
+
+    posts = models.Post.objects.filter(post_type='post', is_draft=False, author=author).order_by('-pub_time')
+    cur_page = request.args.get('page', 1)
+
+    posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
+
+    data = get_base_data()
+    data['user'] = author
+    data['posts'] = posts
+    # data['category_cursor'] = category_cursor
+    # data['cur_tag'] = cur_tag
+    # data['tags'] = tags
+    # data['keywords'] = keywords
+
+    return render_template('main/author.html', **data)
 
 
 def get_comment_func(comment_type):

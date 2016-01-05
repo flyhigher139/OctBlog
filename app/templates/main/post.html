@@ -13,7 +13,7 @@
                     <div class="post-heading">
                         <h1>{{ post.title }}</h1>
                         <!-- <h2 class="subheading">Problems look mighty small from 150 miles up</h2> -->
-                        <span class="meta">Posted by <a href="#">{{ post.author.username }}</a> on {{ post.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</span>
+                        <span class="meta">Posted by <a href="{{ url_for('main.author_detail', username=post.author.username) }}">{{ post.author.username }}</a> on {{ post.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</span>
                         <span class="meta">Category: <a href="{{ url_for('main.index') }}?category={{ post.category }}">{{ post.category }}</a></span>
                         <span class="meta">Tags:
                             {% for tag in post.tags %} <a href="{{ url_for('main.index') }}?tag={{ tag }}">{{ tag }}</a>  {% endfor %}
