@@ -55,7 +55,7 @@
                                     <!-- weixin -->
                                     <div id="weixin" class="hidden">
                                         <br>
-                                        <img src="{{ user.social_networks["weixin"]["url"] }}?imageView/2/w/150" title="Donate">
+                                        <img src="{{ user.social_networks["weixin"]["url"] }}?imageView/2/w/150" title="weixin">
                                     </div> 
                                 {% endif %}                
                             </dd>
@@ -101,4 +101,18 @@
         </div>
     </article>
     <hr>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    $('#btn_weixin').on('click', function(event){
+        if($('#weixin').hasClass('hidden'))
+            $('#weixin').removeClass('hidden');
+        else
+            $('#weixin').addClass('hidden');
+        return false
+    })
+    
+    
+</script>
 {% endblock %}
