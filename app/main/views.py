@@ -100,7 +100,7 @@ def author_detail(username):
     posts = models.Post.objects.filter(post_type='post', is_draft=False, author=author).order_by('-pub_time')
     cur_page = request.args.get('page', 1)
 
-    posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
+    posts = posts.paginate(page=int(cur_page), per_page=ARCHIVE_PER_PAGE)
 
     data = get_base_data()
     data['user'] = author
