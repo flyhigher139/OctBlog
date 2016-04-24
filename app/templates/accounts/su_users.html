@@ -19,7 +19,7 @@
     <tbody>
     {% for user in users %}
         <tr id="user-{{ user.username }}">
-            <td>{{ loop.counter }}</td>
+            <td>{{ loop.index }}</td>
             <td><a href="{{ url_for('accounts.su_edit_user', username=user.username) }}">{{ user.username }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.is_active }}</td>
