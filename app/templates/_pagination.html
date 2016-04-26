@@ -3,13 +3,11 @@
     <ul class="pagination">
       {% if not pagination.has_prev %}
         <li class="disabled">
-          <a href="?page={{ pagination.pre_num }}" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
-          </a>
         </li>
       {% else %}
-        <li {% if not pagination.has_prev %}class="disabled"{% endif %}>
-        <a href="?page={{ pagination.pre_num }}" aria-label="Previous">
+        <li>
+        <a href="?page={{ pagination.prev_num }}" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
         </li>
