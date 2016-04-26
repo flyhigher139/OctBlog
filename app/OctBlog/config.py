@@ -30,6 +30,10 @@ OctBlogSettings = {
             'duoshuo': 'oct-blog', # shotname of duoshuo
             }
     },
+    'donation': {
+        'allow_donate': os.environ.get('allow_donate', 'true').lower() == 'true',
+        'donation_msg': os.environ.get('donation_msg', 'You can donate to me if the article makes sense to you')
+    },
     'allow_share_article': os.environ.get('allow_share_article', 'true').lower() == 'true',
         
 }

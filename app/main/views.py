@@ -79,7 +79,8 @@ def post_detail(slug, post_type='post', fix=False):
     data = get_base_data()
     data['post'] = post
 
-    data['allow_donate'] = OctBlogSettings['allow_donate']
+    data['allow_donate'] = OctBlogSettings['donation']['allow_donate']
+    data['donation_msg'] = OctBlogSettings['donation']['donation_msg']
 
     data['allow_comment'] = OctBlogSettings['blog_comment']['allow_comment']
     if data['allow_comment']:
