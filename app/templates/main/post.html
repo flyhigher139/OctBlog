@@ -33,6 +33,17 @@
                     {{post.content_html|safe}}
                 </div>
             </div>
+            {% if display_copyright %}
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <hr>
+                    <p><strong>{{ copyright_msg }}</strong></p>
+                <hr>
+                </div>
+
+            </div>
+            {% endif %}
+            <br>
             {% if allow_share_article %}
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -52,7 +63,7 @@
                     </a>                  
                     <br>
                   <!-- weixin -->
-                  <div id="donate_guide" class="donate_bar center">
+                  <div id="donate_guide" class="donate_bar center hidden ">
                       <img src="http://7tsygu.com1.z0.glb.clouddn.com/mayblog-weixin-pay.jpg?imageView/2/w/300" title="Donate">
                   </div> 
                 </div>

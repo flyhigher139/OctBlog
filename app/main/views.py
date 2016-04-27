@@ -82,6 +82,9 @@ def post_detail(slug, post_type='post', fix=False):
     data['allow_donate'] = OctBlogSettings['donation']['allow_donate']
     data['donation_msg'] = OctBlogSettings['donation']['donation_msg']
 
+    data['display_copyright'] = OctBlogSettings['copyright']['display_copyright']
+    data['copyright_msg'] = OctBlogSettings['copyright']['copyright_msg']
+
     data['allow_comment'] = OctBlogSettings['blog_comment']['allow_comment']
     if data['allow_comment']:
         comment_type = OctBlogSettings['blog_comment']['comment_type']
