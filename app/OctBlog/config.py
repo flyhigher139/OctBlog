@@ -32,7 +32,7 @@ OctBlogSettings = {
     },
     'donation': {
         'allow_donate': os.environ.get('allow_donate', 'true').lower() == 'true',
-        'donation_msg': os.environ.get('donation_msg', 'You can donate to me if the article makes sense to you')
+        'donation_msg': os.environ.get('donation_msg', 'You can donate to me if the article makes sense to you').decode('utf8')
     },
     'allow_share_article': os.environ.get('allow_share_article', 'true').lower() == 'true',
         
