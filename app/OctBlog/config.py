@@ -36,8 +36,7 @@ OctBlogSettings = {
     },
     'copyright': {
         'display_copyright': os.environ.get('allow_donate', 'true').lower() == 'true',
-        # 'copyright_msg': os.environ.get('copyright_msg', 'The article is not allowed to repost unless author authorized').decode('utf8')
-        'copyright_msg': os.environ.get('copyright_msg', '注：转载本文，请与作者联系').decode('utf8')
+        'copyright_msg': os.environ.get('copyright_msg', 'The article is not allowed to repost unless author authorized').decode('utf8')
     },
     'allow_share_article': os.environ.get('allow_share_article', 'true').lower() == 'true',
         
