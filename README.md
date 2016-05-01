@@ -1,6 +1,6 @@
 # About OctBlog
 
-[OctBlog](https://github.com/flyhigher139/OctBlog) is almost the same with [OctBlog](https://github.com/flyhigher139/OctBlog) except that it is powered by [Flask](http://flask.pocoo.org/) and [MongoDB](https://www.mongodb.org/) rather than [Django](https://www.djangoproject.com/) and SQL Databases.
+[OctBlog](https://github.com/flyhigher139/OctBlog) is almost the same with [MayBlog](https://github.com/flyhigher139/MayBlog) except that it is powered by [Flask](http://flask.pocoo.org/) and [MongoDB](https://www.mongodb.org/) rather than [Django](https://www.djangoproject.com/) and SQL Databases.
 
 And as my customary, I named it OctBlog as OctBlog was started in October, 2015
 

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     {% if post %}
-    <meta name="title" content="{{ blog_meta.name }} | {{ post.title }}">
+    <meta name="title" content="{{ post.title }} | {{ blog_meta.name }}">
     <meta name="description" content="{{ post.abstract }}">
     <meta name="author" content="{{ post.author.username }}">
     <meta name="keywords" content="{{ post.tags|join(',') }}">
