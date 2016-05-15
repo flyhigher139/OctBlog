@@ -1,0 +1,39 @@
+{% extends "admin_base.html" %}
+{% block title %}Posts Statistics{% endblock %}
+{% block main %}
+<div class="row">
+    <!-- <div class="col-md-10"> -->
+    <!-- <h1>New Post</h1> -->
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th style="width: 15%">Publish</th>
+                <th style="width: 15%">Update</th>
+                <th style="width: 5%">Visited</th>
+                <th style="width: 5%">Verbose</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts.items %}
+            <tr id="post-{{ post.id }}">
+                <td>{{ loop.index }}</td>
+                <td>{{ post.post.title }}</td>
+                <td>{{ post.post.pub_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ post.post.update_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ post.visit_count }}</td>
+                <td>{{ post.verbose_count_base }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="7" style="text-align: left">No {{ post_type }}s yet</td></tr>
+            {% endfor %}      
+        </tbody>
+    </table>
+    {% import '_pagination.html' as pagination %}
+    {{ pagination.render_pagination(posts) }}
+    <!-- </div> -->
+    <!-- <div class="col-md-2">.col-md-2</div> -->
+</div>
+{% endblock %}

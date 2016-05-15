@@ -52,6 +52,20 @@ class PostsList(MethodView):
 
         return render_template(self.template_name, posts=posts, post_type=post_type)
 
+class PostStatisticList(MethodView):
+    decorators = [login_required, editor_permission.require(401)]
+    template_name = 'blog_admin/post_statistics.html'
+    
+    def get(self):
+        posts = models.PostStatistics.objects.all()
+
+        cur_page = request.args.get('page', 1)
+        if not cur_page:
+            abort(404)
+        posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
+
+        return render_template(self.template_name, posts=posts)
+
 class Post(MethodView):
     decorators = [login_required, writer_permission.require(401)]
     template_name = 'blog_admin/post.html'
@@ -145,7 +159,7 @@ class Post(MethodView):
         post_type = post.post_type
         is_draft = post.is_draft
         post.delete()
-        
+
         try:
             post_statistic = models.PostStatistics.objects.get(post=post)
             post_statistic.delete()
