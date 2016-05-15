@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import time
-import datetime
+import time, datetime, random
 
 from flask import request, redirect, render_template, url_for, abort, flash, g
 from flask.views import MethodView
@@ -114,28 +113,44 @@ class Post(MethodView):
         post.tags = [tag.strip() for tag in form.tags_str.data.split(',')] if form.tags_str.data else None
         post.post_type = form.post_type.data if form.post_type.data else None
 
-        redirect_url = url_for('blog_admin.pages') if form.post_type.data == 'page' else url_for('blog_admin.posts')
+        
 
         if request.form.get('publish'):
             post.is_draft = False
-            post.save()
-            flash('Succeed to publish the {0}'.format(post_type), 'success')
-            return redirect(redirect_url)
+            msg = 'Succeed to publish the {0}'.format(post_type)
 
         elif request.form.get('draft'):
             post.is_draft = True
-            post.save()
-            flash('Succeed to save the draft', 'success')
-            return redirect('{0}?draft=true'.format(redirect_url))
+            msg = 'Succeed to save the draft'
+        else:
+            return self.get(slug, form)
 
+        post.save()
 
-        return self.get(slug, form)
+        try:
+            post_statistic = models.PostStatistics.objects.get(post=post)
+        except models.PostStatistics.DoesNotExist:
+            post_statistic = models.PostStatistics()
+            post_statistic.post = post
+            post_statistic.verbose_count_base = random.randint(500, 5000)
+            post_statistic.save()
+
+        flash(msg, 'success')
+        redirect_url = url_for('blog_admin.pages') if form.post_type.data == 'page' else url_for('blog_admin.posts')
+        return redirect(redirect_url)
+
 
     def delete(self, slug):
         post = models.Post.objects.get_or_404(slug=slug)
         post_type = post.post_type
         is_draft = post.is_draft
         post.delete()
+        
+        try:
+            post_statistic = models.PostStatistics.objects.get(post=post)
+            post_statistic.delete()
+        except:
+            pass
 
         redirect_url = url_for('blog_admin.pages') if post_type == 'page' else url_for('blog_admin.posts')
         if is_draft:

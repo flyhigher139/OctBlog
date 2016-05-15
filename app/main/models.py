@@ -48,4 +48,23 @@ class Post(db.Document):
         'ordering': ['-pub_time']
     }
 
+class Tracker(db.Document):
+    post = db.ReferenceField(Post)
+    ip = db.StringField()
+    user_agent = db.StringField()
+    create_time = db.DateTimeField(default=datetime.datetime.now())
 
+    def __unicode__(self):
+        return self.ip
+
+    meta = {
+        'allow_inheritance': True,
+        'indexes': ['ip'],
+        'ordering': ['-create_time']
+    }
+
+
+class PostStatistics(db.Document):
+    post = db.ReferenceField(Post)
+    visit_count = db.IntField(default=0)
+    verbose_count_base = db.IntField(default=0)

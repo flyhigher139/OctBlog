@@ -3,6 +3,7 @@
 
 from urlparse import urljoin
 from datetime import datetime, timedelta
+
 from flask import request, redirect, render_template, url_for, abort, flash
 from flask import current_app, make_response
 from flask.views import MethodView
@@ -12,9 +13,11 @@ from flask.ext.login import login_required, current_user
 from werkzeug.contrib.atom import AtomFeed
 from mongoengine.queryset.visitor import Q
 
-from . import models
+
+from . import models, signals
 from accounts.models import User
 from OctBlog.config import OctBlogSettings
+
 
 PER_PAGE = OctBlogSettings['pagination'].get('per_page', 10)
 ARCHIVE_PER_PAGE = OctBlogSettings['pagination'].get('archive_per_page', 10)
@@ -95,6 +98,9 @@ def post_detail(slug, post_type='post', fix=False):
     data['allow_share_article'] = OctBlogSettings['allow_share_article']
     # if data['allow_share_article']:
     #     data['share_html'] = jiathis_share()
+
+    # send signal
+    signals.post_visited.send(current_app._get_current_object(), post=post)
     
     return render_template('main/post.html', **data)
 

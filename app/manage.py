@@ -5,9 +5,12 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 from flask.ext.script import Manager, Server
 
-from OctBlog import create_app, db
+# from OctBlog import create_app
+# app = create_app(os.getenv('config') or 'default')
 
-app = create_app(os.getenv('config') or 'default')
+from OctBlog import app
+
+
 manager = Manager(app)
 
 # Turn on debugger by default and reloader

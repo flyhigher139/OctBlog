@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask.ext.mongoengine import MongoEngine
 from flask.ext.login import LoginManager
@@ -31,3 +33,5 @@ def create_app(config_name):
     app.register_blueprint(accounts_blueprint, url_prefix='/accounts')
 
     return app
+
+app = create_app(os.getenv('config') or 'default')
