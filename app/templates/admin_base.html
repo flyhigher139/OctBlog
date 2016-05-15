@@ -21,7 +21,14 @@
     <!-- Custom CSS -->
     
     {% block css %}{% endblock %}
-    <!-- Custom Fonts -->
+    <style> html{display : none ; } </style> 
+    <script>
+    if( self == top ) {
+              document.documentElement.style.display = 'block' ;
+       } else {
+           top.location = self.location ;
+       }
+    </script>
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
