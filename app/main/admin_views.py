@@ -16,6 +16,11 @@ from OctBlog.config import OctBlogSettings
 POST_TYPES = OctBlogSettings['post_types']
 PER_PAGE = OctBlogSettings['pagination'].get('admin_per_page', 10)
 
+article_models = {
+    'post': models.Post,
+    'draft': models.Draft
+}
+
 def get_current_user(): 
     user = User.objects.get(username=current_user.get_id())
     return user
@@ -52,6 +57,24 @@ class PostsList(MethodView):
 
         return render_template(self.template_name, posts=posts, post_type=post_type)
 
+class DraftList(MethodView):
+    decorators = [login_required]
+    template_name = 'blog_admin/posts.html'
+    
+    def get(self, post_type='post'):
+        # posts = models.Post.objects.filter(post_type=post_type)
+        posts = models.Draft.objects.filter(post_type=post_type).order_by('-update_time')
+
+        if not g.identity.can(editor_permission):
+            posts = posts.filter(author=get_current_user())
+
+        cur_page = request.args.get('page', 1)
+        if not cur_page:
+            abort(404)
+        posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
+
+        return render_template(self.template_name, posts=posts, post_type=post_type, is_draft=True)
+
 class PostStatisticList(MethodView):
     decorators = [login_required, editor_permission.require(401)]
     template_name = 'blog_admin/post_statistics.html'
@@ -70,12 +93,18 @@ class Post(MethodView):
     decorators = [login_required, writer_permission.require(401)]
     template_name = 'blog_admin/post.html'
 
-    def get_context(self, slug=None, form=None, post_type='post'):
+    def get(self, slug=None, form=None, post_type='post', is_draft=False):
         edit_flag = slug is not None or False
         post = None
 
         if edit_flag:
-            post = models.Post.objects.get_or_404(slug=slug)
+            # article_model = article_models['draft'] if is_draft else article_models['post']
+            # post = article_model.objects.get_or_404(slug=slug)
+            try:
+                post = models.Draft.objects.get(slug=slug)
+            except models.Draft.DoesNotExist:
+                post = models.Post.objects.get_or_404(slug=slug)
+
             if not g.identity.can(editor_permission) and post.author.username != current_user.username:
                 abort(401)
 
@@ -97,25 +126,28 @@ class Post(MethodView):
             'categories':categories, 'tags':tags
         }
 
-        return context
-
-    def get(self, slug=None, form=None, post_type='post'):
-        context = self.get_context(slug, form, post_type)
+        # return context
         return render_template(self.template_name, **context)
 
-        # with admin_permission.require(401):
-        #     context = self.get_context(slug, form, post_type)
-        #     return render_template(self.template_name, **context)
 
-    def post(self, slug=None, post_type='post'):
+
+    def post(self, slug=None, post_type='post', is_draft=False):
+        article_model = article_models['post'] if request.form.get('publish') else article_models['draft']
+
         form = forms.PostForm(obj=request.form)
         if not form.validate():
             return self.get(slug, form)
 
-        if slug:
-            post = models.Post.objects.get_or_404(slug=slug)
-        else:
-            post = models.Post()
+        # if slug:
+        #     post = article_model.objects.get_or_404(slug=slug)
+        # else:
+        #     post = article_model()
+        #     post.author = get_current_user()
+
+        try:
+            post = article_model.objects.get_or_404(slug=slug)
+        except:
+            post = article_model()
             post.author = get_current_user()
 
         post.title = form.title.data.strip()
@@ -132,22 +164,31 @@ class Post(MethodView):
         if request.form.get('publish'):
             post.is_draft = False
             msg = 'Succeed to publish the {0}'.format(post_type)
+            post.save()
+            try:
+                draft = models.Draft.objects.get(slug=slug)
+                draft.delete()
+            except:
+                pass
+
+            try:
+                post_statistic = models.PostStatistics.objects.get(post=post)
+            except models.PostStatistics.DoesNotExist:
+                post_statistic = models.PostStatistics()
+                post_statistic.post = post
+                post_statistic.verbose_count_base = random.randint(500, 5000)
+                post_statistic.save()
 
         elif request.form.get('draft'):
             post.is_draft = True
             msg = 'Succeed to save the draft'
+            post.save()
         else:
-            return self.get(slug, form)
+            return self.get(slug, form, is_draft)
 
-        post.save()
+        # post.save()
 
-        try:
-            post_statistic = models.PostStatistics.objects.get(post=post)
-        except models.PostStatistics.DoesNotExist:
-            post_statistic = models.PostStatistics()
-            post_statistic.post = post
-            post_statistic.verbose_count_base = random.randint(500, 5000)
-            post_statistic.save()
+        
 
         flash(msg, 'success')
         redirect_url = url_for('blog_admin.pages') if form.post_type.data == 'page' else url_for('blog_admin.posts')

@@ -20,15 +20,21 @@ main.add_url_rule('/<path:invalid_path>', 'handle_unmatchable', errors.handle_un
 blog_admin = Blueprint('blog_admin', __name__)
 
 blog_admin.add_url_rule('/', view_func=admin_views.AdminIndex.as_view('index'))
+
 blog_admin.add_url_rule('/posts/', view_func=admin_views.PostsList.as_view('posts'))
-blog_admin.add_url_rule('/posts/statistics/', view_func=admin_views.PostStatisticList.as_view('post_statistics'))
+blog_admin.add_url_rule('/posts/draft/', view_func=admin_views.DraftList.as_view('drafts'))
 blog_admin.add_url_rule('/new-post/', view_func=admin_views.Post.as_view('new_post'))
-blog_admin.add_url_rule('/pages/', view_func=admin_views.PostsList.as_view('pages'), defaults={'post_type':'page'})
-blog_admin.add_url_rule('/new-page/', view_func=admin_views.Post.as_view('new_page'), defaults={'post_type':'page'})
 blog_admin.add_url_rule('/posts/<slug>/', view_func=admin_views.Post.as_view('edit_post'))
+
+blog_admin.add_url_rule('/pages/', view_func=admin_views.PostsList.as_view('pages'), defaults={'post_type':'page'})
+blog_admin.add_url_rule('/pages/draft/', view_func=admin_views.DraftList.as_view('page_drafts'), defaults={'post_type':'page'})
+blog_admin.add_url_rule('/new-page/', view_func=admin_views.Post.as_view('new_page'), defaults={'post_type':'page'})
+
+blog_admin.add_url_rule('/posts/statistics/', view_func=admin_views.PostStatisticList.as_view('post_statistics'))
 
 blog_admin.add_url_rule('/su/posts/', view_func=admin_views.SuPostsList.as_view('su_posts'))
 blog_admin.add_url_rule('/su/posts/<slug>/', view_func=admin_views.SuPost.as_view('su_post_edit'))
 blog_admin.errorhandler(404)(errors.admin_page_not_found)
 blog_admin.errorhandler(401)(errors.handle_unauthorized)
 blog_admin.errorhandler(403)(errors.handle_forbidden)
+
