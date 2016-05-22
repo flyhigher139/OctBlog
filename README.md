@@ -35,7 +35,7 @@ OctBlog offers every function in MayBlog, and aims to do it better, its features
 - mongoengine
 - markdown2
 
-### Backend
+### Frontend
 
 - jQuery
 - BootStrap
@@ -46,18 +46,18 @@ OctBlog offers every function in MayBlog, and aims to do it better, its features
 - Font Awesome
 - highlight.js
 
-##How to run OctBlog ?
+## How to run OctBlog ?
 
-###Run from source code
+### Run from source code
 
 If you want to see more about the source code, checkout the [source code readme](app)
 
 
-###Run by docker(recommended)
+### Run by docker(recommended)
 
 Run OctBlog by docker is recommended, here are some instruction：
 
-####First Run
+#### First Run
 
 1\. Build your own OctBlog image
 
@@ -66,7 +66,7 @@ In command line, switch to OctBlog root directory, and run the following command
 ```bash
 (sudo) docker-compose build
 
-#Now you can take a cup of coffee and wait for a few minutes :)
+# Now you can take a cup of coffee and wait for a few minutes :)
 ```
 
 2\. Run OctBlog
@@ -82,15 +82,15 @@ Then you can visit OctBlog in your brower at `http://localhost:8000`
 Maybe you would like to dig into the container, the following command will help:
 
 ```bash
-#Specify OctBlog container ID, eg:12345678
+# Specify OctBlog container ID, eg:12345678
 (sudo) docker ps
 
-#Get into OctBlog container
+# Get into OctBlog container
 (sudo) docker exec -it 12345678 bash
 
 ```
 
-####After first run
+#### After first run
 
 - Start OctBlog
 
@@ -105,9 +105,9 @@ Maybe you would like to dig into the container, the following command will help:
 ```
 
 
-###Get started with OctBlog
+### Get started with OctBlog
 
-####1\. Create a superuser to administrate OctBlog
+#### 1\. Create a superuser to administrate OctBlog
 
 Visit the following url and create a superuser
 
@@ -115,13 +115,13 @@ Visit the following url and create a superuser
 
 If the url is forbidden, you need to modify your configurations to allow the creation.
 
-####2\. Administrate OctBlog
+#### 2\. Administrate OctBlog
 
 The admin home is: `http://localhost:8000/admin`
 
 You will be redirected to login page if you haven't logged in
 
-####3\. Modify the default configurations
+#### 3\. Modify the default configurations
 
 You either change settings in `app/OctBlog/config.py` file, or set environment variables defined in that file.
 
