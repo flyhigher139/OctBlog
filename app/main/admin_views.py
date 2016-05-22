@@ -92,7 +92,7 @@ class PostsList(MethodView):
 #         return render_template(self.template_name, posts=posts, post_type=post_type, is_draft=True)
 
 class DraftList(PostsList):
-    is_draft = False
+    is_draft = True
     article_model = models.Draft
 
 class PostStatisticList(MethodView):
