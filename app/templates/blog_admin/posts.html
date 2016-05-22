@@ -1,5 +1,5 @@
 {% extends "admin_base.html" %}
-{% block title %}{{ post_type|capitalize }}s{% endblock %}
+{% block title %}{{ post_type|capitalize }}s {% if is_draft %} -- draft {% endif %}{% endblock %}
 {% block main %}
 <div class="row">
     <!-- <div class="col-md-10"> -->
@@ -31,7 +31,7 @@
                 <td>
                     <a href="{{ url_for('blog_admin.edit_post', slug=post.slug) }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a>
                     &nbsp
-                    <a href="{{ url_for('blog_admin.edit_post', slug=post.slug) }}"  class="del-post"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
+                    <a href="{{ url_for('blog_admin.edit_post', slug=post.slug) }}?is_draft={{ is_draft }}"  class="del-post"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
                 </td>
             </tr>
             {% else %}
@@ -51,7 +51,7 @@ $('.del-post').on('click', function (event) {
     // var answer = confirm("Delete post?");
     // return answer;
     var url = $(this).attr('href');
-    url = url + '?ajax=true';
+    url = url + '&ajax=true';
     bootbox.confirm("Are you sure?", function(result) {
       if(result){
         // $.get(url, function(){

@@ -41,24 +41,6 @@ class PostsList(MethodView):
     article_model = models.Post
     
     def get(self, post_type='post'):
-        # # posts = models.Post.objects.filter(post_type=post_type)
-        # posts = models.Post.objects.filter(post_type=post_type).order_by('-update_time')
-
-        # if not g.identity.can(editor_permission):
-        #     posts = posts.filter(author=get_current_user())
-
-        # # if request.args.get('draft'):
-        # #     posts = posts.filter(is_draft=True)
-        # # else:
-        # #     posts = posts.filter(is_draft=False)
-
-        # cur_page = request.args.get('page', 1)
-        # if not cur_page:
-        #     abort(404)
-        # posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
-
-        # return render_template(self.template_name, posts=posts, post_type=post_type, is_draft=False)
-
         posts = self.article_model.objects.filter(post_type=post_type).order_by('-update_time')
 
         if not g.identity.can(editor_permission):
@@ -72,24 +54,6 @@ class PostsList(MethodView):
         posts = posts.paginate(page=cur_page, per_page=PER_PAGE)
 
         return render_template(self.template_name, posts=posts, post_type=post_type, is_draft=self.is_draft)
-
-# class DraftList(MethodView):
-#     decorators = [login_required]
-#     template_name = 'blog_admin/posts.html'
-    
-#     def get(self, post_type='post'):
-#         # posts = models.Post.objects.filter(post_type=post_type)
-#         posts = models.Draft.objects.filter(post_type=post_type).order_by('-update_time')
-
-#         if not g.identity.can(editor_permission):
-#             posts = posts.filter(author=get_current_user())
-
-#         cur_page = request.args.get('page', 1)
-#         if not cur_page:
-#             abort(404)
-#         posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
-
-#         return render_template(self.template_name, posts=posts, post_type=post_type, is_draft=True)
 
 class DraftList(PostsList):
     is_draft = True
@@ -118,8 +82,6 @@ class Post(MethodView):
         post = None
 
         if edit_flag:
-            # article_model = article_models['draft'] if is_draft else article_models['post']
-            # post = article_model.objects.get_or_404(slug=slug)
             try:
                 post = models.Draft.objects.get(slug=slug)
             except models.Draft.DoesNotExist:
@@ -184,6 +146,7 @@ class Post(MethodView):
         if request.form.get('publish'):
             post.is_draft = False
             msg = 'Succeed to publish the {0}'.format(post_type)
+            redirect_url = url_for('blog_admin.pages') if form.post_type.data == 'page' else url_for('blog_admin.posts')
             post.save()
             try:
                 draft = models.Draft.objects.get(slug=slug)
@@ -202,21 +165,23 @@ class Post(MethodView):
         elif request.form.get('draft'):
             post.is_draft = True
             msg = 'Succeed to save the draft'
+            redirect_url = url_for('blog_admin.page_drafts') if form.post_type.data == 'page' else url_for('blog_admin.drafts')
             post.save()
         else:
             return self.get(slug, form, is_draft)
 
-        # post.save()
-
         
 
         flash(msg, 'success')
-        redirect_url = url_for('blog_admin.pages') if form.post_type.data == 'page' else url_for('blog_admin.posts')
         return redirect(redirect_url)
 
 
     def delete(self, slug):
-        post = models.Post.objects.get_or_404(slug=slug)
+        if request.args.get('is_draft') and request.args.get('is_draft').lower()=='true':
+            article_model = article_models['draft']
+        else:
+            article_model = article_models['post']
+        post = article_model.objects.get_or_404(slug=slug)
         post_type = post.post_type
         # is_draft = post.is_draft
 
