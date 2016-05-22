@@ -21,12 +21,8 @@
             {% for post in posts.items %}
             <tr id="post-{{ post.id }}">
                 <td>{{ loop.index }}</td>
-                <td>
-                    {% if post_type=='page' %}
-                    <a href="{{ url_for('main.page_detail', slug=post.slug) }}" target="_blank">{{ post.title }}</a>
-                    {% else %}
-                    <a href="{{ url_for('main.post_detail', slug=post.slug) }}" target="_blank">{{ post.title }}</a>
-                    {% endif %}                    
+                <td> 
+                    <a href="{{ url_for('main.post_general_preview', slug=post.slug, post_type=post_type) }}?is_preview={{ is_draft }}" target="_blank">{{ post.title }}</a>                   
                 </td>
                 <td>{{ post.abstract }}</td>
                 <td>{{ post.author.username }}</td>

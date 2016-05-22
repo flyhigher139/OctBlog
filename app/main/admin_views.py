@@ -37,43 +37,63 @@ class AdminIndex(MethodView):
 class PostsList(MethodView):
     decorators = [login_required]
     template_name = 'blog_admin/posts.html'
+    is_draft = False
+    article_model = models.Post
     
     def get(self, post_type='post'):
-        # posts = models.Post.objects.filter(post_type=post_type)
-        posts = models.Post.objects.filter(post_type=post_type).order_by('-update_time')
+        # # posts = models.Post.objects.filter(post_type=post_type)
+        # posts = models.Post.objects.filter(post_type=post_type).order_by('-update_time')
+
+        # if not g.identity.can(editor_permission):
+        #     posts = posts.filter(author=get_current_user())
+
+        # # if request.args.get('draft'):
+        # #     posts = posts.filter(is_draft=True)
+        # # else:
+        # #     posts = posts.filter(is_draft=False)
+
+        # cur_page = request.args.get('page', 1)
+        # if not cur_page:
+        #     abort(404)
+        # posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
+
+        # return render_template(self.template_name, posts=posts, post_type=post_type, is_draft=False)
+
+        posts = self.article_model.objects.filter(post_type=post_type).order_by('-update_time')
 
         if not g.identity.can(editor_permission):
             posts = posts.filter(author=get_current_user())
 
-        if request.args.get('draft'):
-            posts = posts.filter(is_draft=True)
-        else:
-            posts = posts.filter(is_draft=False)
+        try:
+            cur_page = int(request.args.get('page', 1))
+        except:
+            cur_page = 1
 
-        cur_page = request.args.get('page', 1)
-        if not cur_page:
-            abort(404)
-        posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
+        posts = posts.paginate(page=cur_page, per_page=PER_PAGE)
 
-        return render_template(self.template_name, posts=posts, post_type=post_type)
+        return render_template(self.template_name, posts=posts, post_type=post_type, is_draft=self.is_draft)
 
-class DraftList(MethodView):
-    decorators = [login_required]
-    template_name = 'blog_admin/posts.html'
+# class DraftList(MethodView):
+#     decorators = [login_required]
+#     template_name = 'blog_admin/posts.html'
     
-    def get(self, post_type='post'):
-        # posts = models.Post.objects.filter(post_type=post_type)
-        posts = models.Draft.objects.filter(post_type=post_type).order_by('-update_time')
+#     def get(self, post_type='post'):
+#         # posts = models.Post.objects.filter(post_type=post_type)
+#         posts = models.Draft.objects.filter(post_type=post_type).order_by('-update_time')
 
-        if not g.identity.can(editor_permission):
-            posts = posts.filter(author=get_current_user())
+#         if not g.identity.can(editor_permission):
+#             posts = posts.filter(author=get_current_user())
 
-        cur_page = request.args.get('page', 1)
-        if not cur_page:
-            abort(404)
-        posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
+#         cur_page = request.args.get('page', 1)
+#         if not cur_page:
+#             abort(404)
+#         posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
 
-        return render_template(self.template_name, posts=posts, post_type=post_type, is_draft=True)
+#         return render_template(self.template_name, posts=posts, post_type=post_type, is_draft=True)
+
+class DraftList(PostsList):
+    is_draft = False
+    article_model = models.Draft
 
 class PostStatisticList(MethodView):
     decorators = [login_required, editor_permission.require(401)]
@@ -198,18 +218,19 @@ class Post(MethodView):
     def delete(self, slug):
         post = models.Post.objects.get_or_404(slug=slug)
         post_type = post.post_type
-        is_draft = post.is_draft
-        post.delete()
+        # is_draft = post.is_draft
 
         try:
             post_statistic = models.PostStatistics.objects.get(post=post)
             post_statistic.delete()
         except:
             pass
+            
+        post.delete()
 
         redirect_url = url_for('blog_admin.pages') if post_type == 'page' else url_for('blog_admin.posts')
-        if is_draft:
-            redirect_url = redirect_url + '?draft=true'
+        # if is_draft:
+        #     redirect_url = redirect_url + '?draft=true'
 
 
         flash('Succeed to delete the {0}'.format(post_type), 'success')

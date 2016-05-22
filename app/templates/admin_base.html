@@ -65,8 +65,8 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ url_for('blog_admin.posts') }}">All Posts</a></li>
                 <li><a href="{{ url_for('blog_admin.new_post') }}">New Post</a></li>
-                <li><a href="{{ url_for('blog_admin.posts') }}?draft=true">Drafts</a></li>
-                <li><a href="{{ url_for('blog_admin.drafts') }}">Drafts-2</a></li>
+                <!-- <li><a href="{{ url_for('blog_admin.posts') }}?draft=true">Drafts</a></li> -->
+                <li><a href="{{ url_for('blog_admin.drafts') }}">Drafts</a></li>
                 <!-- <li class="divider"></li> -->
                 <li><a href="{{ url_for('blog_admin.post_statistics') }}">Posts Statistics</a></li>
 
@@ -84,8 +84,8 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ url_for('blog_admin.pages') }}">All Pages</a></li>
                 <li><a href="{{ url_for('blog_admin.new_page') }}">New Page</a></li>
-                <li><a href="{{ url_for('blog_admin.pages') }}?draft=true">Drafts</a></li>
-                <li><a href="{{ url_for('blog_admin.page_drafts') }}">Drafts-2</a></li>
+                <!-- <li><a href="{{ url_for('blog_admin.pages') }}?draft=true">Drafts</a></li> -->
+                <li><a href="{{ url_for('blog_admin.page_drafts') }}">Drafts</a></li>
               </ul>
             </li>
             {% endif %}

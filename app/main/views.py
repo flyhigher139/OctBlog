@@ -74,8 +74,13 @@ def list_posts():
 
     return render_template('main/index.html', **data)
 
-def post_detail(slug, post_type='post', fix=False):
-    post = models.Post.objects.get_or_404(slug=slug, post_type=post_type) if not fix else models.Post.objects.get_or_404(fix_slug=slug, post_type=post_type)
+def post_detail(slug, post_type='post', fix=False, is_preview=False):
+    if is_preview:
+        post = models.Draft.objects.get_or_404(slug=slug, post_type=post_type)
+    else:
+        post = models.Post.objects.get_or_404(slug=slug, post_type=post_type) if not fix else models.Post.objects.get_or_404(fix_slug=slug, post_type=post_type)
+    
+    # this block is abandoned
     if post.is_draft and current_user.is_anonymous:
         abort(404)
 
@@ -100,9 +105,18 @@ def post_detail(slug, post_type='post', fix=False):
     #     data['share_html'] = jiathis_share()
 
     # send signal
-    signals.post_visited.send(current_app._get_current_object(), post=post)
+    if not is_preview:
+        signals.post_visited.send(current_app._get_current_object(), post=post)
     
     return render_template('main/post.html', **data)
+
+def post_preview(slug, post_type='post'):
+    return post_detail(slug=slug, post_type=post_type, is_preview=True)
+
+def post_detail_general(slug, post_type):
+    is_preview = request.args.get('is_preview')
+    is_preview = True if is_preview.lower()=='true' else False
+    return post_detail(slug=slug, post_type=post_type, is_preview=is_preview)
 
 def author_detail(username):
     author = User.objects.get_or_404(username=username)
