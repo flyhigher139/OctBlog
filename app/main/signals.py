@@ -10,7 +10,15 @@ post_visited = octblog_signals.signal('post-visited')
 def on_post_visited(sender, post, **extra):
     tracker = models.Tracker()
     tracker.post = post
-    tracker.ip = request.remote_addr
+
+    # if request.headers.getlist("X-Forwarded-For"):
+    #    ip = request.headers.getlist("X-Forwarded-For")[0]
+    # else:
+    #    ip = request.remote_addr
+
+    proxy_list = request.headers.getlist('X-Forwarded-For')
+    tracker.ip = request.remote_addr if not proxy_list else proxy_list[0]
+
     tracker.user_agent = request.headers.get('User-Agent')
     tracker.save()
 

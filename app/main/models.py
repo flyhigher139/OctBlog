@@ -88,7 +88,12 @@ class Tracker(db.Document):
     post = db.ReferenceField(Post)
     ip = db.StringField()
     user_agent = db.StringField()
-    create_time = db.DateTimeField(default=datetime.datetime.now())
+    create_time = db.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        if not self.create_time:
+            self.create_time = datetime.datetime.now()
+        return super(Tracker, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.ip
