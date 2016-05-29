@@ -1,10 +1,14 @@
 from flask import request, current_app
 from blinker import Namespace
 
-from . import models
+from . import models, ext
+from OctBlog.config import OctBlogSettings
+
+search_engine_submit_urls = OctBlogSettings['search_engine_submit_urls']
 
 octblog_signals = Namespace()
 post_visited = octblog_signals.signal('post-visited')
+post_pubished = octblog_signals.signal('post-published')
 
 @post_visited.connect
 def on_post_visited(sender, post, **extra):
@@ -34,3 +38,16 @@ def on_post_visited(sender, post, **extra):
         post_statistic.save()
 
     post_statistic.modify(inc__visit_count=1)
+
+
+@post_pubished.connect
+def on_post_pubished(sender, post, **extra):
+    post_url = request.host + post.get_absolute_url()
+    # print post_url
+    baidu_url = search_engine_submit_urls['baidu']
+    if baidu_url:
+        # print 'Ready to post to baidu'
+        res = ext.submit_url_to_baidu(baidu_url, post_url)
+        print res.status_code, res.text
+    else:
+        print 'Not ready to submit urls yet'

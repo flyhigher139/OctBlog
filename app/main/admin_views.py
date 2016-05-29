@@ -3,11 +3,11 @@
 
 import time, datetime, random
 
-from flask import request, redirect, render_template, url_for, abort, flash, g
+from flask import request, redirect, render_template, url_for, abort, flash, g, current_app
 from flask.views import MethodView
 from flask.ext.login import current_user, login_required
 
-from . import models, forms
+from . import models, forms, signals
 from accounts.models import User
 from accounts.permissions import admin_permission, editor_permission, writer_permission, reader_permission
 from OctBlog.config import OctBlogSettings
@@ -148,6 +148,9 @@ class Post(MethodView):
             msg = 'Succeed to publish the {0}'.format(post_type)
             redirect_url = url_for('blog_admin.pages') if form.post_type.data == 'page' else url_for('blog_admin.posts')
             post.save()
+
+            signals.post_pubished.send(current_app._get_current_object(), post=post)
+
             try:
                 draft = models.Draft.objects.get(slug=slug)
                 draft.delete()
