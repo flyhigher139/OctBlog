@@ -16,6 +16,7 @@ main.add_url_rule('/users/<username>/', 'author_detail', views.author_detail)
 main.add_url_rule('/atom/', 'recent_feed', views.recent_feed)
 main.add_url_rule('/sitemap.xml/', 'sitemap', views.sitemap)
 main.errorhandler(404)(errors.page_not_found)
+main.errorhandler(401)(errors.handle_unauthorized)
 main.add_url_rule('/<path:invalid_path>', 'handle_unmatchable', errors.handle_unmatchable)
 
 

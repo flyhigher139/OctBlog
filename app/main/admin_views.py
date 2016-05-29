@@ -64,7 +64,7 @@ class PostStatisticList(MethodView):
     template_name = 'blog_admin/post_statistics.html'
     
     def get(self):
-        posts = models.PostStatistics.objects.all()
+        posts = models.PostStatistics.objects.all().order_by('-update_time')
 
         cur_page = request.args.get('page', 1)
         if not cur_page:

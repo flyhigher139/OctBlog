@@ -4,7 +4,7 @@
 from urlparse import urljoin
 from datetime import datetime, timedelta
 
-from flask import request, redirect, render_template, url_for, abort, flash
+from flask import request, redirect, render_template, url_for, abort, flash, g
 from flask import current_app, make_response
 from flask.views import MethodView
 
@@ -16,6 +16,7 @@ from mongoengine.queryset.visitor import Q
 
 from . import models, signals
 from accounts.models import User
+from accounts.permissions import admin_permission, editor_permission, writer_permission, reader_permission
 from OctBlog.config import OctBlogSettings
 
 
@@ -76,6 +77,8 @@ def list_posts():
 
 def post_detail(slug, post_type='post', fix=False, is_preview=False):
     if is_preview:
+        if not g.identity.can(reader_permission):
+            abort(401)
         post = models.Draft.objects.get_or_404(slug=slug, post_type=post_type)
     else:
         post = models.Post.objects.get_or_404(slug=slug, post_type=post_type) if not fix else models.Post.objects.get_or_404(fix_slug=slug, post_type=post_type)
