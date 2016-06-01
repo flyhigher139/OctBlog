@@ -12,8 +12,8 @@ class Post(db.Document):
     fix_slug = db.StringField(max_length=255, required=False)
     abstract = db.StringField()
     raw = db.StringField(required=True)
-    pub_time = db.DateTimeField(required=True)
-    update_time = db.DateTimeField(required=True)
+    pub_time = db.DateTimeField()
+    update_time = db.DateTimeField()
     content_html = db.StringField(required=True)
     author = db.ReferenceField(User)
     category = db.StringField(max_length=64, default='default')
@@ -31,7 +31,7 @@ class Post(db.Document):
                 self.pub_time = now
             self.update_time = now
         # self.content_html = self.raw
-        self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks']).encode('utf-8')
+        self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks', 'tables']).encode('utf-8')
         return super(Post, self).save(*args, **kwargs)
 
     def set_post_date(self, pub_time, update_time):
@@ -60,8 +60,8 @@ class Draft(db.Document):
     # fix_slug = db.StringField(max_length=255, required=False)
     abstract = db.StringField()
     raw = db.StringField(required=True)
-    pub_time = db.DateTimeField(default=datetime.datetime.now())
-    update_time = db.DateTimeField(default=datetime.datetime.now())
+    pub_time = db.DateTimeField()
+    update_time = db.DateTimeField()
     content_html = db.StringField(required=True)
     author = db.ReferenceField(User)
     category = db.StringField(max_length=64, default='default')
@@ -70,8 +70,11 @@ class Draft(db.Document):
     post_type = db.StringField(max_length=64, default='post')
 
     def save(self, *args, **kwargs):
-        self.update_time = datetime.datetime.now()
-        self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks']).encode('utf-8')
+        now = datetime.datetime.now()
+        if not self.pub_time:
+            self.pub_time = now
+        self.update_time = now
+        self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks', 'tables']).encode('utf-8')
         return super(Draft, self).save(*args, **kwargs)
 
 
