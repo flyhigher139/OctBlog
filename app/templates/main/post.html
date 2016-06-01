@@ -97,13 +97,14 @@
 {% block js %}
 <script src="{{ url_for('static', filename='js/share.min.js') }}"></script>
 <script type="text/javascript">
+    $('table').addClass('table');
     $('#btn_donate').on('click', function(event){
         if($('#donate_guide').hasClass('hidden'))
             $('#donate_guide').removeClass('hidden');
         else
             $('#donate_guide').addClass('hidden');
         return false
-    })
+    });
     
     
 </script>
