@@ -4,8 +4,10 @@
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, SelectField, ValidationError
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL, Optional
-from flask.ext.login import current_user
-from flask.ext.mongoengine.wtf import model_form
+# from flask.ext.login import current_user
+# from flask.ext.mongoengine.wtf import model_form
+from flask_login import current_user
+from flask_mongoengine.wtf import model_form
 
 from . import models
 

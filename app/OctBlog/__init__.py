@@ -1,9 +1,12 @@
 import os
 
 from flask import Flask
-from flask.ext.mongoengine import MongoEngine
-from flask.ext.login import LoginManager
-from flask.ext.principal import Principal 
+# from flask.ext.mongoengine import MongoEngine
+# from flask.ext.login import LoginManager
+# from flask.ext.principal import Principal 
+from flask_mongoengine import MongoEngine
+from flask_login import LoginManager
+from flask_principal import Principal 
 
 from config import config
 

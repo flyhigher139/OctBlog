@@ -1,4 +1,8 @@
-from flask.ext.mongoengine.wtf import model_form
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# from flask.ext.mongoengine.wtf import model_form
+from flask_mongoengine.wtf import model_form
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, TextAreaField, HiddenField
 from wtforms import widgets, ValidationError

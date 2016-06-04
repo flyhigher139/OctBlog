@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from flask import current_app
-from flask.ext.principal import Permission, RoleNeed, UserNeed, identity_loaded
-from flask.ext.login import current_user
+# from flask.ext.principal import Permission, RoleNeed, UserNeed, identity_loaded
+# from flask.ext.login import current_user
+from flask_principal import Permission, RoleNeed, UserNeed, identity_loaded
+from flask_login import current_user
 
 # admin_need = RoleNeed('admin')
 # editor_need = RoleNeed('editor')
