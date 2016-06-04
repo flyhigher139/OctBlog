@@ -39,10 +39,16 @@ def list_posts():
 
     tags = posts.distinct('tags')
 
+    try:
+        cur_page = int(request.args.get('page', 1))
+    except ValueError:
+        cur_page = 1
+
+
     cur_category = request.args.get('category')
     cur_tag = request.args.get('tag')
-    cur_page = request.args.get('page', 1)
     keywords = request.args.get('keywords')
+
 
     if keywords:
         # posts = posts.filter(raw__contains=keywords )
@@ -54,7 +60,6 @@ def list_posts():
     if cur_tag:
         posts = posts.filter(tags=cur_tag)
 
-    posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
 
     #group by aggregate
     category_cursor = models.Post._get_collection().aggregate([
@@ -65,6 +70,11 @@ def list_posts():
                 }
             }
         ])
+
+
+
+
+    posts = posts.paginate(page=cur_page, per_page=PER_PAGE)
 
     data = get_base_data()
     data['posts'] = posts
