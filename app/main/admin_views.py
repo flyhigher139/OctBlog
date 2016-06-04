@@ -22,6 +22,18 @@ article_models = {
     'draft': models.Draft
 }
 
+# post_urls = {
+#     'post': url_for('blog_admin.posts'),
+#     'page': url_for('blog_admin.pages'),
+#     'wechat': url_for('blog_admin.wechats'),
+# }
+
+# draft_urls = {
+#     'post': url_for('blog_admin.drafts'),
+#     'page': url_for('blog_admin.page_drafts'),
+#     'wechat': url_for('blog_admin.wechat_drafts'),
+# }
+
 def get_current_user(): 
     user = User.objects.get(username=current_user.get_id())
     return user
@@ -142,12 +154,26 @@ class Post(MethodView):
         post.tags = [tag.strip() for tag in form.tags_str.data.split(',')] if form.tags_str.data else None
         post.post_type = form.post_type.data if form.post_type.data else None
 
+
+        post_urls = {
+            'post': url_for('blog_admin.posts'),
+            'page': url_for('blog_admin.pages'),
+            'wechat': url_for('blog_admin.wechats'),
+        }
+
+        draft_urls = {
+            'post': url_for('blog_admin.drafts'),
+            'page': url_for('blog_admin.page_drafts'),
+            'wechat': url_for('blog_admin.wechat_drafts'),
+        }
+
         
 
         if request.form.get('publish'):
             post.is_draft = False
             msg = 'Succeed to publish the {0}'.format(post_type)
-            redirect_url = url_for('blog_admin.pages') if form.post_type.data == 'page' else url_for('blog_admin.posts')
+            # redirect_url = url_for('blog_admin.pages') if form.post_type.data == 'page' else url_for('blog_admin.posts')
+            redirect_url = post_urls[form.post_type.data]
             post.save()
 
             signals.post_pubished.send(current_app._get_current_object(), post=post)
@@ -169,7 +195,8 @@ class Post(MethodView):
         elif request.form.get('draft'):
             post.is_draft = True
             msg = 'Succeed to save the draft'
-            redirect_url = url_for('blog_admin.page_drafts') if form.post_type.data == 'page' else url_for('blog_admin.drafts')
+            # redirect_url = url_for('blog_admin.page_drafts') if form.post_type.data == 'page' else url_for('blog_admin.drafts')
+            redirect_url = draft_urls[form.post_type.data]
             post.save()
         else:
             return self.get(slug, form, is_draft)
