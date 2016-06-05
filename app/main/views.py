@@ -71,7 +71,7 @@ def list_posts():
             }
         ])
 
-    widgets = models.Widget.objects.all()
+    widgets = models.Widget.objects(allow_post_types='post')
 
 
 

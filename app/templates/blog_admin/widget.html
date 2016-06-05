@@ -31,6 +31,19 @@
     {% import "_form.html" as forms %}
     <form method="POST" action="">
         {{ forms.render(form) }}
+        <br>
+        <label for="allow_post_types">Allow Post Types</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="allow_post_types" placeholder="post, page" name="allow_post_types" value="{% if widget %}{{ widget.allow_post_types|join(', ') }}{% endif %}">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right">
+                {% for post_type in post_types %}
+                    <li><a href="#" class="post-type" data-post-type="{{ post_type }}">{{ post_type }}</a></li>
+                {% endfor %}
+            </ul>
+          </div><!-- /btn-group -->
+        </div><br>
 
         <div class="form-group">
             <label for="update_time">Update Time</label>
@@ -53,6 +66,21 @@
 <script src="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
 <script type="text/javascript">
+    $('.post-type').on('click', function(event){
+        var postType = $(this).data('post-type');
+        // alert(category);
+        var elem = document.getElementById("allow_post_types");
+        if(elem.value==''){
+            elem.value = postType;
+        }else{
+            // elem.value += ', ';
+            // elem.value += tag;
+            elem.value = [elem.value, postType].join(', ')
+        }
+
+        // $(this).remove();
+        return false
+    });
 
     $(function () {
         $('.date').datetimepicker({format:'YYYY-MM-DD HH:mm:ss'});
