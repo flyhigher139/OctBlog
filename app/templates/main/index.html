@@ -113,6 +113,12 @@
                 {% endfor %}
             </div>
 
+            {% for widget in widgets %}
+            <h3>{{ widget.title }}</h3><hr/>
+            <div class="list-group">
+                {{ widget.html_content | safe }}
+            </div>
+            {% endfor %}
                         
         </div>
     </div>

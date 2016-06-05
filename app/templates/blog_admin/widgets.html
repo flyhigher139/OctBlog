@@ -1,0 +1,67 @@
+{% extends "admin_base.html" %}
+{% block title %}Widgets{% endblock %}
+{% block main %}
+<div class="row">
+    <!-- <div class="col-md-10"> -->
+    <!-- <h1>New Post</h1> -->
+    
+    <a href="{{ url_for('blog_admin.su_widget') }}"><button type="button" class="btn btn-primary"> New Widget</button></a> <hr>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th>Update Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for widget in widgets %}
+            <tr id="widget-{{ widget.id }}">
+                <td>{{ loop.index }}</td>
+                <td>
+                    <a href="#" target="_blank">{{ widget.title }}</a>              
+                </td>
+                <td>{{ widget.update_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>
+                    <a href="{{ url_for('blog_admin.su_widget_edit', pk=widget.id) }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a>
+                    &nbsp
+                    <a href="{{ url_for('blog_admin.su_widget_edit', pk=widget.id) }}"  class="del-widget"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" style="text-align: left">No widgets yet</td></tr>
+            {% endfor %}      
+        </tbody>
+    </table>
+
+    <!-- </div> -->
+    <!-- <div class="col-md-2">.col-md-2</div> -->
+</div>
+{% endblock %}
+{% block js %}
+<script type="text/javascript">
+$('.del-widget').on('click', function (event) {
+    var url = $(this).attr('href');
+    url = url + '?ajax=true';
+    bootbox.confirm("Are you sure?", function(result) {
+      if(result){
+        // $.get(url, function(){
+        //     location.reload();
+        // });
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            success: function(result){
+                location.reload();
+            }
+
+        })
+        }
+    });
+    return false;
+  });
+
+</script>
+
+{% endblock %}

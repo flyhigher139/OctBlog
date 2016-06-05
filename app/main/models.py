@@ -9,6 +9,8 @@ import markdown2
 from OctBlog import db
 from accounts.models import User
 
+POST_TYPE_CHOICES = ('post', 'page')
+
 class Post(db.Document):
     title = db.StringField(max_length=255, default='new blog', required=True)
     slug = db.StringField(max_length=255, required=True, unique=True)
@@ -122,3 +124,26 @@ class PostStatistics(db.Document):
     post = db.ReferenceField(Post)
     visit_count = db.IntField(default=0)
     verbose_count_base = db.IntField(default=0)
+
+class Widget(db.Document):
+    title = db.StringField(default='widget')
+    md_content = db.StringField()
+    html_content = db.StringField()
+    update_time = db.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        if self.md_content:
+            self.html_content = markdown2.markdown(self.md_content, extras=['code-friendly', 'fenced-code-blocks', 'tables']).encode('utf-8')
+
+        if not self.update_time:
+            self.update_time = datetime.datetime.now()
+
+        return super(Widget, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.title
+
+    meta = {
+        # 'allow_inheritance': True,
+        'ordering': ['update_time']
+    }

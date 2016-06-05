@@ -42,7 +42,7 @@
             <tr id="post-{{ post.id }}">
                 <td>{{ loop.index }}</td>
                 <td>
-                    <a href="#" target="_blank">{{ post.title }}</a>              
+                    <a href="{{ url_for('blog_admin.su_post_edit', slug=post.slug) }}" target="_blank">{{ post.title }}</a>              
                 </td>
                 <td>{{ post.abstract }}</td>
                 <td>{{ post.author.username }}</td>

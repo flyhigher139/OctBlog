@@ -5,13 +5,23 @@
     {{ field() }}
   {% elif field.type == "BooleanField" %}
   <div class="checkbox">
-  <label>
-    {{ field() }} {{ field.label }}
-  </label>
-
+    <label>
+      {{ field() }} {{ field.label }}
+    </label>
   </div>
+
+  {% elif field.type == "RadioField" %}
+  {{ field.label }}
+    {% for subfield in field %}
+      <div class="radio">
+        <label>{{ subfield }} {{ subfield.label }}</label>
+      </div>
+  {% endfor %}
+    
+
   {% else %}
     <div class="clearfix {% if field.errors %}has-error{% endif %} form-group">
+
       {{ field.label }}
         {{ field(class_="form-control") }}
         {% if field.errors or field.help_text %}

@@ -13,8 +13,8 @@ from accounts.models import User
 from accounts.permissions import admin_permission, editor_permission, writer_permission, reader_permission
 from OctBlog.config import OctBlogSettings
 
-# POST_TYPES = ('post', 'page')
-POST_TYPES = OctBlogSettings['post_types']
+POST_TYPES = models.POST_TYPE_CHOICES
+# POST_TYPES = OctBlogSettings['post_types']
 PER_PAGE = OctBlogSettings['pagination'].get('admin_per_page', 10)
 
 article_models = {
@@ -301,4 +301,84 @@ class SuPost(MethodView):
         flash('Succeed to update post', 'success')
         return redirect(redirect_url)
 
+class WidgetList(MethodView):
+    decorators = [login_required, admin_permission.require(401)]
+    template_name = 'blog_admin/widgets.html'
+    
+    def get(self):
+        widgets = models.Widget.objects.all().order_by('-update_time')
+        data = {
+            'widgets':widgets,
+        }
 
+        return render_template(self.template_name, **data)
+
+class Widget(MethodView):
+    decorators = [login_required, admin_permission.require(401)]
+    template_name = 'blog_admin/widget.html'
+
+    def get(self, pk=None, form=None):
+        widget = None
+        if pk:
+            widget = models.Widget.objects.get_or_404(id=pk)
+            if widget.md_content:
+                widget.content = widget.md_content
+                widget.content_type = 'markdown'
+            else:
+                widget.content = widget.html_content
+                widget.content_type = 'html'
+
+        if not form:
+            if pk:
+                form = forms.WidgetForm(obj=widget)
+            else:
+                form = forms.WidgetForm()
+
+        data = {'form':form, 'widget':widget}
+        return render_template(self.template_name, **data)
+
+    def post(self, pk=None, form=None):
+        form = forms.WidgetForm(request.form)
+        if not form.validate():
+            return self.get(pk, form)
+
+
+        if pk:
+            widget = models.Widget.objects.get_or_404(id=pk)
+        else:
+            widget = models.Widget()
+
+        widget.title = form.title.data.strip()
+        if form.content_type.data == 'html':
+            widget.html_content = form.content.data.strip()
+            widget.md_content = None
+        else:
+            widget.md_content = form.content.data.strip()
+        
+        update_time = request.form.get('update_time')
+        if update_time:
+            widget.update_time = update_time
+
+        widget.save()
+
+        msg1 = 'Succeed to create widget'
+        msg2 = 'Succeed to update widget'
+        msg = msg1 if pk else msg2
+        flash(msg, 'success')
+
+        return redirect(url_for('blog_admin.su_widgets'))
+
+
+    def delete(self, pk):
+        widget = models.Widget.objects.get_or_404(id=pk)
+        widget.delete()
+
+        if request.args.get('ajax'):
+            return 'success'
+
+        redirect_url = url_for('blog_admin.su_widgets')
+
+
+        flash('Succeed to delete the widget', 'success')
+            
+        return redirect(redirect_url)
