@@ -7,9 +7,9 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        <h1>{{ blog_meta.name }}</h1>
+                        <h1>{{ blog_meta.wechat_name }}</h1>
                         <hr class="small">
-                        <span class="subheading">{{ blog_meta.subtitle }} <a href="{{ url_for('main.recent_feed') }}"><i class="fa fa-rss"></i></a></span>
+                        <span class="subheading">{{ blog_meta.wechat_subtitle }} <a href="{{ url_for('main.recent_feed') }}"><i class="fa fa-rss"></i></a></span>
                     </div>
                 </div>
             </div>
@@ -23,7 +23,7 @@
         <div class="col-lg-6 col-lg-offset-2 col-md-8 col-md-offset-1">
             {% for post in posts.items %}
             <div class="post-preview">
-                <a href="{{ url_for('main.post_detail', slug=post.slug) }}">
+                <a href="{{ url_for('main.wechat_detail', slug=post.slug) }}">
                     <h2 class="post-title">
                         {{ post.title }}
                     </h2>

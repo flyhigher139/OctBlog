@@ -13,6 +13,8 @@ OctBlogSettings = {
         'name': os.environ.get('name').decode('utf8') if os.environ.get('name') else 'Oct Blog',
         'subtitle': os.environ.get('subtitle').decode('utf8') if os.environ.get('subtitle') else 'Oct Blog Subtitle',
         'description': os.environ.get('description').decode('utf8') if os.environ.get('description') else 'Oct Blog Description',
+        'wechat_name': os.environ.get('wechat_name').decode('utf8') if os.environ.get('wechat_name') else 'Oct Blog Wechat Root',
+        'wechat_subtitle': os.environ.get('wechat_subtitle').decode('utf8') if os.environ.get('wechat_subtitle') else 'Oct Blog Wechat Subtitle',
         'owner': os.environ.get('owner').decode('utf8') if os.environ.get('owner') else 'Gevin',
         'keywords': os.environ.get('keywords').decode('utf8') if os.environ.get('keywords') else 'python,django,flask,docker,MongoDB',
         'google_site_verification': os.environ.get('google_site_verification') or '12345678',

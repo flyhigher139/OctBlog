@@ -12,6 +12,7 @@ main.add_url_rule('/post/<slug>/', 'post_detail_fix', views.post_detail, default
 main.add_url_rule('/posts/<slug>/preview/', 'post_preview', views.post_detail, defaults={'is_preview':True})
 main.add_url_rule('/posts/<slug>/<post_type>/preview/', 'post_general_preview', views.post_detail_general)
 main.add_url_rule('/pages/<slug>/', 'page_detail', views.post_detail, defaults={'post_type':'page'})
+main.add_url_rule('/wechats/<slug>/', 'wechat_detail', views.post_detail, defaults={'post_type':'wechat'})
 main.add_url_rule('/archive/', 'archive', views.archive)
 main.add_url_rule('/users/<username>/', 'author_detail', views.author_detail)
 main.add_url_rule('/atom/', 'recent_feed', views.recent_feed)
