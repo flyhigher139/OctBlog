@@ -115,11 +115,14 @@ def list_wechats():
 
     posts = posts.paginate(page=cur_page, per_page=PER_PAGE)
 
+    widgets = models.Widget.objects(allow_post_types='wechat')
+
     data = get_base_data()
     data['posts'] = posts
     data['cur_tag'] = cur_tag
     data['tags'] = tags
     data['keywords'] = keywords
+    data['widgets'] = widgets
 
     return render_template('main/wechat_list.html', **data)
 

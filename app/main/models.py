@@ -9,7 +9,7 @@ import markdown2
 from OctBlog import db
 from accounts.models import User
 
-POST_TYPE_CHOICES = ('post', 'page')
+POST_TYPE_CHOICES = ('post', 'page', 'wechat')
 
 class Post(db.Document):
     title = db.StringField(max_length=255, default='new blog', required=True)
@@ -21,7 +21,7 @@ class Post(db.Document):
     update_time = db.DateTimeField()
     content_html = db.StringField(required=True)
     author = db.ReferenceField(User)
-    category = db.StringField(max_length=64, default='default')
+    category = db.StringField(max_length=64)
     tags = db.ListField(db.StringField(max_length=30))
     is_draft = db.BooleanField(default=False)
     post_type = db.StringField(max_length=64, default='post')
@@ -32,7 +32,7 @@ class Post(db.Document):
         router = {
             'post': url_for('main.post_detail', slug=self.slug),
             'page': url_for('main.page_detail', slug=self.slug),
-            # 'wechat': url_for('main.page_detail', slug=self.slug),
+            'wechat': url_for('main.wechat_detail', slug=self.slug),
         }
 
         return router[self.post_type]
