@@ -335,7 +335,7 @@ class WidgetList(MethodView):
     def get(self):
         widgets = models.Widget.objects.all().order_by('-update_time')
         data = {
-            'widgets':widgets,
+            'widgets':widgets, 
         }
 
         return render_template(self.template_name, **data)
@@ -361,7 +361,7 @@ class Widget(MethodView):
             else:
                 form = forms.WidgetForm()
 
-        data = {'form':form, 'widget':widget}
+        data = {'form':form, 'widget':widget, 'post_types': POST_TYPES,}
         return render_template(self.template_name, **data)
 
     def post(self, pk=None, form=None):
@@ -381,6 +381,9 @@ class Widget(MethodView):
             widget.md_content = None
         else:
             widget.md_content = form.content.data.strip()
+
+        allow_post_types = request.form.get('allow_post_types').split(',')
+        widget.allow_post_types = [post_type.strip() for post_type in allow_post_types]
         
         update_time = request.form.get('update_time')
         if update_time:

@@ -130,6 +130,7 @@ class Widget(db.Document):
     title = db.StringField(default='widget')
     md_content = db.StringField()
     html_content = db.StringField()
+    allow_post_types = db.ListField(db.StringField())
     update_time = db.DateTimeField()
 
     def save(self, *args, **kwargs):
