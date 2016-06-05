@@ -4,7 +4,7 @@
 # from flask.ext.mongoengine.wtf import model_form
 from flask_mongoengine.wtf import model_form
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, BooleanField, TextAreaField, HiddenField
+from wtforms import StringField, PasswordField, BooleanField, TextAreaField, HiddenField, RadioField
 from wtforms import widgets, ValidationError
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo
 
@@ -27,3 +27,8 @@ class PostForm(Form):
                 raise ValidationError('slug already in use')
 
 SuPostForm = model_form(models.Post, exclude=['pub_time', 'update_time', 'content_html', 'category', 'tags', 'post_type'])
+
+class WidgetForm(Form):
+    title = StringField('Title', validators=[Required()])
+    content = TextAreaField('Content', validators=[Required()])
+    content_type = RadioField('Content Type', choices=[('markdown', 'markdown'), ('html', 'html')], default='html')

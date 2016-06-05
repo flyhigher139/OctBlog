@@ -71,6 +71,8 @@ def list_posts():
             }
         ])
 
+    widgets = models.Widget.objects.all()
+
 
 
 
@@ -83,6 +85,7 @@ def list_posts():
     data['cur_tag'] = cur_tag
     data['tags'] = tags
     data['keywords'] = keywords
+    data['widgets'] = widgets
 
     return render_template('main/index.html', **data)
 

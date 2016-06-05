@@ -1,0 +1,62 @@
+{% extends "admin_base.html" %}
+
+{% block title %}
+    Edit
+{% endblock %}
+
+{% block css %}
+<link href="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+
+<!-- <form method="POST" action="" id='new-post'>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            
+            <br><br><br><br>
+            <div class="row">
+                <button type="submit" class="btn btn-primary" name="publish" value="publish">submit</button>
+                
+            </div>
+        
+        </div>
+    </div>
+            
+    
+</form> -->
+<div class="col-md-6 col-md-offset-1">
+    <h3>Edit</h3>
+    <hr>
+    {% import "_form.html" as forms %}
+    <form method="POST" action="">
+        {{ forms.render(form) }}
+
+        <div class="form-group">
+            <label for="update_time">Update Time</label>
+            <div class='input-group date' id='update_time'>
+                <input type='text' class="form-control" name="update_time" value="{% if widget%}{{ widget.update_time.strftime('%Y-%m-%d %H:%M:%S') }}{% endif %}" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" name="user" value="user">Submit</button>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="//cdn.bootcss.com/moment.js/2.10.6/moment.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $('.date').datetimepicker({format:'YYYY-MM-DD HH:mm:ss'});
+    }); 
+
+</script>
+{% endblock %}
