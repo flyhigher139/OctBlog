@@ -86,6 +86,40 @@ def list_posts():
 
     return render_template('main/index.html', **data)
 
+def list_wechats():
+    posts = models.Post.objects.filter(post_type='wechat', is_draft=False).order_by('-pub_time')
+
+    tags = posts.distinct('tags')
+
+    try:
+        cur_page = int(request.args.get('page', 1))
+    except ValueError:
+        cur_page = 1
+
+
+    cur_tag = request.args.get('tag')
+    keywords = request.args.get('keywords')
+
+
+    if keywords:
+        # posts = posts.filter(raw__contains=keywords )
+        posts = posts.filter(Q(raw__contains=keywords) | Q(title__contains=keywords))
+
+
+    if cur_tag:
+        posts = posts.filter(tags=cur_tag)
+
+
+    posts = posts.paginate(page=cur_page, per_page=PER_PAGE)
+
+    data = get_base_data()
+    data['posts'] = posts
+    data['cur_tag'] = cur_tag
+    data['tags'] = tags
+    data['keywords'] = keywords
+
+    return render_template('main/wechat_list.html', **data)
+
 def post_detail(slug, post_type='post', fix=False, is_preview=False):
     if is_preview:
         if not g.identity.can(reader_permission):
