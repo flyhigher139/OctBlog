@@ -226,11 +226,11 @@ def sitemap():
 
     ten_days_ago=(datetime.now() - timedelta(days=10)).date().isoformat()
     
-    for rule in current_app.url_map.iter_rules():
-        if "GET" in rule.methods and len(rule.arguments)==0:
-            pages.append(
-                         [rule.rule,ten_days_ago]
-                         )
+    # for rule in current_app.url_map.iter_rules():
+    #     if "GET" in rule.methods and len(rule.arguments)==0:
+    #         pages.append(
+    #                      [rule.rule,ten_days_ago]
+    #                      )
 
     ## user model pages
     # users=User.query.order_by(User.modified_time).all()

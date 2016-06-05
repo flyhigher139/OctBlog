@@ -25,7 +25,14 @@ class Post(db.Document):
     post_type = db.StringField(max_length=64, default='post')
 
     def get_absolute_url(self):
-        return url_for('main.post_detail', slug=self.slug)
+        # return url_for('main.post_detail', slug=self.slug)
+
+        router = {
+            'post': url_for('main.post_detail', slug=self.slug),
+            'page': url_for('main.page_detail', slug=self.slug),
+        }
+
+        return router[self.post_type]
 
     def save(self, allow_set_time=False, *args, **kwargs):
         if not allow_set_time:
