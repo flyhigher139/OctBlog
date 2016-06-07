@@ -30,9 +30,9 @@ class Post(db.Document):
         # return url_for('main.post_detail', slug=self.slug)
 
         router = {
-            'post': url_for('main.post_detail', slug=self.slug),
-            'page': url_for('main.page_detail', slug=self.slug),
-            'wechat': url_for('main.wechat_detail', slug=self.slug),
+            'post': url_for('main.post_detail', slug=self.slug, _external=True),
+            'page': url_for('main.page_detail', slug=self.slug, _external=True),
+            'wechat': url_for('main.wechat_detail', slug=self.slug, _external=True),
         }
 
         return router[self.post_type]
