@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        <h1>{{ blog_meta.wechat_name }}</h1>
+                        <h1>{{ blog_meta.wechat_name | safe }}</h1>
                         <hr class="small">
                         <span class="subheading">{{ blog_meta.wechat_subtitle }} <a href="{{ url_for('main.recent_feed') }}"><i class="fa fa-rss"></i></a></span>
                     </div>
@@ -98,7 +98,7 @@
             
             
             {% for widget in widgets %}
-            <h3>{{ widget.title }}</h3><hr/>
+            <h3>{{ widget.title | safe }}</h3><hr/>
             <div class="list-group">
                 {{ widget.html_content | safe }}
             </div>

@@ -40,6 +40,7 @@ blog_admin.add_url_rule('/wechats/draft/', view_func=admin_views.DraftList.as_vi
 blog_admin.add_url_rule('/new-wechat/', view_func=admin_views.Post.as_view('new_wechat'), defaults={'post_type':'wechat'})
 
 blog_admin.add_url_rule('/posts/statistics/', view_func=admin_views.PostStatisticList.as_view('post_statistics'))
+blog_admin.add_url_rule('/posts/statistics/<slug>/', view_func=admin_views.PostStatisticDetail.as_view('post_statistics_detail'))
 
 blog_admin.add_url_rule('/su/posts/', view_func=admin_views.SuPostsList.as_view('su_posts'))
 blog_admin.add_url_rule('/su/posts/<slug>/', view_func=admin_views.SuPost.as_view('su_post_edit'))

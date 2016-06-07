@@ -168,7 +168,7 @@ def post_preview(slug, post_type='post'):
     return post_detail(slug=slug, post_type=post_type, is_preview=True)
 
 def post_detail_general(slug, post_type):
-    is_preview = request.args.get('is_preview')
+    is_preview = request.args.get('is_preview', 'false')
     is_preview = True if is_preview.lower()=='true' else False
     return post_detail(slug=slug, post_type=post_type, is_preview=is_preview)
 

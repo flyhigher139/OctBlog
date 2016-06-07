@@ -1,0 +1,32 @@
+{% extends "admin_base.html" %}
+{% block title %}Posts Statistics{% endblock %}
+{% block main %}
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>IP</th>
+                <th>Agent</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tracker in trackers.items %}
+            <tr id="tracker-{{ tracker.id }}">
+                <td>{{ loop.index }}</td>
+                <td>{{ tracker.ip }}</td>
+                <td>{{ tracker.user_agent }}</td>
+                <td>{{ tracker.create_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" style="text-align: left">No records yet</td></tr>
+            {% endfor %}      
+        </tbody>
+    </table>
+    {% import '_pagination.html' as pagination %}
+    {{ pagination.render_pagination(trackers) }}
+    <!-- </div> -->
+    <!-- <div class="col-md-2">.col-md-2</div> -->
+</div>
+{% endblock %}

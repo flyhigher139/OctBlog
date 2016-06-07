@@ -79,12 +79,34 @@ class PostStatisticList(MethodView):
     def get(self):
         posts = models.PostStatistics.objects.all()
 
-        cur_page = request.args.get('page', 1)
-        if not cur_page:
-            abort(404)
-        posts = posts.paginate(page=int(cur_page), per_page=PER_PAGE)
+        try:
+            cur_page = int(request.args.get('page', 1))
+        except:
+            cur_page = 1
+
+        posts = posts.paginate(page=cur_page, per_page=PER_PAGE*2)
 
         return render_template(self.template_name, posts=posts)
+
+class PostStatisticDetail(MethodView):
+    decorators = [login_required, editor_permission.require(401)]
+    template_name = 'blog_admin/post_statistics_detail.html'
+
+    def get(self, slug):
+        post = models.Post.objects.get_or_404(slug=slug)
+        post_statistics = models.PostStatistics.objects.get_or_404(post=post)
+        trackers = models.Tracker.objects(post=post)
+
+        try:
+            cur_page = int(request.args.get('page', 1))
+        except:
+            cur_page = 1
+
+        trackers = trackers.paginate(page=cur_page, per_page=PER_PAGE*2)
+
+        data = {'post_statistics':post_statistics, 'trackers':trackers}
+
+        return render_template(self.template_name, **data)
 
 class Post(MethodView):
     decorators = [login_required, writer_permission.require(401)]

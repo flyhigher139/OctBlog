@@ -20,7 +20,7 @@
             {% for post in posts.items %}
             <tr id="post-{{ post.id }}">
                 <td>{{ loop.index }}</td>
-                <td>{{ post.post.title }}</td>
+                <td><a href="{{ url_for('blog_admin.post_statistics_detail', slug=post.post.slug) }}">{{ post.post.title }}</a></td>
                 <td>{{ post.post.pub_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                 <td>{{ post.post.update_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                 <td>{{ post.visit_count }}</td>
