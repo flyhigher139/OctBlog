@@ -74,8 +74,20 @@
                 <!-- donate --> 
                 
             </div>
-            
+            <br>
             {% endif %}
+
+            {% if display_wechat %}
+            <div class="row">
+                <!-- donate -->
+                <div class ="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>{{ wechat_msg }} <i class="fa fa-weixin" aria-hidden="true"></i></p>
+                    <img src="http://7tsygu.com1.z0.glb.clouddn.com/gevin-view.jpg?imageView/2/w/150" title="GevinView">
+                </div>
+                
+            </div>
+            {% endif %}
+            
         {% endif %}
             
         <!-- </div> -->
