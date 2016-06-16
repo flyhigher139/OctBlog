@@ -149,3 +149,28 @@ class Widget(db.Document):
         # 'allow_inheritance': True,
         'ordering': ['update_time']
     }
+
+class Comment(db.Document):
+    author = db.StringField(required=True)
+    email = db.EmailField(max_length=255)
+    homepage = db.URLField()
+    post = db.ReferenceField(Post)
+    md_content = db.StringField()
+    html_content = db.StringField()
+    pub_time = db.DateTimeField()
+    update_time = db.DateTimeField()
+    replay_to = db.ReferenceField('self')
+
+    def save(self, *args, **kwargs):
+        if self.md_content:
+            self.html_content = markdown2.markdown(self.md_content, extras=['code-friendly', 'fenced-code-blocks', 'tables', 'nofollow']).encode('utf-8')
+
+        if not self.pub_time:
+            self.pub_time = datetime.datetime.now()
+
+        self.update_time = datetime.update_time.now()
+
+        return super(Comment, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.md_content[:64]

@@ -153,7 +153,7 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
     data['allow_comment'] = OctBlogSettings['blog_comment']['allow_comment']
     if data['allow_comment']:
         comment_type = OctBlogSettings['blog_comment']['comment_type']
-        comment_shortname = OctBlogSettings['blog_comment']['comment_opt']['duoshuo']
+        comment_shortname = OctBlogSettings['blog_comment']['comment_opt'][comment_type]
         comment_func = get_comment_func(comment_type)
         data['comment_html'] = comment_func(comment_shortname, slug, post.title, request.base_url) if comment_func else ''
 
@@ -195,10 +195,19 @@ def author_detail(username):
 
 
 def get_comment_func(comment_type):
-    if comment_type == 'duoshuo':
-        return duoshuo_comment
-    else:
-        return None
+    # if comment_type == 'duoshuo':
+    #     return duoshuo_comment
+    # else:
+    #     return None
+    comment_func = {
+        'octblog': octblog_comment,
+        'duoshuo': duoshuo_comment,
+    }
+
+    return comment_func.get(comment_type)
+
+def octblog_comment(post_id, *args, **kwargs):
+    pass
 
 def duoshuo_comment(duoshuo_shortname, post_id, post_title, post_url):
     '''
