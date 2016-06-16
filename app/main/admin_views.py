@@ -104,7 +104,7 @@ class PostStatisticDetail(MethodView):
 
         trackers = trackers.paginate(page=cur_page, per_page=PER_PAGE*2)
 
-        data = {'post_statistics':post_statistics, 'trackers':trackers}
+        data = {'post_statistics':post_statistics, 'trackers':trackers, 'post':post }
 
         return render_template(self.template_name, **data)
 

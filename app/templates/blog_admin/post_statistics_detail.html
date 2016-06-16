@@ -2,6 +2,17 @@
 {% block title %}Posts Statistics{% endblock %}
 {% block main %}
 <div class="row">
+    <!-- <h3>Post</h3><hr/> -->
+    <h3>
+        {{ post.title }}
+        <a href="{{ url_for('blog_admin.post_statistics') }}" ><i class="fa fa-history" aria-hidden="true"></i></a>
+    </h3><hr>
+    <p><strong>Visits:</strong> {{ post_statistics.visit_count }}</p>
+    <p><strong>Visits Verbose:</strong> {{ post_statistics.verbose_count_base }}</p>
+    <p><strong>Detail:</strong> <a href="{{ url_for('main.post_detail', slug=post.slug) }}" target="_blank">{{ post.title }}</a></p>
+</div>
+<div class="row">
+    <h3>Tracker</h3><hr/>
     <table class="table table-striped">
         <thead>
             <tr>
