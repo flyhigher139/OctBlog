@@ -19,9 +19,13 @@ class PostForm(Form):
     tags_str = StringField('Tags')
     post_id = HiddenField('post_id')
     post_type = HiddenField('post_type')
+    from_draft = HiddenField('from_draft')
 
     def validate_slug(self, field):
-        posts = models.Post.objects.filter(slug=field.data)
+        if self.from_draft.data and self.from_draft.data == 'true':
+            posts = models.Draft.objects.filter(slug=field.data)
+        else:
+            posts = models.Post.objects.filter(slug=field.data)
         if posts.count() > 0:
             if not self.post_id.data or str(posts[0].id) != self.post_id.data:
                 raise ValidationError('slug already in use')

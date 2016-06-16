@@ -119,6 +119,7 @@ class Post(MethodView):
         if edit_flag:
             try:
                 post = models.Draft.objects.get(slug=slug)
+                post.from_draft = 'true'
             except models.Draft.DoesNotExist:
                 post = models.Post.objects.get_or_404(slug=slug)
 
