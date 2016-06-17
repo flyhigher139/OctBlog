@@ -15,7 +15,7 @@ from werkzeug.contrib.atom import AtomFeed
 from mongoengine.queryset.visitor import Q
 
 
-from . import models, signals
+from . import models, signals, forms
 from accounts.models import User
 from accounts.permissions import admin_permission, editor_permission, writer_permission, reader_permission
 from OctBlog.config import OctBlogSettings
@@ -141,6 +141,15 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
     data = get_base_data()
     data['post'] = post
 
+    form = forms.CommentForm(obj=request.form)
+    # if request.method == 'POST' and form.validate():
+    if request.form.get('oct-comment') and form.validate_on_submit():
+        octblog_create_comment(form, slug)
+        url = '{0}#comment'.format(url_for('main.post_detail', slug=slug))
+        msg = 'Succeed to comment, and it will be displayed when the administrator reviews it.'
+        flash(msg, 'success')
+        return redirect(url)
+
     data['allow_donate'] = OctBlogSettings['donation']['allow_donate']
     data['donation_msg'] = OctBlogSettings['donation']['donation_msg']
 
@@ -155,7 +164,7 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
         comment_type = OctBlogSettings['blog_comment']['comment_type']
         comment_shortname = OctBlogSettings['blog_comment']['comment_opt'][comment_type]
         comment_func = get_comment_func(comment_type)
-        data['comment_html'] = comment_func(comment_shortname, slug, post.title, request.base_url) if comment_func else ''
+        data['comment_html'] = comment_func(slug, post.title, request.base_url, comment_shortname, form=form) if comment_func else ''
 
     data['allow_share_article'] = OctBlogSettings['allow_share_article']
     # if data['allow_share_article']:
@@ -206,10 +215,28 @@ def get_comment_func(comment_type):
 
     return comment_func.get(comment_type)
 
-def octblog_comment(post_id, *args, **kwargs):
-    pass
+def octblog_comment(post_id, post_title, post_url, comment_shortname, form=None, *args, **kwargs):
+    template_name = 'main/comments.html'
+    comments = models.Comment.objects(post_slug=post_id, status='approved')
+    if not form:
+        form = forms.CommentForm(obj=request.form)
+    data = {
+        'form': form,
+        'comments': comments,
+        'slug': post_id,
+    }
+    return render_template(template_name, **data)
 
-def duoshuo_comment(duoshuo_shortname, post_id, post_title, post_url):
+def octblog_create_comment(form, slug):
+    comment = models.Comment()
+    comment.author = form.author.data.strip()
+    comment.email = form.email.data.strip()
+    comment.homepage = form.homepage.data.strip() or None
+    comment.post_slug = slug
+    comment.md_content = form.content.data.strip()
+    comment.save()
+
+def duoshuo_comment(post_id, post_title, post_url, duoshuo_shortname, *args, **kwargs):
     '''
     Create duoshuo script by params
     '''

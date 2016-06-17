@@ -1,0 +1,32 @@
+<a name="comment"></a>
+<h3>Comments</h3><br>
+
+{% import "_msg.html" as messages %}
+{{ messages.render_msg() }}
+
+{% import "_form.html" as forms %}
+<form method="POST" action="#comment">
+    {{ forms.render(form) }}
+    <button type="submit" class="btn btn-primary" name="oct-comment" value="oct-comment">Submit</button>
+</form>
+<br>
+<div class="octblog-comment media">
+    {% for comment in comments %}
+    <div class="comment media">
+        <div class="comment-thumbnail media-left">
+            <a href="#">
+                <!-- <img class="media-object" src="#"> -->
+            </a>
+        </div>
+        <div class="comment-content media-body">
+            <div class="comment-author"><a href="#">{{ comment.author }}</a></div>
+            <div class="comment-date">{{ comment.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</div>
+            <div class="comment-body">
+                <p>{{ comment.html_content | safe }}</p>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No comments yet </p>
+    {% endfor %}
+</div>

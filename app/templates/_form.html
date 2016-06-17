@@ -23,7 +23,11 @@
     <div class="clearfix {% if field.errors %}has-error{% endif %} form-group">
 
       {{ field.label }}
-        {{ field(class_="form-control") }}
+        {% if field.type == "TextAreaField" %}
+          {{ field(class_="form-control", rows=10) }}
+        {% else %}
+          {{ field(class_="form-control") }}
+        {% endif %}
         {% if field.errors or field.help_text %}
           <span class="help-block">
           {% if field.errors %}

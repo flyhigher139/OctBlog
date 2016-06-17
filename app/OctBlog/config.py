@@ -31,9 +31,9 @@ OctBlogSettings = {
     },
     'blog_comment':{
         'allow_comment': os.environ.get('allow_comment', 'true').lower() == 'true',
-        'comment_type': os.environ.get('comment_type', 'duoshuo').lower(), # currently, OctBlog only supports duoshuo comment
+        'comment_type': os.environ.get('comment_type', 'octblog').lower(), # currently, OctBlog only supports duoshuo comment
         'comment_opt':{
-            'octblog': 'oct-blog',
+            'octblog': 'oct-blog', # shotname of octblog
             'duoshuo': 'oct-blog', # shotname of duoshuo
             }
     },

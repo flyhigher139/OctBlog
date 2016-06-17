@@ -150,16 +150,19 @@ class Widget(db.Document):
         'ordering': ['update_time']
     }
 
+COMMENT_STATUS = ('approved', 'pending', 'spam', 'deleted')
 class Comment(db.Document):
     author = db.StringField(required=True)
     email = db.EmailField(max_length=255)
     homepage = db.URLField()
-    post = db.ReferenceField(Post)
+    # post = db.ReferenceField(Post)
+    post_slug = db.StringField(required=True)
     md_content = db.StringField()
     html_content = db.StringField()
     pub_time = db.DateTimeField()
     update_time = db.DateTimeField()
     replay_to = db.ReferenceField('self')
+    status = db.StringField(choices=COMMENT_STATUS, default='pending')
 
     def save(self, *args, **kwargs):
         if self.md_content:
@@ -168,7 +171,7 @@ class Comment(db.Document):
         if not self.pub_time:
             self.pub_time = datetime.datetime.now()
 
-        self.update_time = datetime.update_time.now()
+        self.update_time = datetime.datetime.now()
 
         return super(Comment, self).save(*args, **kwargs)
 
