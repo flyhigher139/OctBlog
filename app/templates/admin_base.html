@@ -96,6 +96,15 @@
                 <li><a href="{{ url_for('blog_admin.page_drafts') }}">Drafts</a></li>
               </ul>
             </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Comments <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Pending</a></li>
+                <li><a href="#">Approved</a></li>
+                <!-- <li><a href="{{ url_for('blog_admin.pages') }}?draft=true">Drafts</a></li> -->
+                <li><a href="#">Spam</a></li>
+              </ul>
+            </li>
             {% endif %}
 
             {% if g.identity.allow_admin %}
