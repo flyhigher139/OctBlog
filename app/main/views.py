@@ -144,7 +144,7 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
     form = forms.CommentForm(obj=request.form)
     # if request.method == 'POST' and form.validate():
     if request.form.get('oct-comment') and form.validate_on_submit():
-        octblog_create_comment(form, slug)
+        octblog_create_comment(form, post)
         url = '{0}#comment'.format(url_for('main.post_detail', slug=slug))
         msg = 'Succeed to comment, and it will be displayed when the administrator reviews it.'
         flash(msg, 'success')
@@ -227,12 +227,13 @@ def octblog_comment(post_id, post_title, post_url, comment_shortname, form=None,
     }
     return render_template(template_name, **data)
 
-def octblog_create_comment(form, slug):
+def octblog_create_comment(form, post):
     comment = models.Comment()
     comment.author = form.author.data.strip()
     comment.email = form.email.data.strip()
     comment.homepage = form.homepage.data.strip() or None
-    comment.post_slug = slug
+    comment.post_slug = post.slug
+    comment.post_title = post.title
     comment.md_content = form.content.data.strip()
     comment.save()
 

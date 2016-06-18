@@ -435,3 +435,47 @@ class Widget(MethodView):
         flash('Succeed to delete the widget', 'success')
             
         return redirect(redirect_url)
+
+class Comment(MethodView):
+    decorators = [login_required, editor_permission.require(401)]
+    template_name = 'blog_admin/comments.html'
+    def get(self, status='pending', pk=None):
+        if pk:
+            return redirect(url_for('blog_admin.comments'))
+            
+        data = {}
+        comments = models.Comment.objects(status=status)
+
+        try:
+            cur_page = int(request.args.get('page', 1))
+        except:
+            cur_page = 1
+        comments = comments.paginate(page=cur_page, per_page=10)
+
+        data['status'] = status
+        data['comments'] = comments
+
+        return render_template(self.template_name, **data)
+
+    def put(self, pk):
+        comment = models.Comment.objects.get_or_404(pk=pk)
+        comment.status = 'approved'
+        comment.save()
+
+        if request.args.get('ajax'):
+            return 'success'
+
+        msg = 'The comment has been approved'
+        flask(msg, 'success')
+        return redirect(url_for('blog_admin.comments_approved'))
+
+    def delete(self, pk):
+        comment = models.Comment.objects.get_or_404(pk=pk)
+        comment.delete()
+
+        if request.args.get('ajax'):
+            return 'success'
+
+        msg = 'The comment has been deleted'
+        flask(msg, 'success')
+        return redirect(url_for('blog_admin.comments_approved'))

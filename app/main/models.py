@@ -157,6 +157,7 @@ class Comment(db.Document):
     homepage = db.URLField()
     # post = db.ReferenceField(Post)
     post_slug = db.StringField(required=True)
+    post_title = db.StringField(default='default article')
     md_content = db.StringField()
     html_content = db.StringField()
     pub_time = db.DateTimeField()
@@ -177,3 +178,7 @@ class Comment(db.Document):
 
     def __unicode__(self):
         return self.md_content[:64]
+
+    meta = {
+        'ordering': ['update_time']
+    }
