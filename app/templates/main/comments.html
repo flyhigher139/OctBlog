@@ -10,23 +10,26 @@
     <button type="submit" class="btn btn-primary" name="oct-comment" value="oct-comment">Submit</button>
 </form>
 <br>
-<div class="octblog-comment media">
+
+<table>
     {% for comment in comments %}
-    <div class="comment media">
-        <div class="comment-thumbnail media-left">
-            <a href="#">
-                <!-- <img class="media-object" src="#"> -->
-            </a>
-        </div>
-        <div class="comment-content media-body">
-            <div class="comment-author"><a href="#">{{ comment.author }}</a></div>
-            <div class="comment-date">{{ comment.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</div>
-            <div class="comment-body">
-                {{ comment.md_content }}
+    <tr>
+        <td style="width: 8%">
+            <img class="media-object" src="http://7tsygu.com1.z0.glb.clouddn.com/user-avatar.jpg" alt="user-avatar">
+        </td>
+        <td>
+            <h4>{{ comment.author }} 
+                {% if comment.homepage %}
+                    <a href="{{ comment.homepage }}" rel="nofollow" target="_blank"><i class="fa fa-home" aria-hidden="true"></i></a>
+                {% endif %}
+            </h4>
+            <div>
+                {{ comment.html_content|safe }} 
             </div>
-        </div>
-    </div>
-    {% else %}
-    <p>No comments yet </p>
+        </td>
+        <td style="width: 5%">
+            <small>{{ comment.pub_time.strftime('%Y/%m/%d') }}</small>
+        </td>
+    </tr>
     {% endfor %}
-</div>
+</table>

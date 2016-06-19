@@ -4,10 +4,19 @@
 import datetime
 from flask import url_for
 
-import markdown2
+import markdown2, bleach
 
 from OctBlog import db
 from accounts.models import User
+
+def get_clean_html_content(html_content):
+    allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'hr']
+    html_content = bleach.linkify(bleach.clean(html_content, tags=allowed_tags, strip=True))
+    return html_content
+
+
 
 POST_TYPE_CHOICES = ('post', 'page', 'wechat')
 
@@ -167,7 +176,8 @@ class Comment(db.Document):
 
     def save(self, *args, **kwargs):
         if self.md_content:
-            self.html_content = markdown2.markdown(self.md_content, extras=['code-friendly', 'fenced-code-blocks', 'tables', 'nofollow']).encode('utf-8')
+            html_content = markdown2.markdown(self.md_content, extras=['code-friendly', 'fenced-code-blocks', 'tables', 'nofollow']).encode('utf-8')
+            self.html_content = get_clean_html_content(html_content)
 
         if not self.pub_time:
             self.pub_time = datetime.datetime.now()
@@ -180,5 +190,5 @@ class Comment(db.Document):
         return self.md_content[:64]
 
     meta = {
-        'ordering': ['update_time']
+        'ordering': ['-update_time']
     }

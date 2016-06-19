@@ -11,7 +11,7 @@
 
     <br>
 
-    <table class="table">
+    <table class="table table-striped">
         <tr>
             <th style="width: 5%"></th>
             <th style="width: 15%">Author</th>
@@ -34,7 +34,7 @@
             </td>
             <td>
                 <div>
-                    {{ comment.html_content }}
+                    {{ comment.html_content|safe }}
                 </div>
                 <!-- <hr> -->
                 <br>
