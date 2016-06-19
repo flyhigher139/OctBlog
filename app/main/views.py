@@ -4,7 +4,7 @@
 from urlparse import urljoin
 from datetime import datetime, timedelta
 
-from flask import request, redirect, render_template, url_for, abort, flash, g
+from flask import request, redirect, render_template, url_for, abort, flash, g, session
 from flask import current_app, make_response
 from flask.views import MethodView
 
@@ -141,8 +141,14 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
     data = get_base_data()
     data['post'] = post
 
-    form = forms.CommentForm(obj=request.form)
-    # if request.method == 'POST' and form.validate():
+    if request.form:
+        form = forms.CommentForm(obj=request.form)
+    else:
+        obj = {'author': session.get('author'), 'email': session.get('email'),'homepage': session.get('homepage'),}
+        form = forms.CommentForm(**obj)
+        print session.get('email')
+
+
     if request.form.get('oct-comment') and form.validate_on_submit():
         octblog_create_comment(form, post)
         url = '{0}#comment'.format(url_for('main.post_detail', slug=slug))
@@ -218,8 +224,16 @@ def get_comment_func(comment_type):
 def octblog_comment(post_id, post_title, post_url, comment_shortname, form=None, *args, **kwargs):
     template_name = 'main/comments.html'
     comments = models.Comment.objects(post_slug=post_id, status='approved')
-    if not form:
-        form = forms.CommentForm(obj=request.form)
+    # if not form:
+    #     if session.get('author'):
+    #         print 'session'
+    #         return 'session'
+    #         data = {'author': session['author'], 'email': session['email'],'homepage': session['homepage'],}
+    #         form = forms.SessionCommentForm(obj=data)
+    #     else:
+    #         print 'no session'
+    #         return 'no session'
+    #         form = forms.CommentForm(obj=request.form)
     data = {
         'form': form,
         'comments': comments,
@@ -236,6 +250,11 @@ def octblog_create_comment(form, post):
     comment.post_title = post.title
     comment.md_content = form.content.data.strip()
     comment.save()
+
+    session['author'] = form.author.data.strip()
+    session['email'] = form.email.data.strip()
+    session['homepage'] = form.homepage.data.strip()
+
 
 def duoshuo_comment(post_id, post_title, post_url, duoshuo_shortname, *args, **kwargs):
     '''

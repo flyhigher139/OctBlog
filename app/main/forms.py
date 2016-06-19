@@ -43,3 +43,10 @@ class CommentForm(Form):
     homepage = StringField('Homepage', validators=[URL(), Optional()])
     content = TextAreaField('* Comment', validators=[Required()])
     comment_id = HiddenField('comment_id')
+
+class SessionCommentForm(Form):
+    email = HiddenField('* Email')
+    author = HiddenField('* Name')
+    homepage = HiddenField('Homepage')
+    content = TextAreaField('* Comment', validators=[Required()])
+    comment_id = HiddenField('comment_id')

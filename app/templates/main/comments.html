@@ -22,7 +22,7 @@
             <div class="comment-author"><a href="#">{{ comment.author }}</a></div>
             <div class="comment-date">{{ comment.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</div>
             <div class="comment-body">
-                <p>{{ comment.html_content | safe }}</p>
+                {{ comment.md_content }}
             </div>
         </div>
     </div>

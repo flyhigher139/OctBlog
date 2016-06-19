@@ -13,7 +13,7 @@
 
     <table class="table">
         <tr>
-            <!-- <th style="width: 5%"></th> -->
+            <th style="width: 5%"></th>
             <th style="width: 15%">Author</th>
             <th>Comment</th>
             <th style="width: 15%">Action</th>
@@ -21,7 +21,7 @@
 
         {% for comment in comments.items %}
         <tr>
-            <!-- <td><input type="checkbox" name="comment_ids" value="{{ comment.id }}"></td> -->
+            <td><input type="checkbox" name="comment_ids" value="{{ comment.id }}"></td>
             <td>
                 <p>{{ comment.author }}</p>
                 <p>
@@ -34,7 +34,7 @@
             </td>
             <td>
                 <div>
-                    {{ comment.html_content|safe }}
+                    {{ comment.html_content }}
                 </div>
                 <!-- <hr> -->
                 <br>
@@ -48,7 +48,7 @@
             </td>
         </tr>
         {% else %}
-        <tr><td colspan="4">No records yet!</td></tr>
+        <tr><td></td><td colspan="3">No records yet!</td></tr>
         {% endfor %}
 
     </table>
@@ -62,17 +62,25 @@
 $('.approve').on('click', function (event) {
     var url = $(this).attr('href');
     url = url + '?ajax=true';
-    bootbox.confirm("Are you sure?", function(result) {
-      if(result){
-        $.ajax({
-            url: url,
-            type: 'PUT',
-            success: function(result){
-                location.reload();
-            }
+    // bootbox.confirm("Are you sure?", function(result) {
+    //   if(result){
+    //     $.ajax({
+    //         url: url,
+    //         type: 'PUT',
+    //         success: function(result){
+    //             location.reload();
+    //         }
 
-        })
+    //     })
+    //     }
+    // });
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        success: function(result){
+            location.reload();
         }
+
     });
     return false;
   });
