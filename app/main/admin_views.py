@@ -507,12 +507,14 @@ class ImportCommentView(MethodView):
             flash(msg, 'warning')
             return redirect(url_for('blog_admin.import_comments'))
 
-        url_regx = re.compile('/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/')
+        url_regx = re.compile('^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$')
         def clean_url(url):
             if not url:
                 return None
+            url = url.replace('\\', '')
             clean = url_regx.match(url)
             if not clean:
+                # print url
                 return None
 
             return url
