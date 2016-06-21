@@ -7,6 +7,7 @@ from flask import request, redirect, render_template, url_for, abort, flash, g, 
 from flask.views import MethodView
 # from flask.ext.login import current_user, login_required
 from flask_login import current_user, login_required
+import dateutil.parser
 
 from . import models, forms, signals
 from accounts.models import User
@@ -529,8 +530,8 @@ class ImportCommentView(MethodView):
             comment.post_slug = import_comment['thread_key']
             comment.post_title = import_comment['thread_key']
             comment.md_content = import_comment['message']
-            comment.pub_time = import_comment['created_at']
-            comment.update_time = import_comment['updated_at']
+            comment.pub_time = dateutil.parser.parse(import_comment['created_at'])
+            comment.update_time = dateutil.parser.parse(import_comment['updated_at'])
             comment.status = 'approved'
             comment.misc = 'duoshuo'
 

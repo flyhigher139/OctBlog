@@ -223,7 +223,7 @@ def get_comment_func(comment_type):
 
 def octblog_comment(post_id, post_title, post_url, comment_shortname, form=None, *args, **kwargs):
     template_name = 'main/comments.html'
-    comments = models.Comment.objects(post_slug=post_id, status='approved')
+    comments = models.Comment.objects(post_slug=post_id, status='approved').order_by('pub_time')
     # if not form:
     #     if session.get('author'):
     #         print 'session'
