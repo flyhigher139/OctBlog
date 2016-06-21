@@ -50,6 +50,8 @@ OctBlogSettings = {
         'copyright_msg': os.environ.get('copyright_msg', 'The article is not allowed to repost unless author authorized').decode('utf8')
     },
     'allow_share_article': os.environ.get('allow_share_article', 'true').lower() == 'true',
+    'gavatar_cdn_base': os.environ.get('gavatar_cdn_base', '//cdn.v2ex.com/gravatar/'),
+    'gavatar_default_image': os.environ.get('gavatar_default_image', 'http://7tsygu.com1.z0.glb.clouddn.com/user-avatar.jpg'),
         
 }
 

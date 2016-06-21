@@ -15,7 +15,8 @@
     {% for comment in comments %}
     <tr>
         <td style="width: 8%">
-            <img class="media-object" src="http://7tsygu.com1.z0.glb.clouddn.com/user-avatar.jpg" alt="user-avatar">
+            <!-- <img class="media-object" src="http://7tsygu.com1.z0.glb.clouddn.com/user-avatar.jpg" alt="user-avatar"> -->
+            <img class="media-object" src="{{ comment.get_gavatar_url() }}" alt="user-avatar">
         </td>
         <td>
             <h4>{{ comment.author }} 

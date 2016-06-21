@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import datetime
+import datetime, hashlib, urllib
 from flask import url_for
 
 import markdown2, bleach
 
 from OctBlog import db
+from OctBlog.config import OctBlogSettings
 from accounts.models import User
 
 def get_clean_html_content(html_content):
@@ -19,6 +20,8 @@ def get_clean_html_content(html_content):
 
 
 POST_TYPE_CHOICES = ('post', 'page', 'wechat')
+GAVATAR_CDN_BASE = OctBlogSettings['gavatar_cdn_base']
+GAVATAR_DEFAULT_IMAGE = OctBlogSettings['gavatar_default_image']
 
 class Post(db.Document):
     title = db.StringField(max_length=255, default='new blog', required=True)
@@ -174,6 +177,13 @@ class Comment(db.Document):
     replay_to = db.ReferenceField('self')
     status = db.StringField(choices=COMMENT_STATUS, default='pending')
     misc = db.StringField() # If the comment is imported, this field will store something useful
+    gavatar_id = db.StringField(default='00000000000')
+
+    def reset_gavatar_id(self):
+        if not self.email:
+            self.gavatar_id = '00000000000'
+            return
+        self.gavatar_id = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
 
     def save(self, *args, **kwargs):
         if self.md_content:
@@ -185,7 +195,23 @@ class Comment(db.Document):
 
         self.update_time = datetime.datetime.now()
 
+        if self.gavatar_id=='00000000000':
+            self.reset_gavatar_id()
+
         return super(Comment, self).save(*args, **kwargs)
+
+    def get_gavatar_url(self, base_url=GAVATAR_CDN_BASE, img_size=0, default_image_url=None):
+        gavatar_url = base_url + self.gavatar_id
+        params = {}
+        if img_size: 
+            params['s'] = str(img_size)
+        if default_image_url: 
+            params['d'] = default_image_url
+
+        if params:
+            gavatar_url = '{0}?{1}'.format(gavatar_url, urllib.urlencode(params))
+
+        return gavatar_url
 
     def __unicode__(self):
         return self.md_content[:64]
