@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import time, datetime, random
+import time, datetime, random, json, re
 
 from flask import request, redirect, render_template, url_for, abort, flash, g, current_app
 from flask.views import MethodView
@@ -478,4 +478,62 @@ class Comment(MethodView):
 
         msg = 'The comment has been deleted'
         flask(msg, 'success')
+        return redirect(url_for('blog_admin.comments_approved'))
+
+class ImportCommentView(MethodView):
+    decorators = [login_required, editor_permission.require(401)]
+    template_name = 'blog_admin/import_comments.html'
+
+    def get(self, form=None):
+        if not form:
+            form = forms.ImportCommentForm()
+        data = {'form': form}
+        return render_template(self.template_name, **data)
+
+    def post(self):
+        form = forms.ImportCommentForm(obj=request.form)
+        if not form.validate():
+            return self.get(form=form)
+
+        if form.json_file.data and form.import_format.data=='file':
+            msg = 'Import from file is not ready yet'
+            flash(msg, 'warning')
+            return redirect(url_for('blog_admin.import_comments'))
+
+        try:
+            comment_json = json.loads(form.content.data)
+        except:
+            msg = 'Json data error'
+            flash(msg, 'warning')
+            return redirect(url_for('blog_admin.import_comments'))
+
+        url_regx = re.compile('/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/')
+        def clean_url(url):
+            if not url:
+                return None
+            clean = url_regx.match(url)
+            if not clean:
+                return None
+
+            return url
+
+
+        imported_comments = comment_json['posts']
+        for import_comment in imported_comments:
+            comment = models.Comment()
+            comment.author = import_comment['author_name']
+            comment.email = import_comment['author_email']
+            comment.homepage = clean_url(import_comment['author_url'])
+            comment.post_slug = import_comment['thread_key']
+            comment.post_title = import_comment['thread_key']
+            comment.md_content = import_comment['message']
+            comment.pub_time = import_comment['created_at']
+            comment.update_time = import_comment['updated_at']
+            comment.status = 'approved'
+            comment.misc = 'duoshuo'
+
+            comment.save()
+
+        msg = 'Succeed to import comments'
+        flash(msg, 'success')
         return redirect(url_for('blog_admin.comments_approved'))

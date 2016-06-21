@@ -103,6 +103,8 @@
                 <li><a href="{{ url_for('blog_admin.comments_approved') }}">Approved</a></li>
                 <!-- <li><a href="{{ url_for('blog_admin.pages') }}?draft=true">Drafts</a></li> -->
                 <li><a href="{{ url_for('blog_admin.comments_spam') }}">Spam</a></li>
+                <li class="divider"></li>
+                <li><a href="{{ url_for('blog_admin.import_comments') }}">Import</a></li>
               </ul>
             </li>
             {% endif %}

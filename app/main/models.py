@@ -173,6 +173,7 @@ class Comment(db.Document):
     update_time = db.DateTimeField()
     replay_to = db.ReferenceField('self')
     status = db.StringField(choices=COMMENT_STATUS, default='pending')
+    misc = db.StringField() # If the comment is imported, this field will store something useful
 
     def save(self, *args, **kwargs):
         if self.md_content:
