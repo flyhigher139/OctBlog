@@ -146,7 +146,7 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
     else:
         obj = {'author': session.get('author'), 'email': session.get('email'),'homepage': session.get('homepage'),}
         form = forms.CommentForm(**obj)
-        print session.get('email')
+        # print session.get('email')
 
 
     if request.form.get('oct-comment') and form.validate_on_submit():
