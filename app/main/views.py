@@ -303,7 +303,11 @@ def make_external(url):
     return urljoin(request.url_root, url)
 
 def recent_feed():
-    feed = AtomFeed('Recent Articles', feed_url=request.url, url=request.url_root)
+    feed_title = OctBlogSettings['blog_meta']['name']
+    feed = AtomFeed(feed_title, feed_url=request.url, url=request.url_root,
+        icon=url_for('static', filename='img/favicon-32x32.png', _external=True),
+        logo=url_for('static', filename='img/favicon-96x96.png', _external=True),)
+
 
     posts = models.Post.objects.filter(post_type='post', is_draft=False)[:15]
     for post in posts:
