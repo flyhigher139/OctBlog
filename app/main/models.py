@@ -100,6 +100,7 @@ class Draft(db.Document):
             self.pub_time = now
         self.update_time = now
         self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks', 'tables']).encode('utf-8')
+        self.content_html = get_clean_html_content(self.content_html)
         return super(Draft, self).save(*args, **kwargs)
 
 
@@ -148,6 +149,8 @@ class Widget(db.Document):
     def save(self, *args, **kwargs):
         if self.md_content:
             self.html_content = markdown2.markdown(self.md_content, extras=['code-friendly', 'fenced-code-blocks', 'tables']).encode('utf-8')
+
+        self.html_content = get_clean_html_content(self.html_content)
 
         if not self.update_time:
             self.update_time = datetime.datetime.now()
