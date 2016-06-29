@@ -322,7 +322,7 @@ def recent_feed():
     feed_title = OctBlogSettings['blog_meta']['name']
     feed = AtomFeed(feed_title, feed_url=request.url, url=request.url_root,
         icon=url_for('static', filename='img/favicon-32x32.png', _external=True),
-        logo=url_for('static', filename='img/favicon-96x96.png', _external=True),)
+        logo=url_for('static', filename='img/favicon-96x96.png', _external=True))
 
     data = {}
     data['allow_donate'] = OctBlogSettings['donation']['allow_donate']
