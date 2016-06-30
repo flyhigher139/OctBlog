@@ -320,29 +320,27 @@ def get_post_footer(allow_donate=False, donation_msg=None,
 
 def recent_feed():
     feed_title = OctBlogSettings['blog_meta']['name']
-    feed = AtomFeed(feed_title, feed_url=request.url, url=request.url_root,
-        icon=url_for('static', filename='img/favicon-32x32.png', _external=True),
-        logo=url_for('static', filename='img/favicon-96x96.png', _external=True))
+    feed = AtomFeed(feed_title, feed_url=request.url, url=request.url_root)
 
-    data = {}
-    data['allow_donate'] = OctBlogSettings['donation']['allow_donate']
-    data['donation_msg'] = OctBlogSettings['donation']['donation_msg']
+    # data = {}
+    # data['allow_donate'] = OctBlogSettings['donation']['allow_donate']
+    # data['donation_msg'] = OctBlogSettings['donation']['donation_msg']
 
-    data['display_wechat'] = OctBlogSettings['wechat']['display_wechat']
-    data['wechat_msg'] = OctBlogSettings['wechat']['wechat_msg']
+    # data['display_wechat'] = OctBlogSettings['wechat']['display_wechat']
+    # data['wechat_msg'] = OctBlogSettings['wechat']['wechat_msg']
 
-    data['display_copyright'] = OctBlogSettings['copyright']['display_copyright']
-    data['copyright_msg'] = OctBlogSettings['copyright']['copyright_msg']
+    # data['display_copyright'] = OctBlogSettings['copyright']['display_copyright']
+    # data['copyright_msg'] = OctBlogSettings['copyright']['copyright_msg']
 
-    post_footer = get_post_footer(**data)
+    # post_footer = get_post_footer(**data)
 
     posts = models.Post.objects.filter(post_type='post', is_draft=False)[:15]
     for post in posts:
         # return post.get_absolute_url()
-        feed.add(post.title, unicode(post.content_html+post_footer),
+        feed.add(post.title, unicode(post.abstract),
                  content_type='html',
                  author=post.author.username,
-                 url=make_external(post.get_absolute_url()),
+                 url=post.get_absolute_url(),
                  updated=post.update_time,
                  published=post.pub_time)
     return feed.get_response()
