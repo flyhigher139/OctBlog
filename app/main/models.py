@@ -13,8 +13,14 @@ from accounts.models import User
 def get_clean_html_content(html_content):
     allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
                         'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
-                        'h1', 'h2', 'h3', 'p', 'hr']
-    html_content = bleach.linkify(bleach.clean(html_content, tags=allowed_tags, strip=True))
+                        'h1', 'h2', 'h3', 'h4', 'h5', 'p', 'hr', 'img']
+
+    allowed_attrs = {
+                '*': ['class'],
+                'a': ['href', 'rel'],
+                'img': ['alt', 'src', 'title'],
+            }
+    html_content = bleach.linkify(bleach.clean(html_content, tags=allowed_tags, attributes=allowed_attrs, strip=True))
     return html_content
 
 
@@ -57,6 +63,7 @@ class Post(db.Document):
             self.update_time = now
         # self.content_html = self.raw
         self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks', 'tables']).encode('utf-8')
+        self.content_html = get_clean_html_content(self.content_html)
         return super(Post, self).save(*args, **kwargs)
 
     def set_post_date(self, pub_time, update_time):
