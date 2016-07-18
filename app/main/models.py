@@ -17,7 +17,7 @@ def get_clean_html_content(html_content):
 
     allowed_attrs = {
                 '*': ['class'],
-                'a': ['href', 'rel'],
+                'a': ['href', 'rel', 'name'],
                 'img': ['alt', 'src', 'title'],
             }
     html_content = bleach.linkify(bleach.clean(html_content, tags=allowed_tags, attributes=allowed_attrs, strip=True))
