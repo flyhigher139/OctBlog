@@ -4,6 +4,8 @@
     <url>
         <loc>{{page[0]|safe}}</loc>
         <lastmod>{{page[1]}}</lastmod>
+        <changefreq>{{page[2]}}</changefreq>
+        <priority>{{page[3]}}</priority>
     </url>
     {% endfor %}
 </urlset>

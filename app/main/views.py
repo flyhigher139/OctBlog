@@ -353,7 +353,7 @@ def sitemap():
     # static pages
     #########################
 
-    ten_days_ago=(datetime.now() - timedelta(days=10)).date().isoformat()
+    # ten_days_ago=(datetime.now() - timedelta(days=10)).date().isoformat()
     
     # for rule in current_app.url_map.iter_rules():
     #     if "GET" in rule.methods and len(rule.arguments)==0:
@@ -374,7 +374,7 @@ def sitemap():
 
     posts = models.Post.objects.filter(is_draft=False, post_type='post')
     for post in posts:
-        pages.append((post.get_absolute_url(), post.update_time.date().isoformat()))
+        pages.append((post.get_absolute_url(), post.update_time.date().isoformat(), 'weekly', '0.8'))
 
     ######################
     # Blog-Page Pages
@@ -382,7 +382,15 @@ def sitemap():
 
     blog_pages = models.Post.objects.filter(is_draft=False, post_type='page')
     for page in blog_pages:
-        pages.append((page.get_absolute_url(), page.update_time.date().isoformat()))
+        pages.append((page.get_absolute_url(), page.update_time.date().isoformat(), 'monthly', '0.6'))
+
+    ######################
+    # Wechat Pages
+    ######################
+
+    posts = models.Post.objects.filter(is_draft=False, post_type='wechat')
+    for post in posts:
+        pages.append((post.get_absolute_url(), post.update_time.date().isoformat(), 'weekly', '0.5'))
 
     sitemap_xml = render_template('main/sitemap.xml', pages=pages)
     response= make_response(sitemap_xml)

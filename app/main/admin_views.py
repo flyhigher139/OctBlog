@@ -138,8 +138,8 @@ class Post(MethodView):
             else:
                 form = forms.PostForm(post_type=post_type)
 
-        categories = models.Post.objects.distinct('category')
-        tags = models.Post.objects.distinct('tags')
+        categories = models.Post.objects(post_type=post_type).distinct('category')
+        tags = models.Post.objects(post_type=post_type).distinct('tags')
         
         context = {'edit_flag':edit_flag, 'form':form, 'display_slug':display_slug, 
             'categories':categories, 'tags':tags
