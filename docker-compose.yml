@@ -16,5 +16,5 @@ mongo:
   env_file: .env
 
   volumes:
-    - /mongo/data
+    - /data/db
 
