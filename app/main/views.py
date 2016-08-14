@@ -382,7 +382,7 @@ def sitemap():
 
     blog_pages = models.Post.objects.filter(is_draft=False, post_type='page')
     for page in blog_pages:
-        pages.append((page.get_absolute_url(), page.update_time.date().isoformat(), 'monthly', '0.6'))
+        pages.append((page.get_absolute_url(), page.update_time.date().isoformat(), 'monthly', '0.7'))
 
     ######################
     # Wechat Pages
@@ -390,7 +390,7 @@ def sitemap():
 
     posts = models.Post.objects.filter(is_draft=False, post_type='wechat')
     for post in posts:
-        pages.append((post.get_absolute_url(), post.update_time.date().isoformat(), 'weekly', '0.5'))
+        pages.append((post.get_absolute_url(), post.update_time.date().isoformat(), 'weekly', '0.6'))
 
     sitemap_xml = render_template('main/sitemap.xml', pages=pages)
     response= make_response(sitemap_xml)
