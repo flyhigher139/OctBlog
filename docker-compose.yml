@@ -1,20 +1,22 @@
-blog:
-  # restart: always
-  build: ./app
-  # image: gevin/octblog:0.2.4.2
-  ports:
-    - "8000:8000"
-  links:
-    - mongo:mongo
-  # volumes:
-  #   - /usr/src/app/static
-  env_file: .env
+version: '2'
+services:
+  blog:
+    # restart: always
+    # build: ./app
+    image: gevin/octblog:0.1
+    ports:
+      - "8000:8000"
+    links:
+      - mongo:mongo
+    # volumes:
+    #   - /usr/src/app/static
+    env_file: .env
 
-mongo:
-  # restart: always
-  image: mongo:latest
-  env_file: .env
+  mongo:
+    # restart: always
+    image: mongo:latest
+    env_file: .env
 
-  volumes:
-    - /data/db
+    volumes:
+      - /data/db
 
