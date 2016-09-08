@@ -1,5 +1,7 @@
 # About OctBlog
 
+[![](https://images.microbadger.com/badges/image/gevin/octblog.svg)](http://microbadger.com/images/gevin/octblog "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/gevin/octblog.svg)](http://microbadger.com/images/gevin/octblog "Get your own version badge on microbadger.com")
+
 [OctBlog](https://github.com/flyhigher139/OctBlog) is almost the same with [MayBlog](https://github.com/flyhigher139/MayBlog) except that it is powered by [Flask](http://flask.pocoo.org/) and [MongoDB](https://www.mongodb.org/) rather than [Django](https://www.djangoproject.com/) and SQL Databases.
 
 And as my customary, I named it OctBlog as OctBlog was started in October, 2015
@@ -67,6 +69,12 @@ In command line, switch to OctBlog root directory, and run the following command
 (sudo) docker-compose build
 
 # Now you can take a cup of coffee and wait for a few minutes :)
+```
+
+Alternatively, pull Octblog image from DockerHub:
+
+```bash
+(sudo) docker pull gevin/octblog
 ```
 
 2\. Run OctBlog
