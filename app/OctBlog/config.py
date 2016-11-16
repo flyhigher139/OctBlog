@@ -87,7 +87,7 @@ class PrdConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     DEBUG = True
-    MONGODB_SETTINGS = {'DB': 'OctBlog-Test'}
+    MONGODB_SETTINGS = {'DB': 'OctBlogTest'}
     WTF_CSRF_ENABLED = False
 
 config = {
