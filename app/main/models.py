@@ -13,7 +13,8 @@ from accounts.models import User
 def get_clean_html_content(html_content):
     allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
                         'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
-                        'h1', 'h2', 'h3', 'h4', 'h5', 'p', 'hr', 'img']
+                        'h1', 'h2', 'h3', 'h4', 'h5', 'p', 'hr', 'img',
+                        'table', 'thead', 'tbody', 'tr', 'th', 'td']
 
     allowed_attrs = {
                 '*': ['class'],
@@ -213,9 +214,9 @@ class Comment(db.Document):
     def get_gavatar_url(self, base_url=GAVATAR_CDN_BASE, img_size=0, default_image_url=None):
         gavatar_url = base_url + self.gavatar_id
         params = {}
-        if img_size: 
+        if img_size:
             params['s'] = str(img_size)
-        if default_image_url: 
+        if default_image_url:
             params['d'] = default_image_url
 
         if params:
