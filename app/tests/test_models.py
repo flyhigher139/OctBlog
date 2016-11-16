@@ -13,8 +13,8 @@ class ModelTestCase(unittest.TestCase):
 
     def tearDown(self):
         db_name = current_app.config['MONGODB_SETTINGS']['DB']
-        self.app_context.pop()
         db.connection.drop_database(db_name)
+        self.app_context.pop()
 
 
     def test_db_is_testing(self):
