@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %} {{ post.title }} {% endblock %}
+
+{% block custom_head %}
+    <link href="{{ url_for('static', filename='css/share.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+<header class="intro-header" style="background-image: url('http://7d9q7a.com1.z0.glb.clouddn.com/mayblog-home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>{{ post.title }}</h1>
+                        <!-- <h2 class="subheading">Problems look mighty small from 150 miles up</h2> -->
+                        <span class="meta">Posted by <a href="{{ url_for('main.author_detail', username=post.author.username) }}">{{ post.author.username }}</a> on {{ post.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</span>
+                        <span class="meta">Tags:
+                            {% for tag in post.tags %} <a href="{{ url_for('main.wechats') }}?tag={{ tag }}">{{ tag }}</a>  {% endfor %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+{% block main %}
+<div class="container">
+    <article>
+        <!-- <div class="container"> -->
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {{post.content_html|safe}}
+                </div>
+            </div>
+
+        {% if not post.post_type=='page' %}
+            {% if display_copyright %}
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <hr>
+                    <p><strong>{{ copyright_msg }}</strong></p>
+                <hr>
+                </div>
+
+            </div>
+            {% endif %}
+            <br>
+            {% if allow_share_article %}
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="share-component" data-sites="weibo,wechat,douban,twitter,qq,google,facebook,linkedin"></div>
+                </div>
+
+            </div>
+            {% endif %}
+            <br>
+            {% if allow_donate %}
+            <div class="row">
+                <!-- donate -->
+                <div class ="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>{{ donation_msg }}</p>
+                    <a id="btn_donate" class="btn_donate" href="#" title="Donate">
+                    <i class="fa fa-usd"></i> | <i class="fa fa-jpy"></i>
+                    </a>
+                    <br>
+                  <!-- weixin -->
+                  <div id="donate_guide" class="donate_bar center hidden ">
+                      <img src="http://7tsygu.com1.z0.glb.clouddn.com/mayblog-weixin-pay.jpg?imageView/2/w/300" title="Donate">
+                  </div>
+                </div>
+                <!-- donate -->
+
+            </div>
+            <br>
+            {% endif %}
+
+            {% if display_wechat %}
+            <div class="row">
+                <!-- donate -->
+                <div class ="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>{{ wechat_msg }} <i class="fa fa-weixin" aria-hidden="true"></i></p>
+                    <img src="http://7tsygu.com1.z0.glb.clouddn.com/gevin-view.jpg?imageView/2/w/150" title="GevinView">
+                </div>
+
+            </div>
+            {% endif %}
+
+        {% endif %}
+
+        <!-- </div> -->
+    </article>
+    <br>
+    <hr>
+    {% if allow_comment %}
+        <article>
+            <!-- <div class="container"> -->
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        {{ comment_html|safe }}
+                    </div>
+                </div>
+            <!-- </div> -->
+        </article>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/share.min.js') }}"></script>
+<script type="text/javascript">
+    $('table').addClass('table');
+    $('#btn_donate').on('click', function(event){
+        if($('#donate_guide').hasClass('hidden'))
+            $('#donate_guide').removeClass('hidden');
+        else
+            $('#donate_guide').addClass('hidden');
+        return false
+    });
+
+
+</script>
+{% endblock %}

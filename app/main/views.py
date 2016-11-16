@@ -63,8 +63,8 @@ def list_posts():
 
     #group by aggregate
     category_cursor = models.Post._get_collection().aggregate([
-            { '$group' : 
-                { '_id' : {'category' : '$category' }, 
+            { '$group' :
+                { '_id' : {'category' : '$category' },
                   'name' : { '$first' : '$category' },
                   'count' : { '$sum' : 1 },
                 }
@@ -133,13 +133,14 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
         post = models.Draft.objects.get_or_404(slug=slug, post_type=post_type)
     else:
         post = models.Post.objects.get_or_404(slug=slug, post_type=post_type) if not fix else models.Post.objects.get_or_404(fix_slug=slug, post_type=post_type)
-    
+
     # this block is abandoned
     if post.is_draft and current_user.is_anonymous:
         abort(404)
 
     data = get_base_data()
     data['post'] = post
+    data['post_type'] = post_type
 
     if request.form:
         form = forms.CommentForm(obj=request.form)
@@ -179,8 +180,14 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
     # send signal
     if not is_preview:
         signals.post_visited.send(current_app._get_current_object(), post=post)
-    
-    return render_template('main/post.html', **data)
+
+    templates = {
+        'post': 'main/post.html',
+        'post': 'main/post.html',
+        'wechat': 'main/wechat_detail.html',
+    }
+
+    return render_template(templates[post_type], **data)
 
 def post_preview(slug, post_type='post'):
     return post_detail(slug=slug, post_type=post_type, is_preview=True)
@@ -302,8 +309,8 @@ def archive():
 def make_external(url):
     return urljoin(request.url_root, url)
 
-def get_post_footer(allow_donate=False, donation_msg=None, 
-                    display_wechat=False, wechat_msg=None, 
+def get_post_footer(allow_donate=False, donation_msg=None,
+                    display_wechat=False, wechat_msg=None,
                     display_copyright=False, copyright_msg=None, *args, **kwargs):
     template_name = 'main/misc/post_footer.html'
     data = {}
@@ -354,7 +361,7 @@ def sitemap():
     #########################
 
     # ten_days_ago=(datetime.now() - timedelta(days=10)).date().isoformat()
-    
+
     # for rule in current_app.url_map.iter_rules():
     #     if "GET" in rule.methods and len(rule.arguments)==0:
     #         pages.append(
@@ -366,7 +373,7 @@ def sitemap():
     # for user in users:
     #     url=url_for('user.pub',name=user.name)
     #     modified_time=user.modified_time.date().isoformat()
-    #     pages.append([url,modified_time]) 
+    #     pages.append([url,modified_time])
 
     ######################
     # Post Pages
@@ -394,6 +401,6 @@ def sitemap():
 
     sitemap_xml = render_template('main/sitemap.xml', pages=pages)
     response= make_response(sitemap_xml)
-    response.headers["Content-Type"] = "application/xml"    
+    response.headers["Content-Type"] = "application/xml"
 
     return response
