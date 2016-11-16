@@ -52,12 +52,15 @@ OctBlogSettings = {
     'allow_share_article': os.environ.get('allow_share_article', 'true').lower() == 'true',
     'gavatar_cdn_base': os.environ.get('gavatar_cdn_base', '//cdn.v2ex.com/gravatar/'),
     'gavatar_default_image': os.environ.get('gavatar_default_image', 'http://7tsygu.com1.z0.glb.clouddn.com/user-avatar.jpg'),
-        
+
 }
 
 class Config(object):
+    DEBUG = False
+    TESTING = False
+
     BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-    
+
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'fjdljLJDL08_80jflKzcznv*c'
     MONGODB_SETTINGS = {'DB': 'OctBlog'}
 
@@ -81,9 +84,15 @@ class PrdConfig(Config):
             # 'port': 12345
         }
 
+class TestingConfig(Config):
+    TESTING = True
+    DEBUG = True
+    MONGODB_SETTINGS = {'DB': 'OctBlog-Test'}
+    WTF_CSRF_ENABLED = False
 
 config = {
     'dev': DevConfig,
     'prd': PrdConfig,
+    'testing': TestingConfig,
     'default': DevConfig,
 }
