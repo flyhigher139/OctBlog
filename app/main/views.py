@@ -183,7 +183,7 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
 
     templates = {
         'post': 'main/post.html',
-        'post': 'main/post.html',
+        'page': 'main/post.html',
         'wechat': 'main/wechat_detail.html',
     }
 
