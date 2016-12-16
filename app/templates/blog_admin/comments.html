@@ -38,7 +38,13 @@
                 </div>
                 <!-- <hr> -->
                 <br>
-                <p><a href="{{ url_for('main.post_detail', slug=comment.post_slug) }}" target="_blank"><i class="fa fa-search" aria-hidden="true"></i> {{ comment.post_title }}</a></p>
+                <p>
+                    <a href="{{ url_for('main.post_detail', slug=comment.post_slug) }}" target="_blank"><i class="fa fa-search" aria-hidden="true"></i> {{ comment.post_title }}</a> 
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;  
+                    
+                    <i class="fa fa-clock-o" aria-hidden="true"></i> {{ comment.update_time.strftime('%Y-%m-%d %H:%M:%S') }}
+                </p>
             </td>
             <td>
                 {% if status!='approved' %}
