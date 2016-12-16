@@ -71,8 +71,11 @@
 
                 <li class="divider"></li>
                 <li><a href="#">Tags</a></li>
-                
                 <li><a href="#">Category</a></li>
+
+                <li class="divider"></li>
+                <li><a href="#">Import</a></li>
+                <li><a href="#">Export</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -84,6 +87,8 @@
                 <li><a href="{{ url_for('blog_admin.wechat_drafts') }}">Drafts</a></li>
               </ul>
             </li>
+
+            
             {% endif %}
 
             {% if g.identity.allow_edit %}
@@ -148,6 +153,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ current_user.username }} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ url_for('accounts.settings') }}">Settings</a></li>
+                <li><a href="#">Import/Export</a></li>
                 <li class="divider"></li>
                 <li><a href="{{ url_for('accounts.logout') }}">Logout</a></li>
                 <!-- <li class="divider"></li>
