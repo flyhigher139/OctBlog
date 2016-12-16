@@ -447,6 +447,10 @@ class Comment(MethodView):
         data = {}
         comments = models.Comment.objects(status=status)
 
+        keyword = request.args.get('keyword')
+        if keyword:
+            comments = comments.filter(md_content__icontains=keyword)
+
         try:
             cur_page = int(request.args.get('page', 1))
         except:
@@ -455,6 +459,7 @@ class Comment(MethodView):
 
         data['status'] = status
         data['comments'] = comments
+        data['keyword'] = keyword
 
         return render_template(self.template_name, **data)
 

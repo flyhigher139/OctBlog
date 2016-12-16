@@ -3,11 +3,31 @@
 {% block main %}
 <div class="row">
     <h3>Comments</h3><br>
-    <ul class="nav nav-pills">
-      <li role="presentation" {% if status=='pending' %}class="active"{% endif %}><a href="{{ url_for('blog_admin.comments') }}">Pending</a></li>
-      <li role="presentation" {% if status=='approved' %}class="active"{% endif %}><a href="{{ url_for('blog_admin.comments_approved') }}">Approved</a></li>
-      <li role="presentation" {% if status=='spam' %}class="active"{% endif %}><a href="{{ url_for('blog_admin.comments_spam') }}">Spam</a></li>
-    </ul>
+
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="nav nav-pills">
+              <li role="presentation" {% if status=='pending' %}class="active"{% endif %}><a href="{{ url_for('blog_admin.comments') }}">Pending</a></li>
+              <li role="presentation" {% if status=='approved' %}class="active"{% endif %}><a href="{{ url_for('blog_admin.comments_approved') }}">Approved</a></li>
+              <li role="presentation" {% if status=='spam' %}class="active"{% endif %}><a href="{{ url_for('blog_admin.comments_spam') }}">Spam</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <form class="form-inline" style="text-align: right;">
+              <div class="form-group">
+                <!-- <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label> -->
+                <div class="input-group">
+                  <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                  <input type="text" class="form-control" placeholder="keyword" name="keyword"
+                    {% if keyword %} value={{keyword}} {% endif %}
+                  >
+                  
+                </div>
+              </div>
+              <!-- <button type="submit" class="btn btn-primary">Transfer cash</button> -->
+            </form>
+        </div>
+    </div>
 
     <br>
 
@@ -42,7 +62,7 @@
                     <a href="{{ url_for('main.post_detail', slug=comment.post_slug) }}" target="_blank"><i class="fa fa-search" aria-hidden="true"></i> {{ comment.post_title }}</a> 
 
                     &nbsp;&nbsp;&nbsp;&nbsp;  
-                    
+
                     <i class="fa fa-clock-o" aria-hidden="true"></i> {{ comment.update_time.strftime('%Y-%m-%d %H:%M:%S') }}
                 </p>
             </td>
