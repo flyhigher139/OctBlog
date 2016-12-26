@@ -53,6 +53,7 @@ blog_admin.add_url_rule('/su/posts/<slug>/', view_func=admin_views.SuPost.as_vie
 blog_admin.add_url_rule('/su/widgets/', view_func=admin_views.WidgetList.as_view('su_widgets'))
 blog_admin.add_url_rule('/su/widgets/create/', view_func=admin_views.Widget.as_view('su_widget'))
 blog_admin.add_url_rule('/su/widgets/<pk>/', view_func=admin_views.Widget.as_view('su_widget_edit'))
+blog_admin.add_url_rule('/su/export/', view_func=admin_views.SuExportView.as_view('su_export'))
 
 blog_admin.errorhandler(404)(errors.admin_page_not_found)
 blog_admin.errorhandler(401)(errors.handle_unauthorized)

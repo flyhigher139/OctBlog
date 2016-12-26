@@ -545,3 +545,16 @@ class ImportCommentView(MethodView):
         msg = 'Succeed to import comments'
         flash(msg, 'success')
         return redirect(url_for('blog_admin.comments_approved'))
+
+class SuExportView(MethodView):
+    template_name = 'blog_admin/su_export.html'
+
+    def get(self):
+        return render_template(self.template_name)
+
+    def post(self):
+        obj_type = request.form.get('type')
+        obj_format = request.form.get('format')
+
+        return 'Type: {0}, Format: {1}'.format(obj_type, obj_format)
+        # return 'Not ready yet'
