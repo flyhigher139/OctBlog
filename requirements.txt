@@ -10,3 +10,4 @@ flask_mongoengine
 markdown2
 bleach
 python-dateutil
+requests
