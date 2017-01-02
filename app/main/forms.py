@@ -3,14 +3,14 @@
 
 # from flask.ext.mongoengine.wtf import model_form
 from flask_mongoengine.wtf import model_form
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, TextAreaField, HiddenField, RadioField, FileField
 from wtforms import widgets, ValidationError
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL, Optional
 
 from . import models
 
-class PostForm(Form):
+class PostForm(FlaskForm):
     title = StringField('Title', validators=[Required()])
     slug = StringField('Slug', validators=[Required()])
     raw = TextAreaField('Content')
@@ -32,26 +32,26 @@ class PostForm(Form):
 
 SuPostForm = model_form(models.Post, exclude=['pub_time', 'update_time', 'content_html', 'category', 'tags', 'post_type'])
 
-class WidgetForm(Form):
+class WidgetForm(FlaskForm):
     title = StringField('Title', validators=[Required()])
     content = TextAreaField('Content', validators=[Required()])
     content_type = RadioField('Content Type', choices=[('markdown', 'markdown'), ('html', 'html')], default='html')
 
-class CommentForm(Form):
+class CommentForm(FlaskForm):
     email = StringField('* Email', validators=[Required(), Length(1,128), Email()])
     author = StringField('* Name', validators=[Required(), Length(1,128)])
     homepage = StringField('Homepage', validators=[URL(), Optional()])
     content = TextAreaField('* Comment <small><span class="label label-info">markdown</span></small>', validators=[Required()])
     comment_id = HiddenField('comment_id')
 
-class SessionCommentForm(Form):
+class SessionCommentForm(FlaskForm):
     email = HiddenField('* Email')
     author = HiddenField('* Name')
     homepage = HiddenField('Homepage')
     content = TextAreaField('* Comment', validators=[Required()])
     comment_id = HiddenField('comment_id')
 
-class ImportCommentForm(Form):
+class ImportCommentForm(FlaskForm):
     content = TextAreaField('Content')
     json_file = FileField('Json File')
     import_format = RadioField('Import Format', choices=[('text', 'text'), ('file', 'file')], default='text')
