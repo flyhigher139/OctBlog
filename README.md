@@ -36,6 +36,7 @@ OctBlog offers every function in MayBlog, and aims to do it better, its features
 - WTForms
 - mongoengine
 - markdown2
+- bleach
 
 ### Frontend
 
@@ -61,20 +62,21 @@ Run OctBlog by docker is recommended, here are some instruction：
 
 #### First Run
 
-1\. Build your own OctBlog image
+1\. Get your OctBlog image
 
 In command line, switch to OctBlog root directory, and run the following command to build your own OctBlog image:
 
 ```bash
-(sudo) docker-compose build
+cd app
+(sudo) docker build gevin/octblog:0.1 .
 
 # Now you can take a cup of coffee and wait for a few minutes :)
 ```
 
-Alternatively, pull Octblog image from DockerHub:
+Alternatively, pull Octblog image from DockerHub(**recommended**):
 
 ```bash
-(sudo) docker pull gevin/octblog
+(sudo) docker pull gevin/octblog:0.1
 ```
 
 2\. Run OctBlog

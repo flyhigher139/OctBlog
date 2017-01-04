@@ -62,7 +62,7 @@ If you don't want to use the default settings, just set a settings environment v
 I usually set the environment vairable in bash with `export` command. For example, if I want to run OctBlog in product environment, I will switch to prd settings like this:
 
 ```
-export config="prd"
+export config=prd
 ```
 
 ## Deploy OctBlog
