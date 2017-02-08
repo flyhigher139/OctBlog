@@ -13,7 +13,8 @@ from config import config
 db = MongoEngine()
 
 login_manager = LoginManager()
-login_manager.session_protection = 'strong'
+# login_manager.session_protection = 'strong'
+login_manager.session_protection = 'basic'
 login_manager.login_view = 'accounts.login'
 
 principals = Principal()

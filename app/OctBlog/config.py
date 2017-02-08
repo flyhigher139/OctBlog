@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, sys
+import os, sys, datetime
 
 OctBlogSettings = {
     'post_types': ('post', 'page'), # deprecated
@@ -66,6 +66,8 @@ class Config(object):
 
     TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates').replace('\\', '/')
     STATIC_PATH = os.path.join(BASE_DIR, 'static').replace('\\', '/')
+
+    REMEMBER_COOKIE_DURATION = datetime.timedelta(hours=3)
 
 
     @staticmethod
