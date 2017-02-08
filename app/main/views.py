@@ -342,9 +342,14 @@ def recent_feed():
     # post_footer = get_post_footer(**data)
 
     posts = models.Post.objects.filter(post_type='post', is_draft=False)[:15]
+    only_abstract_in_feed = OctBlogSettings['only_abstract_in_feed']
+    content = 'abstract' if only_abstract_in_feed else 'content_html'
     for post in posts:
         # return post.get_absolute_url()
-        feed.add(post.title, unicode(post.abstract),
+        feed.add(post.title, 
+                 # unicode(post.content_html),
+                 # post.abstract,
+                 getattr(post, content),
                  content_type='html',
                  author=post.author.username,
                  url=post.get_absolute_url(),
