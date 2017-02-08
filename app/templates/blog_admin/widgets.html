@@ -11,6 +11,7 @@
             <tr>
                 <th>No.</th>
                 <th>Title</th>
+                <th>Priority</th>
                 <th>Update Time</th>
                 <th>Actions</th>
             </tr>
@@ -22,6 +23,7 @@
                 <td>
                     <a href="{{ url_for('blog_admin.su_widget_edit', pk=widget.id) }}" target="_blank">{{ widget.title }}</a>              
                 </td>
+                <td>{{ widget.priority }}</td>
                 <td>{{ widget.update_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                 <td>
                     <a href="{{ url_for('blog_admin.su_widget_edit', pk=widget.id) }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a>

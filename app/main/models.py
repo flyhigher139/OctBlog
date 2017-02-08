@@ -152,6 +152,7 @@ class Widget(db.Document):
     md_content = db.StringField()
     html_content = db.StringField()
     allow_post_types = db.ListField(db.StringField())
+    priority = db.IntField(default=1000000)
     update_time = db.DateTimeField()
 
     def save(self, *args, **kwargs):
@@ -170,7 +171,7 @@ class Widget(db.Document):
 
     meta = {
         # 'allow_inheritance': True,
-        'ordering': ['update_time']
+        'ordering': ['priority']
     }
 
 COMMENT_STATUS = ('approved', 'pending', 'spam', 'deleted')

@@ -4,7 +4,7 @@
 # from flask.ext.mongoengine.wtf import model_form
 from flask_mongoengine.wtf import model_form
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, TextAreaField, HiddenField, RadioField, FileField
+from wtforms import StringField, PasswordField, BooleanField, TextAreaField, HiddenField, RadioField, FileField, IntegerField
 from wtforms import widgets, ValidationError
 from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL, Optional
 
@@ -36,6 +36,7 @@ class WidgetForm(FlaskForm):
     title = StringField('Title', validators=[Required()])
     content = TextAreaField('Content', validators=[Required()])
     content_type = RadioField('Content Type', choices=[('markdown', 'markdown'), ('html', 'html')], default='html')
+    priority = IntegerField(default=1000000)
 
 class CommentForm(FlaskForm):
     email = StringField('* Email', validators=[Required(), Length(1,128), Email()])

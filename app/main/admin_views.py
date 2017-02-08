@@ -357,7 +357,7 @@ class WidgetList(MethodView):
     template_name = 'blog_admin/widgets.html'
     
     def get(self):
-        widgets = models.Widget.objects.all().order_by('-update_time')
+        widgets = models.Widget.objects.all()
         data = {
             'widgets':widgets, 
         }
@@ -405,6 +405,8 @@ class Widget(MethodView):
             widget.md_content = None
         else:
             widget.md_content = form.content.data.strip()
+
+        widget.priority = form.priority.data
 
         allow_post_types = request.form.get('allow_post_types').split(',')
         widget.allow_post_types = [post_type.strip() for post_type in allow_post_types]
