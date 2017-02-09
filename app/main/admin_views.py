@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import time, datetime, random, json, re
+import time, datetime, random, json, re, os
 
-from flask import request, redirect, render_template, url_for, abort, flash, g, current_app
+from flask import request, redirect, render_template, url_for, abort, flash, g, current_app, send_from_directory
 from flask.views import MethodView
 # from flask.ext.login import current_user, login_required
 from flask_login import current_user, login_required
@@ -558,5 +558,45 @@ class SuExportView(MethodView):
         obj_type = request.form.get('type')
         obj_format = request.form.get('format')
 
-        return 'Type: {0}, Format: {1}'.format(obj_type, obj_format)
+        export_methods = {
+            'Posts':{
+                'json':self.export_posts_json,
+                'zip': self.export_posts_zip
+            },
+            'Comments':{
+                'json':self.export_comments_json,
+                'zip': self.export_comments_zip
+            }
+        }
+
+        return export_methods[obj_type][obj_format]()
+        # export_path, file_name = export_methods[obj_type][obj_format]()
+        # return export_path+file_name
+
+        # return 'Type: {0}, Format: {1}'.format(obj_type, obj_format)
         # return 'Not ready yet'
+
+    def export_posts_json(self):
+        posts = models.Post.objects()
+        post_list = [post.to_dict() for post in posts]
+
+        export_path = current_app._get_current_object().config['EXPORT_PATH']
+        file_name = 'all_posts.json'
+        file_fullname = os.path.join(export_path, file_name)
+
+        with open(file_fullname, 'w') as fs:
+            json.dump(post_list, fs, ensure_ascii=True)
+
+        return send_from_directory(export_path, file_name, as_attachment=True)
+
+        return 'Succeed to export posts'
+        return (export_path, file_name)
+
+    def export_posts_zip(self):
+        return 'Not ready yet'
+
+    def export_comments_json(self):
+        return 'Not ready yet'
+
+    def export_comments_zip(self):
+        return 'Not ready yet'

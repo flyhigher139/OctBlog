@@ -72,6 +72,23 @@ class Post(db.Document):
         self.update_time = update_time
         return self.save(allow_set_time=True)
 
+    def to_dict(self):
+        post_dict = {}
+        post_dict['title'] = self.title
+        post_dict['slug'] = self.slug
+        post_dict['abstract'] = self.abstract
+        post_dict['raw'] = self.raw
+        post_dict['pub_time'] = self.pub_time.strftime('%Y-%m-%d %H:%M:%S')
+        post_dict['update_time'] = self.update_time.strftime('%Y-%m-%d %H:%M:%S')
+        post_dict['content_html'] = self.content_html
+        post_dict['author'] = self.author.username
+        post_dict['category'] = self.category
+        post_dict['tags'] = self.tags
+        post_dict['post_type'] = self.post_type
+
+        return post_dict
+
+
     def __unicode__(self):
         return self.title
 
