@@ -86,7 +86,7 @@ class PrdConfig(Config):
     # DEBUG = False
     DEBUG = os.environ.get('DEBUG', 'false').lower() == 'true'
     MONGODB_SETTINGS = {
-            'db': 'OctBlog',
+            'db': os.environ.get('DB_NAME') or 'OctBlog',
             'host': os.environ.get('MONGO_HOST') or 'localhost',
             # 'port': 12345
         }
