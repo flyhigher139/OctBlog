@@ -584,8 +584,16 @@ class SuExportView(MethodView):
         file_name = 'all_posts.json'
         file_fullname = os.path.join(export_path, file_name)
 
-        with open(file_fullname, 'w') as fs:
-            json.dump(post_list, fs, ensure_ascii=True)
+        # with open(file_fullname, 'w') as fs:
+        #     json.dump(post_list, fs, ensure_ascii=True)
+
+        import io, sys
+        if sys.version_info < (3, 0):
+            with io.open(file_fullname, 'w', encoding='utf-8') as f:
+                f.write(unicode(json.dumps(post_list, ensure_ascii=False, indent=4)))
+        else:
+            with open(file_fullname, 'w') as fs:
+                json.dump(post_list, fs, ensure_ascii=True)
 
         return send_from_directory(export_path, file_name, as_attachment=True)
 
