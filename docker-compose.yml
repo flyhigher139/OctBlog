@@ -3,7 +3,7 @@ services:
   blog:
     # restart: always
     # build: ./app
-    image: gevin/octblog:0.1
+    image: gevin/octblog
     ports:
       - "8000:8000"
     links:
@@ -14,7 +14,7 @@ services:
 
   mongo:
     # restart: always
-    image: mongo:latest
+    image: mongo:3.2
     env_file: .env
 
     volumes:
