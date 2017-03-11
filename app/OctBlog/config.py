@@ -53,6 +53,11 @@ OctBlogSettings = {
     'allow_share_article': os.environ.get('allow_share_article', 'true').lower() == 'true',
     'gavatar_cdn_base': os.environ.get('gavatar_cdn_base', '//cdn.v2ex.com/gravatar/'),
     'gavatar_default_image': os.environ.get('gavatar_default_image', 'http://7tsygu.com1.z0.glb.clouddn.com/user-avatar.jpg'),
+    'background_image': {
+        'home': os.environ.get('bg_home') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog-bg.jpg',
+        'post': os.environ.get('bg_post') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog-bg.jpg',
+        'about': os.environ.get('bg_about') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog_about.jpg'
+    },
 
 }
 

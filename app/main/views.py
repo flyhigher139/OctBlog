@@ -23,12 +23,19 @@ from OctBlog.config import OctBlogSettings
 
 PER_PAGE = OctBlogSettings['pagination'].get('per_page', 10)
 ARCHIVE_PER_PAGE = OctBlogSettings['pagination'].get('archive_per_page', 10)
+BACKGROUND = OctBlogSettings['background_image']
 
 
 def get_base_data():
     pages = models.Post.objects.filter(post_type='page', is_draft=False)
     blog_meta = OctBlogSettings['blog_meta']
-    data = {'blog_meta':blog_meta, 'pages':pages}
+    data = {
+        'blog_meta': blog_meta, 
+        'pages': pages,
+        'bg_home': BACKGROUND['home'],
+        'bg_post': BACKGROUND['post'],
+        'bg_about': BACKGROUND['about'],
+        }
     return data
 
 def index():
