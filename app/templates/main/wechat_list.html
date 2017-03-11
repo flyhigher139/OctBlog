@@ -31,7 +31,7 @@
                 <p class="post-subtitle">
                     {{ post.abstract }}
                 </p>
-                <p class="post-meta">Posted by <a href="{{ url_for('main.author_detail', username=post.author.username) }}">{{ post.author.username }}</a> on {{ post.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</p>
+                <p class="post-meta">Posted by <a href="{{ url_for('main.author_detail', username=post.author.username) }}">{{ post.author.display_name }}</a> on {{ post.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</p>
                 <p class="post-meta">Tags:
                             {% for tag in post.tags %} <a href="{{ url_for('main.index') }}?tag={{ tag }}">{{ tag }}</a>  {% endfor %}
                 </p>

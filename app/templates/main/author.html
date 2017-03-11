@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        <h1>{{ blog_meta.name }}</h1>
+                        <h1>About Author</h1>
                         <hr class="small">
                         <span class="subheading">{{ blog_meta.subtitle }} <a href="{{ url_for('main.recent_feed') }}"><i class="fa fa-rss"></i></a></span>
                     </div>
@@ -22,11 +22,11 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="row">
-                        <h3>About Author </h3>
+                        <h3>About {{ user.display_name }} </h3>
                         <hr>
                         <dl class="dl-horizontal">
-                            <dt>Display Name:</dt>
-                            <dd>{{ user.display_name }}</dd>
+                            <dt>Username:</dt>
+                            <dd>{{ user.username }}</dd>
                         </dl>
                         <dl class="dl-horizontal">
                             <dt>Biography:</dt>
