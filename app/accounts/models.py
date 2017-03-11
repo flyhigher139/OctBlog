@@ -28,7 +28,7 @@ class User(UserMixin, db.Document):
     # is_active = db.BooleanField(default=True)
     is_superuser = db.BooleanField(default=False)
     role = db.StringField(max_length=32, default='reader', choices=ROLES)
-    display_name = db.StringField(max_length=255, default='Anonymous')
+    display_name = db.StringField(max_length=255, default=username)
     biography = db.StringField()
     social_networks = db.DictField(default=SOCIAL_NETWORKS)
     homepage_url = db.URLField()
