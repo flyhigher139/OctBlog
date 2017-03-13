@@ -46,7 +46,7 @@ OctBlogSettings = {
         'wechat_msg': os.environ.get('wechat_msg', 'Welcome to follow my wechat').decode('utf8')
     },
     'copyright': {
-        'display_copyright': os.environ.get('allow_donate', 'true').lower() == 'true',
+        'display_copyright': os.environ.get('allow_display_copyright', 'true').lower() == 'true',
         'copyright_msg': os.environ.get('copyright_msg', 'The article is not allowed to repost unless author authorized').decode('utf8')
     },
     'only_abstract_in_feed': os.environ.get('only_abstract_in_feed', 'false').lower() == 'true',
