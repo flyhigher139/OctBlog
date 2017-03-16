@@ -172,6 +172,8 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
 
     data['display_wechat'] = OctBlogSettings['wechat']['display_wechat']
     data['wechat_msg'] = OctBlogSettings['wechat']['wechat_msg']
+    data['wechat_image_url'] = OctBlogSettings['wechat']['wechat_image_url']
+    data['wechat_title'] = OctBlogSettings['wechat']['wechat_title']
 
     data['display_copyright'] = OctBlogSettings['copyright']['display_copyright']
     data['copyright_msg'] = OctBlogSettings['copyright']['copyright_msg']

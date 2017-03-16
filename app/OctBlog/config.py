@@ -43,7 +43,9 @@ OctBlogSettings = {
     },
     'wechat': {
         'display_wechat': os.environ.get('display_wechat', 'true').lower() == 'true',
-        'wechat_msg': os.environ.get('wechat_msg', 'Welcome to follow my wechat')
+        'wechat_msg': os.environ.get('wechat_msg', 'Welcome to follow my wechat'),
+        'wechat_image_url': os.environ.get('wechat_image_url') or 'http://7tsygu.com1.z0.glb.clouddn.com/gevin-view.jpg?imageView/2/w/150',
+        'wechat_title': os.environ.get('wechat_title', 'GevinView'),
     },
     'copyright': {
         'display_copyright': os.environ.get('allow_display_copyright', 'true').lower() == 'true',
