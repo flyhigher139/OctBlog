@@ -37,6 +37,7 @@ def get_base_data():
         'bg_home': BACKGROUND['home'],
         'bg_post': BACKGROUND['post'],
         'bg_about': BACKGROUND['about'],
+        'qiniu': BACKGROUND['qiniu'],
         }
     return data
 

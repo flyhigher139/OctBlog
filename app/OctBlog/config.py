@@ -56,7 +56,8 @@ OctBlogSettings = {
     'background_image': {
         'home': os.environ.get('bg_home') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog-bg.jpg',
         'post': os.environ.get('bg_post') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog-bg.jpg',
-        'about': os.environ.get('bg_about') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog_about.jpg'
+        'about': os.environ.get('bg_about') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog_about.jpg',
+        'qiniu': os.environ.get('qiniu') or 'http://assets.qiniu.com/qiniu-transparent.png',
     },
 
 }
