@@ -10,7 +10,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from flask_principal import Identity, AnonymousIdentity, identity_changed
 
 from . import models, forms
-from permissions import admin_permission, su_permission
+from .permissions import admin_permission, su_permission
 from OctBlog.config import OctBlogSettings
 
 def login():

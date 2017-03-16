@@ -8,7 +8,7 @@ from flask_mongoengine import MongoEngine
 from flask_login import LoginManager
 from flask_principal import Principal 
 
-from config import config
+from .config import config
 
 db = MongoEngine()
 

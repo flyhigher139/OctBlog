@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+from __future__ import unicode_literals
 import time, datetime, random, json, re, os
 
 from flask import request, redirect, render_template, url_for, abort, flash, g, current_app, send_from_directory
@@ -585,15 +585,16 @@ class SuExportView(MethodView):
         file_fullname = os.path.join(export_path, file_name)
 
         # with open(file_fullname, 'w') as fs:
-        #     json.dump(post_list, fs, ensure_ascii=True)
+        #     json.dump(post_list, fs, ensure_ascii=True, indent=4)
 
         import io, sys
         if sys.version_info < (3, 0):
             with io.open(file_fullname, 'w', encoding='utf-8') as f:
-                f.write(unicode(json.dumps(post_list, ensure_ascii=False, indent=4)))
+                # f.write(unicode(json.dumps(post_list, ensure_ascii=False, indent=4)))
+                f.write(json.dumps(post_list, ensure_ascii=False, indent=4))
         else:
             with open(file_fullname, 'w') as fs:
-                json.dump(post_list, fs, ensure_ascii=True)
+                json.dump(post_list, fs, ensure_ascii=False, indent=4)
 
         return send_from_directory(export_path, file_name, as_attachment=True)
 

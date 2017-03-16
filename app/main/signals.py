@@ -1,3 +1,4 @@
+from __future__ import print_function
 from flask import request, current_app
 from blinker import Namespace
 
@@ -48,6 +49,6 @@ def on_post_pubished(sender, post, **extra):
     if baidu_url:
         # print 'Ready to post to baidu'
         res = ext.submit_url_to_baidu(baidu_url, post_url)
-        print res.status_code, res.text
+        print(res.status_code, res.text)
     else:
-        print 'Not ready to submit urls yet'
+        print('Not ready to submit urls yet')

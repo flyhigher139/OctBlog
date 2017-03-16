@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import datetime
 # from flask.ext.login import UserMixin
 from flask_login import UserMixin
@@ -46,7 +47,9 @@ class User(UserMixin, db.Document):
 
     def get_id(self):
         try:
-            return unicode(self.username)
+            # return unicode(self.username)
+            return self.username
+
         except AttributeError:
             raise NotImplementedError('No `username` attribute - override `get_id`')
 
