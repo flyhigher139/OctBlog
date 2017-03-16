@@ -39,7 +39,8 @@ OctBlogSettings = {
     },
     'donation': {
         'allow_donate': os.environ.get('allow_donate', 'true').lower() == 'true',
-        'donation_msg': os.environ.get('donation_msg', 'You can donate to me if the article makes sense to you')
+        'donation_msg': os.environ.get('donation_msg', 'You can donate to me if the article makes sense to you'),
+        'donation_img_url': os.environ.get('donation_img_url') or 'http://img-own.igevin.info/weixin-pay.jpg?imageView/2/w/300'
     },
     'wechat': {
         'display_wechat': os.environ.get('display_wechat', 'true').lower() == 'true',

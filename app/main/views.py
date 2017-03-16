@@ -169,6 +169,7 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
 
     data['allow_donate'] = OctBlogSettings['donation']['allow_donate']
     data['donation_msg'] = OctBlogSettings['donation']['donation_msg']
+    data['donation_img_url'] = OctBlogSettings['donation']['donation_img_url']
 
     data['display_wechat'] = OctBlogSettings['wechat']['display_wechat']
     data['wechat_msg'] = OctBlogSettings['wechat']['wechat_msg']
