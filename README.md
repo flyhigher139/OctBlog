@@ -8,16 +8,16 @@ And as my customary, I named it OctBlog as OctBlog was started in October, 2015
 
 OctBlog offers every function in MayBlog, and aims to do it better, its features are as follow:
 
-- multiple user
-- roles: su, admin, editor, writer, reader
-- posts, pages, tags, and categories
-- markdown support
-- admin interface
-- change configurations by configuration file or environment variable
-- multiple comment plugin
+- Multiple user
+- OctBlog roles: su, admin, editor, writer, reader
+- Blog features: posts, pages, tags, and categories
+- Markdown support
+- Admin interface
+- Change configurations by configuration file or environment variable
+- Multiple comment plugin
 - User defined widgets
 - Deploy with docker
-- order posts by weight
+- Sort posts by weight
 
 ## Demo
 
