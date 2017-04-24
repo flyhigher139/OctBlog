@@ -52,6 +52,12 @@
                 {% endif %}
 
                 <div class="form-group">
+                    {{ form.weight.label }}
+                    {{ form.weight(class_="form-control") }}
+                    <!-- <span class="help-block">{{ url_for('main.post_detail', slug=display_slug) }}</span> -->
+                </div>
+
+                <div class="form-group">
                     {{ form.raw.label }}
 
                     {{ form.raw(class_="form-control", rows=30, data_provide="markdown") }}

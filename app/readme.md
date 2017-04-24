@@ -67,7 +67,7 @@ export config=prd
 
 ## Deploy OctBlog
 
-I recommend you to deploy OctBlog by `Ubuntu + nginx + gunicorn`.
+I recommend you to deploy OctBlog with `Ubuntu + nginx + gunicorn`.
 
 [Here](http://flask.pocoo.org/docs/0.10/deploying/wsgi-standalone/) is an instruction, and it is enough.
 

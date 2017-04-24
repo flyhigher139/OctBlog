@@ -15,12 +15,19 @@ OctBlog offers every function in MayBlog, and aims to do it better, its features
 - admin interface
 - change configurations by configuration file or environment variable
 - multiple comment plugin
-- RESTful API(not yet)
+- User defined widgets
 - Deploy with docker
+- order posts by weight
 
 ## Demo
 
-[Gevin's blog](http://gevin-oct-blog.daoapp.io/) is powered by OctBlog
+[Gevin's Blog](https://blog.igevin.info/) is powered by OctBlog
+
+## Explanation
+
+The weight is used to order articles, and if you want to hidden an article from the article list, weight is also qualified:
+
+The default weight for each article is 10, if a article's weight is heavier than 10, it will be firstly displayed, and if the weight is negative, the article will be never displayed in the article list
 
 ## Dependency
 
@@ -165,3 +172,11 @@ You either change settings in `app/OctBlog/config.py` file, or set environment v
 ## License
 
 OctBlog is under [GPL2](https://github.com/flyhigher139/OctBlog/blob/dev/LICENSE)
+
+## What's more
+
+If you find a bug or want to add a new feature, just issue me.
+
+Want to contribute? Please fork OctBlog and pull request to me.
+
+I'm not good at frontend development, so I used a free bootstrap blog theme. If you can redesign the blog theme and admin interface, I'll appriciate your work very much!

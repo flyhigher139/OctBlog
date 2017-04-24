@@ -14,6 +14,7 @@
                 <th>Author</th>
                 <th style="width: 10%">Publish</th>
                 <th style="width: 10%">Update</th>
+                <th style="width: 5%">Weight</th>
                 <th style="width: 5%">Actions</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td>{{ post.author.username }}</td>
                 <td>{{ post.pub_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                 <td>{{ post.update_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ post.weight }}</td>
                 <td>
                     <a href="{{ url_for('blog_admin.edit_post', slug=post.slug) }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> </a>
                     &nbsp

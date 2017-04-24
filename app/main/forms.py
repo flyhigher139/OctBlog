@@ -13,6 +13,7 @@ from . import models
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[Required()])
     slug = StringField('Slug', validators=[Required()])
+    weight = IntegerField('Weight', default=10)
     raw = TextAreaField('Content')
     abstract = TextAreaField('Abstract')
     category = StringField('Category')

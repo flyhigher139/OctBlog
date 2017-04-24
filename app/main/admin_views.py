@@ -55,7 +55,7 @@ class PostsList(MethodView):
     article_model = models.Post
     
     def get(self, post_type='post'):
-        posts = self.article_model.objects.filter(post_type=post_type).order_by('-update_time')
+        posts = self.article_model.objects.filter(post_type=post_type).order_by('-update_time', '-weight')
 
         if not g.identity.can(editor_permission):
             posts = posts.filter(author=get_current_user())
@@ -171,6 +171,7 @@ class Post(MethodView):
 
         post.title = form.title.data.strip()
         post.slug = form.slug.data.strip()
+        post.weight = form.weight.data
         post.raw = form.raw.data.strip()
         abstract = form.abstract.data.strip()
         post.abstract = abstract if abstract else post.raw[:140]

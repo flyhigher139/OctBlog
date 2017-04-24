@@ -45,7 +45,7 @@ def index():
     return 'Hello'
 
 def list_posts():
-    posts = models.Post.objects.filter(post_type='post', is_draft=False).order_by('-pub_time')
+    posts = models.Post.objects.filter(post_type='post', is_draft=False, weight__gt=0).order_by('-weight', '-pub_time')
 
     tags = posts.distinct('tags')
 

@@ -44,6 +44,7 @@ class Post(db.Document):
     tags = db.ListField(db.StringField(max_length=30))
     is_draft = db.BooleanField(default=False)
     post_type = db.StringField(max_length=64, default='post')
+    weight = db.IntField(default=1)
 
     def get_absolute_url(self):
         # return url_for('main.post_detail', slug=self.slug)
@@ -118,6 +119,7 @@ class Draft(db.Document):
     tags = db.ListField(db.StringField(max_length=30))
     is_draft = db.BooleanField(default=True)
     post_type = db.StringField(max_length=64, default='post')
+    weight = db.IntField(default=10)
 
     def save(self, *args, **kwargs):
         now = datetime.datetime.now()
