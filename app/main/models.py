@@ -44,7 +44,7 @@ class Post(db.Document):
     tags = db.ListField(db.StringField(max_length=30))
     is_draft = db.BooleanField(default=False)
     post_type = db.StringField(max_length=64, default='post')
-    weight = db.IntField(default=1)
+    weight = db.IntField(default=10)
 
     def get_absolute_url(self):
         # return url_for('main.post_detail', slug=self.slug)

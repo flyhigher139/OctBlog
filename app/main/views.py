@@ -45,7 +45,11 @@ def index():
     return 'Hello'
 
 def list_posts():
-    posts = models.Post.objects.filter(post_type='post', is_draft=False, weight__gt=0).order_by('-weight', '-pub_time')
+    # Not compatible with old post model, deprecated
+    # posts = models.Post.objects.filter(post_type='post', is_draft=False, weight__gt=0).order_by('-weight', '-pub_time')
+    posts = models.Post.objects.filter(post_type='post', is_draft=False).order_by('-weight', '-pub_time')
+    # Compatible with old post model, recommended
+    posts = posts.filter(Q(weight__gt=0) | Q(weight=None)) 
 
     tags = posts.distinct('tags')
 
