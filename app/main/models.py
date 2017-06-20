@@ -60,7 +60,7 @@ class Post(db.Document):
 
     def save(self, allow_set_time=False, *args, **kwargs):
         if not allow_set_time:
-            now = datetime.datetime.now()
+            now = datetime.datetime.utcnow()
             if not self.pub_time:
                 self.pub_time = now
             self.update_time = now
@@ -123,7 +123,7 @@ class Draft(db.Document):
     weight = db.IntField(default=10)
 
     def save(self, *args, **kwargs):
-        now = datetime.datetime.now()
+        now = datetime.datetime.utcnow()
         if not self.pub_time:
             self.pub_time = now
         self.update_time = now
@@ -149,7 +149,7 @@ class Tracker(db.Document):
 
     def save(self, *args, **kwargs):
         if not self.create_time:
-            self.create_time = datetime.datetime.now()
+            self.create_time = datetime.datetime.utcnow()
         return super(Tracker, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -182,7 +182,7 @@ class Widget(db.Document):
         self.html_content = get_clean_html_content(self.html_content)
 
         if not self.update_time:
-            self.update_time = datetime.datetime.now()
+            self.update_time = datetime.datetime.utcnow()
 
         return super(Widget, self).save(*args, **kwargs)
 
@@ -223,9 +223,9 @@ class Comment(db.Document):
             self.html_content = get_clean_html_content(html_content)
 
         if not self.pub_time:
-            self.pub_time = datetime.datetime.now()
+            self.pub_time = datetime.datetime.utcnow()
 
-        self.update_time = datetime.datetime.now()
+        self.update_time = datetime.datetime.utcnow()
 
         if self.gavatar_id=='00000000000':
             self.reset_gavatar_id()
