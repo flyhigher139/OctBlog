@@ -58,6 +58,7 @@
                 {% if posts.has_prev %}
                     <li class="next"><a href="?page={{ posts.prev_num }}
                         {%- if cur_category %}&category={{ cur_category }}{% endif %}
+                        {%- if keywords %}&keywords={{ keywords }}{% endif %}
                         {%- if cur_tag %}&tag={{ cur_tag }}{% endif %}">Previous Posts</a></li>
                 {% endif %}
             </ul>
