@@ -14,7 +14,8 @@ def get_clean_html_content(html_content):
     allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
                         'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
                         'h1', 'h2', 'h3', 'h4', 'h5', 'p', 'hr', 'img',
-                        'table', 'thead', 'tbody', 'tr', 'th', 'td']
+                        'table', 'thead', 'tbody', 'tr', 'th', 'td',
+                        'sup', 'sub']
 
     allowed_attrs = {
                 '*': ['class'],
