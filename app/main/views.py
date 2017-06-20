@@ -26,6 +26,7 @@ from OctBlog.config import OctBlogSettings
 PER_PAGE = OctBlogSettings['pagination'].get('per_page', 10)
 ARCHIVE_PER_PAGE = OctBlogSettings['pagination'].get('archive_per_page', 10)
 BACKGROUND = OctBlogSettings['background_image']
+DAOVOICE = OctBlogSettings['daovoice']
 
 
 def get_base_data():
@@ -38,6 +39,8 @@ def get_base_data():
         'bg_post': BACKGROUND['post'],
         'bg_about': BACKGROUND['about'],
         'qiniu': BACKGROUND['qiniu'],
+        'allow_daovoice': DAOVOICE['allow_daovoice'],
+        'dao_app_id': DAOVOICE['app_id'],
         }
     return data
 

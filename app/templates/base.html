@@ -56,6 +56,10 @@
        }
     </script>
 
+    {% if allow_daovoice %}
+    <script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/3de6f25e.js","daovoice")</script>
+    {% endif %}
+
     <!-- Custom Fonts -->
     <!-- <link href="http://libs.useso.com/js/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -157,6 +161,32 @@
     <!-- Custom Theme JavaScript -->
     <script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+    
+    {% if allow_daovoice %}
+        {% if current_user.is_authenticated %}
+            <script type="text/javascript">
+                  daovoice('init', {
+                  app_id: "{{ dao_app_id }}",
+                  user_id: "{{ current_user.username }}", // 必填: 该用户在您系统上的唯一ID
+                  email: "{{ current_user.email }}", // 选填:  该用户在您系统上的主邮箱
+                  name: "{{ current_user.username }}", // 选填: 用户名
+                  signed_up: {{ current_user.create_time.strftime("%s") }} // 选填: 用户的注册时间，用Unix时间戳表示
+                });
+                daovoice('update');
+            </script>
+
+        {% else %}
+            <script type="text/javascript">
+                daovoice('init', {
+                  app_id: "{{ dao_app_id }}"
+                });
+                daovoice('update');
+            </script>
+
+        {% endif %}
+    {% endif %}
+
+
     {% block js %}
     {% endblock %}
 </body>

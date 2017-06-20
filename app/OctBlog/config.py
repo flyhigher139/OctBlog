@@ -194,6 +194,10 @@ OctBlogSettings = {
         'about': os.environ.get('bg_about') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog_about.jpg',
         'qiniu': os.environ.get('qiniu') or 'http://assets.qiniu.com/qiniu-transparent.png',
     },
+    'daovoice':{
+        'allow_daovoice': (os.environ.get('allow_daovoice', 'false').lower() == 'true' and os.environ.get('daovoice_app_id') is not None),
+        'app_id': os.environ.get('daovoice_app_id'),
+    }
 
 }
 
