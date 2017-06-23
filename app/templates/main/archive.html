@@ -30,7 +30,7 @@
                         <h3><a href="{{ url_for('main.post_detail', slug=post.slug) }}">{{ post.title }}</a></h3><hr>
                         <p><strong>Abstract: </strong>{{ post.abstract }}</p>
                         <p><strong>Author: </strong>{{ post.author }}</p>
-                        <p><strong>Date: </strong>{{ post.pub_time.strftime('%Y/%m/%d') }}</p>
+                        <p><strong>Date: </strong>{{ moment(post.pub_time).format('YYYY/MM/DD, h:mm a') }}</p>
                         
                       </div>
                     </div>          
@@ -51,6 +51,7 @@
 {% endblock %}
 
 {% block js %}
+{{ moment.include_moment(local_js="//cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js") }}
 <script type="text/javascript">
 $('.rm-filter').on('click', function (event) {
 

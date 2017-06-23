@@ -14,7 +14,7 @@
                     <div class="post-heading">
                         <h1>{{ post.title }}</h1>
                         <!-- <h2 class="subheading">Problems look mighty small from 150 miles up</h2> -->
-                        <span class="meta">Posted by <a href="{{ url_for('main.author_detail', username=post.author.username) }}">{{ post.author.display_name }}</a> on {{ post.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</span>
+                        <span class="meta">Posted by <a href="{{ url_for('main.author_detail', username=post.author.username) }}">{{ post.author.display_name }}</a> on {{ moment(post.pub_time).format('YYYY/MM/DD, h:mm a') }}</span>
                         {% if post.category%}
                         <span class="meta">Category: <a href="{{ url_for('main.index') }}?category={{ post.category }}">{{ post.category }}</a></span>
                         {% endif %}
@@ -110,6 +110,7 @@
 {% endblock %}
 
 {% block js %}
+{{ moment.include_moment(local_js="//cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js") }}
 <script src="{{ url_for('static', filename='js/share.min.js') }}"></script>
 <script type="text/javascript">
     $('table').addClass('table');

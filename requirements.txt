@@ -11,3 +11,4 @@ markdown2
 bleach
 python-dateutil
 requests
+flask-moment

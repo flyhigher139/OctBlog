@@ -32,7 +32,7 @@
                 <p class="post-subtitle">
                     {{ post.abstract }}
                 </p>
-                <p class="post-meta">Posted by <a href="{{ url_for('main.author_detail', username=post.author.username) }}">{{ post.author.display_name }}</a> on {{ post.pub_time.strftime('%Y/%m/%d %H:%M:%S') }}</p>
+                <p class="post-meta">Posted by <a href="{{ url_for('main.author_detail', username=post.author.username) }}">{{ post.author.display_name }}</a> on {{ moment(post.pub_time).format('YYYY/MM/DD, h:mm a') }}</p>
                 <p class="post-meta">category: <a href="?category={{ post.category }}">{{ post.category }}</a></p>
                 <p class="post-meta">Tags:
                             {% for tag in post.tags %} <a href="{{ url_for('main.index') }}?tag={{ tag }}">{{ tag }}</a>  {% endfor %}
@@ -132,6 +132,7 @@
 {% endblock %}
 
 {% block js %}
+{{ moment.include_moment(local_js="//cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js") }}
 <script type="text/javascript">
 $('.rm-filter').on('click', function (event) {
 
