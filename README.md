@@ -75,7 +75,7 @@ In command line, switch to OctBlog root directory, and run the following command
 
 ```bash
 cd app
-(sudo) docker build gevin/octblog:0.1 .
+(sudo) docker build -t gevin/octblog:0.1 .
 
 # Now you can take a cup of coffee and wait for a few minutes :)
 ```
@@ -86,7 +86,13 @@ Alternatively, pull Octblog image from DockerHub(**recommended**):
 (sudo) docker pull gevin/octblog:0.1
 ```
 
-2\. Run OctBlog
+2\. Edit `docker-compose.yml`
+
+Replace ```/Users/gevin/projects/data/mongodb```  with a path on your machine
+
+
+
+3\. Run OctBlog
 
 ```bash
 (sudo) docker-compose up -d
