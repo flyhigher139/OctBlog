@@ -99,22 +99,29 @@ All environment variables can be found in `/OctBlog/config.py`
 A `.env` file example:
 
 ```
+DEBUG=false
 config=prd
 MONGO_HOST=mongo
 allow_registration=true
 allow_su_creation=true
 
-wechat_subtitle=技术、生活都要折腾
+name=Gevin's Blog
 subtitle=技术、生活都要折腾
 description=技术、生活都要折腾
+
 wechat_name=GevinView @ <i class="fa fa-weixin" aria-hidden="true"></i>
+wechat_subtitle=技术、生活都要折腾
+
 copyright_msg=注：转载本文，请与Gevin联系
 donation_msg=如果您觉得Gevin的文章有价值，就请Gevin喝杯茶吧！
-DEBUG=false
-google_site_verification=Cj8n-gGgBXzrcuYXoe9fWtDOqNn0hmakKzmoazwrFAY
-allow_comment=true
 wechat_msg=欢迎关注我的微信公众账号
-name=Gevin's Blog
+
+google_site_verification=
+allow_comment=true
+
+
+allow_daovoice=true
+daovoice_app_id=
 ```
 
 3\. Get into OctBlog container
