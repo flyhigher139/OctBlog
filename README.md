@@ -1,5 +1,7 @@
 # About OctBlog
 
+[![Join the chat at https://gitter.im/flyhigher139/OctBlog](https://badges.gitter.im/flyhigher139/OctBlog.svg)](https://gitter.im/flyhigher139/OctBlog?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![](https://images.microbadger.com/badges/image/gevin/octblog.svg)](http://microbadger.com/images/gevin/octblog "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/gevin/octblog.svg)](http://microbadger.com/images/gevin/octblog "Get your own version badge on microbadger.com")
 
 [OctBlog](https://github.com/flyhigher139/OctBlog) is almost the same with [MayBlog](https://github.com/flyhigher139/MayBlog) except that it is powered by [Flask](http://flask.pocoo.org/) and [MongoDB](https://www.mongodb.org/) rather than [Django](https://www.djangoproject.com/) and SQL Databases.
