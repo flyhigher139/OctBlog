@@ -3,10 +3,10 @@ import os
 from flask import Flask
 # from flask.ext.mongoengine import MongoEngine
 # from flask.ext.login import LoginManager
-# from flask.ext.principal import Principal 
+# from flask.ext.principal import Principal
 from flask_mongoengine import MongoEngine
 from flask_login import LoginManager
-from flask_principal import Principal 
+from flask_principal import Principal
 from flask_moment import Moment
 
 from .config import config
@@ -22,12 +22,11 @@ principals = Principal()
 moment = Moment()
 
 def create_app(config_name):
-    app = Flask(__name__, 
+    app = Flask(__name__,
         template_folder=config[config_name].TEMPLATE_PATH, static_folder=config[config_name].STATIC_PATH)
     app.config.from_object(config[config_name])
-
+    app.config["MONGODB_SETTINGS"]=config["prd"].MONGODB_SETTINGS
     config[config_name].init_app(app)
-
     db.init_app(app)
     login_manager.init_app(app)
     principals.init_app(app)
