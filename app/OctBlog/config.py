@@ -239,8 +239,12 @@ class PrdConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     DEBUG = True
-    MONGODB_SETTINGS = {'DB': 'OctBlogTest'}
+    
     WTF_CSRF_ENABLED = False
+    MONGODB_SETTINGS = {
+        'db': 'OctBlogTest',
+        'is_mock':True
+        }
 
 config = {
     'dev': DevConfig,
