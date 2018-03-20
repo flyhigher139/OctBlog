@@ -33,7 +33,7 @@ def get_base_data():
     pages = models.Post.objects.filter(post_type='page', is_draft=False)
     blog_meta = OctBlogSettings['blog_meta']
     data = {
-        'blog_meta': blog_meta, 
+        'blog_meta': blog_meta,
         'pages': pages,
         'bg_home': BACKGROUND['home'],
         'bg_post': BACKGROUND['post'],
@@ -52,7 +52,7 @@ def list_posts():
     # posts = models.Post.objects.filter(post_type='post', is_draft=False, weight__gt=0).order_by('-weight', '-pub_time')
     posts = models.Post.objects.filter(post_type='post', is_draft=False).order_by('-weight', '-pub_time')
     # Compatible with old post model, recommended
-    posts = posts.filter(Q(weight__gt=0) | Q(weight=None)) 
+    posts = posts.filter(Q(weight__gt=0) | Q(weight=None))
 
     tags = posts.distinct('tags')
 
@@ -69,7 +69,7 @@ def list_posts():
 
     if keywords:
         # posts = posts.filter(raw__contains=keywords )
-        posts = posts.filter(Q(raw__contains=keywords) | Q(title__contains=keywords))
+        posts = posts.filter(Q(raw__icontains=keywords) | Q(title__icontains=keywords))
 
     if cur_category:
         posts = posts.filter(category=cur_category)
@@ -123,7 +123,7 @@ def list_wechats():
 
     if keywords:
         # posts = posts.filter(raw__contains=keywords )
-        posts = posts.filter(Q(raw__contains=keywords) | Q(title__contains=keywords))
+        posts = posts.filter(Q(raw__icontains=keywords) | Q(title__icontains=keywords))
 
 
     if cur_tag:
@@ -366,7 +366,7 @@ def recent_feed():
     content = 'abstract' if only_abstract_in_feed else 'content_html'
     for post in posts:
         # return post.get_absolute_url()
-        feed.add(post.title, 
+        feed.add(post.title,
                  # unicode(post.content_html),
                  # post.abstract,
                  getattr(post, content),
