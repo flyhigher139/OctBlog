@@ -159,7 +159,7 @@ OctBlogSettings = {
     'pagination':{
         'per_page': int(os.environ.get('per_page', 5)),
         'admin_per_page': int(os.environ.get('admin_per_page', 10)),
-        'archive_per_page': int(os.environ.get('admin_per_page', 20)),
+        'archive_per_page': int(os.environ.get('archive_per_page', 20)),
     },
     'blog_comment':{
         'allow_comment': os.environ.get('allow_comment', 'true').lower() == 'true',
@@ -239,7 +239,7 @@ class PrdConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     DEBUG = True
-    
+
     WTF_CSRF_ENABLED = False
     MONGODB_SETTINGS = {
         'db': 'OctBlogTest',
