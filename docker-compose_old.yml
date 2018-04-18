@@ -1,0 +1,22 @@
+version: '2'
+services:
+  blog:
+    # restart: always
+    image: gevin/octblog
+    ports:
+      - "8000:8000"
+      # - "5000:5000"
+    links:
+      - mongo:mongo
+    env_file: .env
+
+  mongo:
+    # restart: always
+    image: mongo:3.2
+
+    volumes:
+      - /Users/gevin/projects/data/mongodb:/data/db
+
+    # ports:
+    #   - "27017:27017"
+

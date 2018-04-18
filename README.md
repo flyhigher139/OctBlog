@@ -87,7 +87,9 @@ Alternatively, pull Octblog image from DockerHub(**recommended**):
 (sudo) docker pull gevin/octblog:0.1
 ```
 
-2\. Edit `docker-compose.yml`
+2\. Create your `docker-compose.yml`
+
+You need to create a docker-compose file similar to the `docker-compose_old.yml` file
 
 Replace ```/Users/gevin/projects/data/mongodb```  with a path on your machine
 
@@ -158,6 +160,43 @@ Maybe you would like to dig into the container, the following command will help:
 (sudo) docker-compose stop
 ```
 
+### Run by docker with swarm mode
+
+#### Preparation
+
+If you want to use docker swarm mode, you need to activate this mode first:
+
+```
+docker swarm init
+```
+
+This command activates your docker swarm mode and make it as a swarm manager
+
+Then you can join other swarm node to this manager with `docker swarm join`
+
+#### Run OctBlog
+
+You need to create a docker-compose file similar to the `docker-compose.yml` file.
+
+Then, start your application:
+
+```
+docker stack deploy -c docker-compose.yml octblog
+```
+
+review your application:
+
+```
+docker stack ps octblog
+```
+
+remove your application:
+
+```
+docker stack rm octblog
+```
+
+You can refer to [Docker Documentation](https://docs.docker.com/) for more docker swarm usages.
 
 ### Get started with OctBlog
 
