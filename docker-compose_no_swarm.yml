@@ -8,6 +8,8 @@ services:
       # - "5000:5000"
     links:
       - mongo:mongo
+    volumes:
+      - blog-static:/usr/src/app/static
     env_file: .env
     environment:
       - VIRTUAL_HOST=localhost
@@ -16,16 +18,29 @@ services:
   mongo:
     # restart: always
     image: mongo:3.2
-
     volumes:
       - /Users/gevin/projects/data/mongodb:/data/db
-
     # ports:
     #   - "27017:27017"
 
+  blog-static-nginx:
+    # restart: always
+    image: nginx:stable-alpine
+    # ports:
+    #   - "8000:80"
+    volumes:
+      - blog-static:/usr/share/nginx/html/static:ro
+    environment:
+      - VIRTUAL_HOST=localhost
+      - VIRTUAL_PORT=80
+
   nginx-proxy:
+    # restart: always
     image: jwilder/nginx-proxy:alpine
     ports:
       - "80:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+
+volumes:
+  blog-static:
