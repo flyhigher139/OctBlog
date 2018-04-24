@@ -89,7 +89,7 @@ Alternatively, pull Octblog image from DockerHub(**recommended**):
 
 2\. Create your `docker-compose.yml`
 
-You need to create a docker-compose file similar to the `docker-compose_old.yml` file
+You need to create a docker-compose file similar to the `docker-compose_no_swarm.yml` file
 
 Replace ```/Users/gevin/projects/data/mongodb```  with a path on your machine
 
@@ -101,7 +101,7 @@ Replace ```/Users/gevin/projects/data/mongodb```  with a path on your machine
 (sudo) docker-compose up -d
 ```
 
-Then you can visit OctBlog in your brower at `http://localhost:8000`
+Then you can visit OctBlog in your brower at `http://localhost`
 
 All environment variables can be found in `/OctBlog/config.py`
 

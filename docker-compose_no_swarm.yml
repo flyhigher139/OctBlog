@@ -2,13 +2,16 @@ version: '2'
 services:
   blog:
     # restart: always
-    image: gevin/octblog
-    ports:
-      - "8000:8000"
+    image: gevin/octblog:0.4
+    # ports:
+    #   - "8000:8000"
       # - "5000:5000"
     links:
       - mongo:mongo
     env_file: .env
+    environment:
+      - VIRTUAL_HOST=localhost
+      - VIRTUAL_PORT=8000
 
   mongo:
     # restart: always
@@ -20,3 +23,9 @@ services:
     # ports:
     #   - "27017:27017"
 
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
