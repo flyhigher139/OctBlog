@@ -7,7 +7,7 @@ COPY sources.list /etc/apt/sources.list
 COPY pip.conf /root/.pip/pip.conf
 
 RUN apt-get update && apt-get install -y \
-    # vim \
+    vim \
     nginx \
     build-essential \
     python-dev \
@@ -39,4 +39,4 @@ ENV PORT 8000
 EXPOSE 8000 5000
 
 # CMD ["/usr/local/bin/supervisord", "-n"]
-CMD ["/usr/local/bin/supervisord", "-c", "/usr/src/app/supervisord.conf"]
+CMD ["/usr/local/bin/supervisord", "-n", "-c", "/usr/src/app/supervisord.conf"]
