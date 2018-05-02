@@ -65,7 +65,7 @@ class Post(db.Document):
                 self.pub_time = now
             self.update_time = now
         # self.content_html = self.raw
-        self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks', 'tables']).encode('utf-8')
+        self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks', 'tables'])
         self.content_html = get_clean_html_content(self.content_html)
         return super(Post, self).save(*args, **kwargs)
 
@@ -127,7 +127,7 @@ class Draft(db.Document):
         if not self.pub_time:
             self.pub_time = now
         self.update_time = now
-        self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks', 'tables']).encode('utf-8')
+        self.content_html = markdown2.markdown(self.raw, extras=['code-friendly', 'fenced-code-blocks', 'tables'])
         self.content_html = get_clean_html_content(self.content_html)
         return super(Draft, self).save(*args, **kwargs)
 
@@ -177,7 +177,7 @@ class Widget(db.Document):
 
     def save(self, *args, **kwargs):
         if self.md_content:
-            self.html_content = markdown2.markdown(self.md_content, extras=['code-friendly', 'fenced-code-blocks', 'tables']).encode('utf-8')
+            self.html_content = markdown2.markdown(self.md_content, extras=['code-friendly', 'fenced-code-blocks', 'tables'])
 
         self.html_content = get_clean_html_content(self.html_content)
 
@@ -215,11 +215,12 @@ class Comment(db.Document):
         if not self.email:
             self.gavatar_id = '00000000000'
             return
-        self.gavatar_id = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
+        # self.gavatar_id = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
+        self.gavatar_id = hashlib.md5(self.email.lower()).hexdigest()
 
     def save(self, *args, **kwargs):
         if self.md_content:
-            html_content = markdown2.markdown(self.md_content, extras=['code-friendly', 'fenced-code-blocks', 'tables', 'nofollow']).encode('utf-8')
+            html_content = markdown2.markdown(self.md_content, extras=['code-friendly', 'fenced-code-blocks', 'tables', 'nofollow'])
             self.html_content = get_clean_html_content(html_content)
 
         if not self.pub_time:

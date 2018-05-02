@@ -494,12 +494,12 @@ class Comments(MethodView):
 
     def delete(self):
         if request.args.get('ajax')=='true' and request.args.get('action')=='clear_comments':
-            # comments = models.Comment.objects(status='pending')
-            # comments.delete()
+            comments = models.Comment.objects(status='pending')
+            comments.delete()
             flash('All pending comments has been deleted', 'success')
         # flash(request.args.get('action'))
         # return redirect(url_for('blog_admin.comments'))
-        return 'test'
+        return 'All pending comments has been deleted'
 
 class ImportCommentView(MethodView):
     decorators = [login_required, editor_permission.require(401)]
