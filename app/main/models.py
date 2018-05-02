@@ -215,8 +215,8 @@ class Comment(db.Document):
         if not self.email:
             self.gavatar_id = '00000000000'
             return
-        # self.gavatar_id = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
-        self.gavatar_id = hashlib.md5(self.email.lower()).hexdigest()
+        self.gavatar_id = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
+        # self.gavatar_id = hashlib.md5(self.email.lower()).hexdigest()
 
     def save(self, *args, **kwargs):
         if self.md_content:
