@@ -475,7 +475,7 @@ class Comment(MethodView):
             return 'success'
 
         msg = 'The comment has been approved'
-        flask(msg, 'success')
+        flash(msg, 'success')
         return redirect(url_for('blog_admin.comments_approved'))
 
     def delete(self, pk):
@@ -486,8 +486,20 @@ class Comment(MethodView):
             return 'success'
 
         msg = 'The comment has been deleted'
-        flask(msg, 'success')
+        flash(msg, 'success')
         return redirect(url_for('blog_admin.comments_approved'))
+
+class Comments(MethodView):
+    decorators = [login_required, editor_permission.require(401)]
+
+    def delete(self):
+        if request.args.get('ajax')=='true' and request.args.get('action')=='clear_comments':
+            # comments = models.Comment.objects(status='pending')
+            # comments.delete()
+            flash('All pending comments has been deleted', 'success')
+        # flash(request.args.get('action'))
+        # return redirect(url_for('blog_admin.comments'))
+        return 'test'
 
 class ImportCommentView(MethodView):
     decorators = [login_required, editor_permission.require(401)]

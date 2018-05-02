@@ -47,6 +47,7 @@ blog_admin.add_url_rule('/posts/comments/approved/', view_func=admin_views.Comme
 blog_admin.add_url_rule('/posts/comments/spam/', view_func=admin_views.Comment.as_view('comments_spam'), defaults={'status':'spam'})
 blog_admin.add_url_rule('/posts/comments/<pk>/action/', view_func=admin_views.Comment.as_view('comment_action'))
 blog_admin.add_url_rule('/posts/comments/import/', view_func=admin_views.ImportCommentView.as_view('import_comments'))
+blog_admin.add_url_rule('/posts/comments/action/', view_func=admin_views.Comments.as_view('comments_action'))
 
 blog_admin.add_url_rule('/su/posts/', view_func=admin_views.SuPostsList.as_view('su_posts'))
 blog_admin.add_url_rule('/su/posts/<slug>/', view_func=admin_views.SuPost.as_view('su_post_edit'))

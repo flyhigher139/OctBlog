@@ -78,6 +78,8 @@
         {% endfor %}
 
     </table>
+
+    <a class="btn btn-danger" id="clear_comments" href="{{ url_for('blog_admin.comments_action') }}" role="button">Clear</a>
     {% import '_pagination.html' as pagination %}
     {{ pagination.render_pagination(comments) }}
 </div>
@@ -114,6 +116,23 @@ $('.approve').on('click', function (event) {
 $('.delete').on('click', function (event) {
     var url = $(this).attr('href');
     url = url + '?ajax=true';
+    bootbox.confirm("Are you sure?", function(result) {
+      if(result){
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            success: function(result){
+                location.reload();
+            }
+
+        })
+        }
+    });
+    return false;
+  });
+$('#clear_comments').on('click', function (event) {
+    var url = $(this).attr('href');
+    url = url + '?ajax=true&action=clear_comments';
     bootbox.confirm("Are you sure?", function(result) {
       if(result){
         $.ajax({
