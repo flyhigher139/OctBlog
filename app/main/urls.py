@@ -1,6 +1,7 @@
-from flask import Blueprint
+from flask import Blueprint, g
 
 from . import views, admin_views, errors
+from OctBlog.config import OctBlogSettings
 
 main = Blueprint('main', __name__)
 
@@ -59,4 +60,10 @@ blog_admin.add_url_rule('/su/export/', view_func=admin_views.SuExportView.as_vie
 blog_admin.errorhandler(404)(errors.admin_page_not_found)
 blog_admin.errorhandler(401)(errors.handle_unauthorized)
 blog_admin.errorhandler(403)(errors.handle_forbidden)
+
+ALLOW_WECHAT_PORT = OctBlogSettings['allow_wechat_port']
+
+@blog_admin.before_app_request
+def before_request():
+    g.allow_wechat_port = ALLOW_WECHAT_PORT
 

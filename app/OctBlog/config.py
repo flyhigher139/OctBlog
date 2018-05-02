@@ -186,6 +186,7 @@ OctBlogSettings = {
     },
     'only_abstract_in_feed': os.environ.get('only_abstract_in_feed', 'false').lower() == 'true',
     'allow_share_article': os.environ.get('allow_share_article', 'true').lower() == 'true',
+    'allow_wechat_port': os.environ.get('allow_wechat_port', 'false').lower() == 'true',
     'gavatar_cdn_base': os.environ.get('gavatar_cdn_base', '//cdn.v2ex.com/gravatar/'),
     'gavatar_default_image': os.environ.get('gavatar_default_image', 'http://7tsygu.com1.z0.glb.clouddn.com/user-avatar.jpg'),
     'background_image': {

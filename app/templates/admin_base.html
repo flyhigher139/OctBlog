@@ -78,6 +78,8 @@
                 <li><a href="#">Export</a></li>
               </ul>
             </li>
+
+            {% if g.allow_wechat_port %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">WeChat <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -87,9 +89,10 @@
                 <li><a href="{{ url_for('blog_admin.wechat_drafts') }}">Drafts</a></li>
               </ul>
             </li>
+            {% endif %} <!-- end allow_wechat_port -->
 
             
-            {% endif %}
+            {% endif %}  <!-- g.identity.allow_write -->
 
             {% if g.identity.allow_edit %}
             <li class="dropdown">
