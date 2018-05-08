@@ -170,6 +170,7 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
     if request.form.get('oct-comment') and form.validate_on_submit():
         octblog_create_comment(form, post)
         url = '{0}#comment'.format(url_for('main.post_detail', slug=slug))
+        url = '{0}#comment'.format(request.full_path)
         msg = 'Succeed to comment, and it will be displayed when the administrator reviews it.'
         flash(msg, 'success')
         return redirect(url)
