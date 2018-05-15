@@ -41,6 +41,7 @@ def on_identity_loaded(sender, identity):
         identity.provides.add(su_need)
         # return current_user.role
 
+    identity.allow_su = su_permission.allows(identity)
     identity.allow_edit = editor_permission.allows(identity)
     identity.allow_admin = admin_permission.allows(identity)
     identity.allow_write = writer_permission.allows(identity)
