@@ -1,0 +1,11 @@
+Dear {{ user.username }},
+
+Welcome to GitMark!
+
+To confirm your email please click on the following link:
+
+{{ url_for('accounts.confirm_email', token=token, _external=True) }}
+
+Sincerely,
+
+The GitMark Team

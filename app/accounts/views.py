@@ -9,7 +9,7 @@ from flask.views import MethodView
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_principal import Identity, AnonymousIdentity, identity_changed
 
-from . import models, forms
+from . import models, forms, misc
 from .permissions import admin_permission, su_permission
 from OctBlog.config import OctBlogSettings
 
@@ -252,20 +252,48 @@ class Password(MethodView):
         if not form:
             form = forms.PasswordForm()
         data = {'form': form}
+        data['user'] = current_user
         return render_template(self.template_name, **data)
 
     def post(self):
-        form = forms.PasswordForm(obj=request.form)
-        if form.validate():
-            # if not current_user.verify_password(form.current_password.data):
-            #     return 'current password error', 403 
-            current_user.password = form.new_password.data
-            current_user.save()
-            # return 'waiting to code'
-            msg = 'Succeed to update password'
-            flash(msg, 'success')
+        form = None
 
-            return redirect(url_for('accounts.password'))
+        if request.form.get('update'):
+            form = forms.PasswordForm(obj=request.form)
+            if form.validate():
+                # if not current_user.verify_password(form.current_password.data):
+                #     return 'current password error', 403 
+                current_user.password = form.new_password.data
+                current_user.save()
+                # return 'waiting to code'
+                msg = 'Succeed to update password'
+                flash(msg, 'success')
+
+                return redirect(url_for('accounts.password'))
+
+        elif request.form.get('email'):
+            if current_user.email:
+                token = current_user.generate_confirmation_token()
+                misc.send_user_confirm_mail(current_user.email, current_user, token)
+                current_user.confirm_email_sent_time = datetime.datetime.now()
+                current_user.save()
+                flash('Confirmation message has been sent, please check your email to confirm your account')
+                # return 'sending confirm email'
+            else:
+                flash('Set your email first!', 'danger')
 
         return self.get(form)
 
+class ConfirmEmail(MethodView):
+    decorators = [login_required]
+
+    def get(self, token):
+        if current_user.is_email_confirmed:
+            return redirect(url_for('accounts.password'))
+
+        if current_user.confirm_email(token):
+            flash('Your email has been confirmed', 'success')
+        else:
+            flash('The confirmation link is invalid or has expired', 'danger')
+
+        return redirect(url_for('accounts.password'))

@@ -2,6 +2,7 @@ flask
 flask-script
 flask-login
 flask-admin
+flask_mail
 Flask-WTF
 flask-principal
 WTForms

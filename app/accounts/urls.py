@@ -16,5 +16,6 @@ accounts.add_url_rule('/su-users/', view_func=views.SuUsers.as_view('su_users'))
 accounts.add_url_rule('/su-users/edit/<username>', view_func=views.SuUser.as_view('su_edit_user'))
 accounts.add_url_rule('/user/settings/', view_func=views.Profile.as_view('settings'))
 accounts.add_url_rule('/user/password/', view_func=views.Password.as_view('password'))
+accounts.add_url_rule('/user/email-confirm/<token>/', view_func=views.ConfirmEmail.as_view('confirm_email'))
 
 accounts.errorhandler(403)(errors.handle_forbidden)
