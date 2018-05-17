@@ -10,6 +10,10 @@
         {{ forms.render(form) }}
             <button type="submit" class="btn btn-primary" name="login">Login</button>
         </form>
+        <br>
+        <!-- <br> -->
+        <a href="{{ url_for('accounts.reset_password_request') }}"> <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+        Click here if you forget your password?</a>
     </div>
     <div class="col-xs-6 col-sm-3"></div>
 </div>

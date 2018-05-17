@@ -1,6 +1,6 @@
 Dear {{ user.username }},
 
-Welcome to GitMark!
+Welcome to OctBlog!
 
 To confirm your email please click on the following link:
 
@@ -8,4 +8,4 @@ To confirm your email please click on the following link:
 
 Sincerely,
 
-The GitMark Team
+Gevin

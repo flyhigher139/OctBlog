@@ -298,3 +298,58 @@ class ConfirmEmail(MethodView):
             flash('The confirmation link is invalid or has expired', 'danger')
 
         return redirect(url_for('accounts.password'))
+
+class ResetPasswordRequest(MethodView):
+    template_name = 'accounts/reset_password.html'
+
+    def get(self, form=None):
+        if not current_user.is_anonymous:
+            return redirect(url_for('blog_admin.index'))
+
+        if not form:
+            form = forms.PasswordResetRequestForm()
+        data = {'form': form}
+
+        return render_template(self.template_name, **data)
+
+    def post(self):
+        form = forms.PasswordResetRequestForm(obj=request.form)
+        if form.validate():
+            user = models.User.objects(email=form.email.data.strip()).first()
+            if user:
+                token = user.generate_reset_token()
+                misc.send_reset_password_mail(user.email, user, token)
+                flash('An email with instructions to reset your password has been '
+                      'sent to you.')
+                return redirect(url_for('accounts.login'))
+
+            flash('User does not exist!', 'danger')
+            return redirect(url_for('accounts.register'))
+
+        return self.get(form)
+
+class ResetPassword(MethodView):
+    template_name = 'accounts/reset_password.html'
+
+    def get(self, token, form=None):
+        if not current_user.is_anonymous:
+            return redirect(url_for('blog_admin.index'))
+
+        if not form:
+            form = forms.PasswordResetForm()
+        data = {'form': form}
+
+        return render_template(self.template_name, **data)
+
+    def post(self, token):
+        form = forms.PasswordResetForm(obj=request.form)
+        if form.validate():
+            success = models.User.reset_password(token, form.password.data)
+            if success:
+                flash('Your password has been updated.')
+            else:
+                flash('Fail to update your password')
+            
+            return redirect(url_for('accounts.login'))
+
+        return self.get(form)

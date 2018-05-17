@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SelectField, ValidationError
-from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL, Optional
+from wtforms import StringField, PasswordField, BooleanField, SelectField, SubmitField, ValidationError
+from wtforms.validators import Required, Length, Email, Regexp, EqualTo, URL, Optional, DataRequired
 # from flask.ext.login import current_user
 # from flask.ext.mongoengine.wtf import model_form
 from flask_login import current_user
@@ -76,3 +76,10 @@ class PasswordForm(FlaskForm):
     def validate_current_password(self, field):
         if not current_user.verify_password(field.data):
             raise ValidationError('Current password is wrong')
+
+class PasswordResetRequestForm(FlaskForm):
+    email = StringField('Email', validators=[Required(), Length(1,128), Email()])
+
+class PasswordResetForm(FlaskForm):
+    password = PasswordField('New Password', validators=[DataRequired(), EqualTo('password2', message='Passwords must match')])
+    password2 = PasswordField('Confirm password', validators=[DataRequired()])
