@@ -275,7 +275,7 @@ class Password(MethodView):
         elif request.form.get('email'):
             if current_user.email:
                 token = current_user.generate_confirmation_token()
-                misc.send_user_confirm_mail(current_user.email, current_user, token)
+                misc.send_user_confirm_mail2(current_user.email, current_user, token)
                 current_user.confirm_email_sent_time = datetime.datetime.now()
                 current_user.save()
                 flash('Confirmation message has been sent, please check your email to confirm your account')
