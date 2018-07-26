@@ -165,6 +165,10 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
         obj = {'author': session.get('author'), 'email': session.get('email'),'homepage': session.get('homepage'),}
         form = forms.CommentForm(**obj)
         # print session.get('email')
+        if not current_user.is_anonymous:
+            session['author'] = session.get('author') or current_user.username
+            session['email'] = session.get('email') or current_user.email
+            session['homepage'] = session.get('homepage') or current_user.homepage_url
 
 
     if request.form.get('oct-comment') and form.validate_on_submit():
@@ -193,10 +197,7 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
         comment_shortname = OctBlogSettings['blog_comment']['comment_opt'][comment_type]
         comment_func = get_comment_func(comment_type)
 
-        if not current_user.is_anonymous:
-            session['author'] = session['author'] or current_user.username
-            session['email'] = session['email'] or current_user.email
-            session['homepage'] = session['homepage'] or current_user.homepage_url
+        
 
         data['comment_html'] = comment_func(slug, post.title, request.base_url, comment_shortname, form=form) if comment_func else ''
 
