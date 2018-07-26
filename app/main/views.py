@@ -192,11 +192,15 @@ def post_detail(slug, post_type='post', fix=False, is_preview=False):
         comment_type = OctBlogSettings['blog_comment']['comment_type']
         comment_shortname = OctBlogSettings['blog_comment']['comment_opt'][comment_type]
         comment_func = get_comment_func(comment_type)
+
+        if not current_user.is_anonymous:
+            session['author'] = session['author'] or current_user.username
+            session['email'] = session['email'] or current_user.email
+            session['homepage'] = session['homepage'] or current_user.homepage_url
+
         data['comment_html'] = comment_func(slug, post.title, request.base_url, comment_shortname, form=form) if comment_func else ''
 
     data['allow_share_article'] = OctBlogSettings['allow_share_article']
-    # if data['allow_share_article']:
-    #     data['share_html'] = jiathis_share()
 
     # send signal
     if not is_preview:
