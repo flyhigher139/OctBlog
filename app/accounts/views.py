@@ -167,7 +167,7 @@ class SuUser(MethodView):
             user.linkedin = user.social_networks['linkedin'].get('url')
 
             form = forms.SuUserForm(obj=user)
-        data = {'form':form}
+        data = {'form':form, 'user': user}
         return data
 
     def get(self, username, form=None):
