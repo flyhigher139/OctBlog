@@ -3,7 +3,7 @@
 
 FROM python:3.6.5-alpine3.7
 LABEL maintainer="flyhigher139@gmail.com"
-COPY pip.conf /root/.pip/pip.conf
+# COPY pip.conf /root/.pip/pip.conf
 
 RUN mkdir -p /usr/src/app  && \
     mkdir -p /var/log/gunicorn
