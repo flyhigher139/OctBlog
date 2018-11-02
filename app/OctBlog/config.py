@@ -51,7 +51,7 @@ OctBlogSettings = {
     'wechat': {
         'display_wechat': os.environ.get('display_wechat', 'true').lower() == 'true',
         'wechat_msg': get_env_value('wechat_msg', 'Welcome to follow my wechat'),
-        'wechat_image_url': os.environ.get('wechat_image_url') or 'http://7tsygu.com1.z0.glb.clouddn.com/gevin-view.jpg?imageView/2/w/150',
+        'wechat_image_url': os.environ.get('wechat_image_url') or 'http://free.igevin.info/gevin-view.jpg?imageView/2/w/150',
         'wechat_title': get_env_value('wechat_title', 'GevinView'),
     },
     'copyright': {
@@ -62,11 +62,11 @@ OctBlogSettings = {
     'allow_share_article': os.environ.get('allow_share_article', 'true').lower() == 'true',
     'allow_wechat_port': os.environ.get('allow_wechat_port', 'false').lower() == 'true',
     'gavatar_cdn_base': os.environ.get('gavatar_cdn_base', '//cdn.v2ex.com/gravatar/'),
-    'gavatar_default_image': os.environ.get('gavatar_default_image', 'http://7tsygu.com1.z0.glb.clouddn.com/user-avatar.jpg'),
+    'gavatar_default_image': os.environ.get('gavatar_default_image', 'http://free.igevin.info/user-avatar.jpg'),
     'background_image': {
-        'home': os.environ.get('bg_home') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog-bg.jpg',
-        'post': os.environ.get('bg_post') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog-bg.jpg',
-        'about': os.environ.get('bg_about') or 'http://7d9q7a.com1.z0.glb.clouddn.com/octblog_about.jpg',
+        'home': os.environ.get('bg_home') or 'http://free.igevin.info/mayblog-home-bg.jpg',
+        'post': os.environ.get('bg_post') or 'http://free.igevin.info/mayblog-home-bg.jpg',
+        'about': os.environ.get('bg_about') or 'http://free.igevin.info/mayblog-about-bg.jpg',
         'qiniu': os.environ.get('qiniu') or 'http://assets.qiniu.com/qiniu-transparent.png',
     },
     'daovoice':{
